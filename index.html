@@ -55,11 +55,11 @@
                         <span flex><br/></span>
                         <md-list>
                             <md-list-item class="md-3-line" ng-repeat="pizza in orders.pizza">
-                                <span class="md-avatar md-display-3">{{pizza.quantity}}</span>
+                                <span class="md-avatar"><span class="md-display-3">{{pizza.quantity}}</span><span class="md-title">X</span></span>
                                 <div class="md-list-item-text" layout="column">
                                     <h3>{{ pizza.name }}</h3>
                                     <h4>Crust: {{ pizza.crust }}</h4>
-                                    <p>Price: {{ pizza.price }}</p>
+                                    <p>{{ pizza.itemPrice | currency:'IDR ':0}}</p>
                                 </div>
                             </md-list-item>
                         </md-list>
