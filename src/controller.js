@@ -10,6 +10,7 @@ app.controller('SliceCtrl', function($scope, $rootScope, $mdDialog, $mdMedia, Or
                         allOrders.push({
                             'phone': value.phone_no,
                             'customer': value.fname + ' ' + value.lname,
+                            'delivery': order.delivery,
                             'order': order
                         });
                     });
