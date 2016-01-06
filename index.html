@@ -1,118 +1,100 @@
-<!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>Angular Etsy Stamplay</title>
-
-	<!-- required by ui-router -->
-	<base href="/">
-
-	<!-- CSS -->
-	<!-- load up bootswatch-cerulean and our custom styles -->
-	<link rel="stylesheet" href="./bower_components/bootswatch/cerulean/bootstrap.min.css">
-	<link rel="stylesheet" href="./style.css">
-
-	<!-- JS -->
-	<!-- load the stamplay sdk and configure it -->
-	<script src="./bower_components/stamplay-js-sdk/dist/stamplay.min.js"></script>
-	<script>
-		Stamplay.init('angularetsy'); 	// initiate stamplay app with app name
-	</script>
-
-	<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-	<script>
-	  Stripe.setPublishableKey('pk_test_2DPyHPUmEw5O14d35FocF5nF');
-	</script>
-
-	<!-- load our other JS dependencies -->
-	<script src="./bower_components/angular/angular.min.js"></script>
-	<script src="./bower_components/angular-stamplay/angular-stamplay.js"></script>
-	<script src="./bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-	<script src="./bower_components/ng-file-upload/ng-file-upload.min.js"></script>
-	<script src="./bower_components/algoliasearch/dist/algoliasearch.angular.js"></script>
-	<script src="./bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-
-	<!-- load all the parts for our custom angular app -->
-	<!-- youd probably want to compile all this with a build system like gulp -->
-	<!-- load our angular components -->
-	<script src="./app/components/home/home.js"></script>
-	<script src="./app/components/shop/shop.js"></script>
-	<script src="./app/components/product/product.js"></script>
-	<script src="./app/components/checkout/checkout.js"></script>
-	<script src="./app/components/profile/profile.js"></script>
-	<script src="./app/components/admin/admin.js"></script>
-	<script src="./app/components/authenticate/authenticate.js"></script>
-
-	<!-- load our angular services -->
-	<script src="./app/shared/ProductService.js"></script>
-	<script src="./app/shared/UserService.js"></script>
-	<script src="./app/shared/OrderService.js"></script>
-	<script src="./app/shared/ShopService.js"></script>
-
-	<!-- load our core angular app -->
-	<script src="./app/app.routes.js"></script>
-	<script src="./app/app.js"></script>
-
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="src/style/style.css">
 </head>
-<body ng-app="etsyApp" ng-controller="MainController as main">
 
-	<!-- HEADER AND NAV -->
-	<header>
-		<nav id="main-nav" class="navbar">
-		<div class="container">
-
-			<!-- site logo -->
-			<div class="navbar-header">
-				<a ui-sref="home" class="navbar-brand">
-					<span class="glyphicon glyphicon-heart-empty"></span>
-					Shop City
-				</a>
-			</div>
-
-			<!-- search form -->
-			<form class="search-form navbar-form navbar-left">
-				<div class="form-group">
-				<div class="input-group">
-					<input
-						type="text"
-						class="form-control"
-						ng-model="main.query"
-						placeholder="Find a Product"
-						typeahead="product as product.name for product in main.searchProducts($viewValue)"
-						typeahead-on-select="main.searchPicked($item, $model, $label)">
-				    <div class="input-group-addon">
-				    	<span class="glyphicon glyphicon-search"></span>
-				    </div>
-				</div>
-				</div>
-			</form>
-
-			<!-- logged in navigation -->
-			<!-- todo: check for logged in user -->
-			<ul class="nav navbar-nav navbar-right" ng-show="currentUser.id">
-				<li><a ui-sref="admin">Admin</a></li>
-				<li><a ui-sref="profile">Profile</a></li>
-				<li><a ng-click="main.logout()">Logout</a></li>
-			</ul>
-
-			<!-- not logged in navigation -->
-	        <ul class="nav navbar-nav navbar-right" ng-show="!currentUser.id">
-	            <li><a ui-sref="authenticate">Register</a></li>
-	            <li><a ui-sref="authenticate">Sign in</a></li>
-	        </ul>
-		</div>
-		</nav>
-	</header>
-
-	<!-- ui-router will inject our component views here -->
-	<main class="container">
-		<div ui-view></div>
-	</main>
-
-	<!-- FOOTER -->
-	<footer class="text-center">
-		&copy; 2015 Shop City
-	</footer>
-	
+<body ng-app="SliceDash" ng-cloak>
+    <div ng-controller="SliceCtrl" ng-cloak>
+        <md-content class="md-padding" layout="row" layout-wrap layout-align="center start" layout-xs="column">
+            <div flex="25" flex-sm="25" flex-xs="25" layout="column" ng-repeat="item in allOrders | orderBy:'order.date':true">
+                <md-card>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">#{{item.order.number}}</span>
+                            <span class="md-subhead" am-time-ago="item.order.date"></span>
+                        </md-card-title-text>
+                        <md-card-title-media>
+                            <div class="md-media-sm card-image"></div>
+                        </md-card-title-media>
+                    </md-card-title>
+                    <md-card-actions layout="row" layout-align="end right">
+                        <md-button class="md-primary md-raised" ng-click="showDetails($event, item.phone, item.order.number, item.customer)">
+                            Open
+                        </md-button>
+                    </md-card-actions>
+                </md-card>
+            </div>
+        </md-content>
+    </div>
+    <!-- Order details dialog -->
+    <script type="text/ng-template" id="details.tmpl.html">
+        <md-dialog aria-label="Order Details" ng-cloak>
+            <form>
+                <md-toolbar>
+                    <div class="md-toolbar-tools">
+                        <h2><i class="material-icons">shopping_cart</i> ORDER #{{number}}</h2>
+                        <span flex></span>
+                        <md-button class="md-icon-button" ng-click="cancel()">
+                            <i class="material-icons">power_settings_new</i>
+                        </md-button>
+                    </div>
+                </md-toolbar>
+                <md-dialog-content>
+                    <div class="md-dialog-content">
+                        <i class="material-icons">schedule</i>
+                        <span class="md-title">{{orders.date | date:'dd/mm/yyyy HH:mm'}}</span>
+                        <span flex><br/></span>
+                        <i class="material-icons">person</i>
+                        <span class="md-subheading">{{customer}}</span>
+                        <span flex><br/></span>
+                        <i class="material-icons">phone_in_talk</i>
+                        <span class="md-subheading">+{{phone}}</span>
+                        <span flex><br/></span>
+                        <md-list>
+                            <md-list-item class="md-3-line" ng-repeat="pizza in orders.pizza">
+                                <span class="md-avatar md-display-3">{{pizza.quantity}}</span>
+                                <div class="md-list-item-text" layout="column">
+                                    <h3>{{ pizza.name }}</h3>
+                                    <h4>Crust: {{ pizza.crust }}</h4>
+                                    <p>Price: {{ pizza.price }}</p>
+                                </div>
+                            </md-list-item>
+                        </md-list>
+                        </span>
+                        <span flex></span>
+                        <span class="md-headline">Total:</span>
+                        <br/>
+                        <span class="md-display-1">{{orders.total | currency:'IDR ':0}}</span>
+                    </div>
+                </md-dialog-content>
+                <md-dialog-actions layout="row">
+                    <span flex></span>
+                    <md-button ng-click="answer('sign')" ng-disabled="true">
+                        <i class="material-icons">delete</i> Delete
+                    </md-button>
+                    <md-button ng-click="answer('delete')" style="margin-right:20px;" ng-disabled="true">
+                        <i class="material-icons">assignment_ind</i> Sign a courier
+                    </md-button>
+                </md-dialog-actions>
+            </form>
+        </md-dialog>
+    </script>
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+    <!-- Angular Material Library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-moment/angular-moment.js"></script>
+    <!-- App's scripts -->
+    <script src="src/app.js"></script>
+    <script src="src/service.js"></script>
+    <script src="src/controller.js"></script>
 </body>
+
 </html>
