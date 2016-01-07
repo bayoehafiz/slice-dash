@@ -60,7 +60,7 @@
                     <div class="col s4 center-align">
                         <h6>{{item.phone}}</h6>
                     </div>
-                    <ul class="col s12 collection with-header"> 
+                    <ul class="col s12 collection with-header">
                         <li class="collection-header center-align">
                             <h4>Orders</h4>
                         </li>
@@ -79,7 +79,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="collection-footer center-align green" ng-if="item.order.delivery.status == 'processed'">
+                        <li class="collection-footer center-align teal" ng-if="item.order.delivery.status == 'processed'">
                             <h5 class="white-text">PROCESSED</h5>
                         </li>
                         <li class="collection-footer center-align black" ng-if="item.order.delivery.status == 'finished'">
@@ -87,19 +87,11 @@
                         </li>
                     </ul>
                     <div class="col s12 right-align">
-                        <h6>Total Pay:</h6>
-                        <h4>{{item.order.total | currency:'IDR ':0}}</h4>
+                        <h6>Total Pay</h6>
+                        <h4><small>IDR </small> {{item.order.total | currency:'':0}}</h4>
                     </div>
                 </p>
             </div>
-            <!--<div class="card-action">
-              <a href="#">This is a link</a>
-              <a href="#">This is a link</a>
-            </div>
-            <div class="card-reveal" style="background-color: #ffb9b9;">
-                <span class="card-title grey-text text-darken-4"><i class="small material-icons">shopping_cart</i>  #{{item.order.number}}<i class="material-icons right">close</i></span>
-                <p class="flow-text" ng-repeat="pizza in item.order.pizza">{{pizza.name}}</p>
-            </div>-->
         </div>
     </div>
     <!--Import jQuery before materialize.js-->
