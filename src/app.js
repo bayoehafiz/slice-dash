@@ -1,4 +1,4 @@
-var app = angular.module('SliceDash', ['ngMaterial', 'ngMessages', 'angularMoment']);
+var app = angular.module('SliceDashApp', ['angularMoment']);
 
 app.filter('capitalize', function() {
     return function(input, all) {

@@ -1,4 +1,4 @@
-app.controller('SliceCtrl', function($scope, $rootScope, $mdDialog, $mdMedia, OrderService) {
+app.controller('SliceCtrl', function($scope, $rootScope, OrderService) {
     OrderService
         .getAllOrders()
         .success(function(data) {
@@ -10,12 +10,13 @@ app.controller('SliceCtrl', function($scope, $rootScope, $mdDialog, $mdMedia, Or
                         allOrders.push({
                             'phone': value.phone_no,
                             'customer': value.fname + ' ' + value.lname,
-                            'delivery': order.delivery,
+                            'delivery': value.delivery,
                             'order': order
                         });
                     });
                     // Pass values to scope
                     $scope.allOrders = allOrders;
+                    //console.log(allOrders);
                 }
             });
 
