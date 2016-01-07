@@ -36,7 +36,7 @@
             <div class="card-content">
                 <span class="card-title activator grey-text text-darken-4 valign-wrapper">
                   <span class="valign">
-                    <i class="material-icons small">shopping_cart</i> #{{item.order.number}}
+                    {{$index + 1}}. Order #<strong>{{item.order.number}}</strong>
                   </span>
                 </span>
                 <p class="row center">
@@ -46,10 +46,10 @@
                         <i class="medium material-icons" style="color:#ee6e73;">access_time</i>
                     </div>
                     <div class="col s5 center-align">
-                        <i class="medium material-icons">person</i>
+                        <i class="medium material-icons" style="color:#9e9e9e;">person</i>
                     </div>
                     <div class="col s4 center-align">
-                        <i class="medium material-icons">phone</i>
+                        <i class="medium material-icons" style="color:#9e9e9e;">phone</i>
                     </div>
                     <div class="col s3 center-align" capitalize>
                         <h6 am-time-ago="item.order.date" style="color:#ee6e73;"></h6>
@@ -60,27 +60,33 @@
                     <div class="col s4 center-align">
                         <h6>{{item.phone}}</h6>
                     </div>
-                    <ul class="col s12 collection with-header">
-                        <li class="collection-header">
-                            <h4><i class="material-icons">playlist_add_check</i> Order</h4>
+                    <ul class="col s12 collection with-header"> 
+                        <li class="collection-header center-align">
+                            <h4>ORDERS</h4>
                         </li>
                         <li class="collection-item" ng-repeat="pizza in item.order.pizza">
-                            <div class="row">
-                                <div class="col s2">
+                            <div class="row valign-wrapper">
+                                <div class="col s2 valign">
                                     <h1>{{pizza.quantity}}</h1>
                                 </div>
-                                <div class="col s10">
+                                <div class="col s10 valign">
                                     <blockquote>
                                         <h6><strong>{{pizza.name | uppercase}}</strong></h6> Crust: {{pizza.crust | uppercase}}
                                         <br/> Price: {{pizza.itemPrice | currency:'IDR ':0}}
                                         <br/>
-                                        <span ng-if="pizza.request">Request: {{pizza.request}}</span>
+                                        <span ng-if="pizza.request">Request:  <strong style="color:#ee6e73;">{{pizza.request}}</strong></span>
                                     </blockquote>
                                 </div>
                             </div>
                         </li>
+                        <li class="collection-footer center-align green" ng-if="item.order.delivery.status == 'processed'">
+                            <h5 class="white-text">PROCESSED</h5>
+                        </li>
+                        <li class="collection-footer center-align black" ng-if="item.order.delivery.status == 'finished'">
+                            <h5 class="white-text">FINISHED</h5>
+                        </li>
                     </ul>
-                    <div class="col s10 left-align">
+                    <div class="col s12 right-align">
                         <h6>Total Pay:</h6>
                         <h4>{{item.order.total | currency:'IDR ':0}}</h4>
                     </div>
