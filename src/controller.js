@@ -48,13 +48,13 @@ app.controller('SliceCtrl', function($scope, $rootScope, OrderService) {
 
                 function DialogController($scope, $mdDialog) {
                     $scope.number = number;
-                    $scope.phone = phone.replace(/[^\w\s]/gi, '');
+                    /*$scope.phone = phone.replace(/[^\w\s]/gi, '');
                     $scope.customer = customer;
 
                     OrderService.getOrderDetails($scope.phone, $scope.number).success(function(response) {
                     	$scope.orders = response.details;
                     	//console.log(response.details.pizza);
-                    });
+                    });*/
 
                     $scope.hide = function() {
                         $mdDialog.hide();

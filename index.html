@@ -30,14 +30,6 @@
     <!--Contents-->
     <div class="row">
         <div class="card hoverable col s12 m6 l3" ng-repeat="item in allOrders | orderBy:'order.date':true">
-            <!--<div class="card-image waves-effect waves-block waves-light">
-                <img class="activator" ng-src="https://maps.googleapis.com/maps/api/staticmap?center={{item.order.delivery.latitude}},{{item.order.delivery.longitude}}&zoom=15&size=400x200&maptype=roadmap&markers=color:red%7Clabel:D%7C{{item.order.delivery.latitude}},{{item.order.delivery.longitude}}">
-                <span class="card-title grey-text text-darken-4 valign-wrapper">
-                  <span class="valign">
-                    {{$index + 1}}. Order #<strong>{{item.order.number}}</strong>
-                  </span>
-                </span>
-            </div>-->
             <div class="card-content row">
                 <div class="col s3 center-align">
                     <i class="medium material-icons" style="color:#c52431;">access_time</i>
@@ -59,7 +51,9 @@
                 </div>
                 <ul class="col s12 collection with-header">
                     <li class="collection-header center-align">
-                        <h4><small>ORDER</small> #<strong>{{item.order.number}}</strong></h4>
+                        <h4>
+                        <a class="activator"><small>ORDER </small> <strong>{{item.order.number}}</strong></a>
+                        </h4>
                     </li>
                     <li class="collection-item" ng-repeat="pizza in item.order.pizza">
                         <div class="row valign-wrapper">
@@ -76,11 +70,11 @@
                             </div>
                         </div>
                     </li>
-                    <li class="collection-footer center-align teal" ng-if="item.order.delivery.status == 'processed'">
-                        <h5 class="white-text">PROCESSED</h5>
+                    <li class="collection-footer center-align" ng-if="item.order.delivery.status == 'processed'">
+                        <h5><a class="activator">PROCESSED</a></h5>
                     </li>
-                    <li class="collection-footer center-align black" ng-if="item.order.delivery.status == 'finished'">
-                        <h5 class="white-text">FINISHED</h5>
+                    <li class="collection-footer center-align" ng-if="item.order.delivery.status == 'finished'">
+                        <h5 class="grey-text">FINISHED</h5>
                     </li>
                 </ul>
                 <div class="col s12 right-align">
@@ -89,11 +83,43 @@
                 </div>
             </div>
             <div class="card-action center-align row">
-                <a class="btn-floating red darken-4 left"><i class="material-icons">delete</i></a>
-                <span class="right">
-                  <a class="btn-floating btn-large darken-3 blue"><i class="large material-icons">local_shipping</i></a>
-                  <a class="btn-floating btn-large"><i class="large material-icons">check</i></a>
-                </span>
+                <a class="btn-floating grey left"><i class="material-icons">delete</i></a>
+                <a class="activator waves-effect waves-circle waves-light btn-floating btn-large right"><i class="large material-icons">local_shipping</i></a>
+            </div>
+            <!-- Modal Structure -->
+            <div class="card-reveal">
+                <div class="modal-content">
+                    <div class="card-title row right-align">
+                        <i class="material-icons col s12">close</i>
+                    </div>
+                    <div class="row">
+                        <span class="col s12">
+													<img ng-src="https://maps.googleapis.com/maps/api/staticmap?center={{item.order.delivery.latitude}},{{item.order.delivery.longitude}}&zoom=15&size=300x200&maptype=roadmap&markers=color:red%7Clabel:D%7C{{item.order.delivery.latitude}},{{item.order.delivery.longitude}}" style="width:100%;"/>
+												</span>
+                        <span class="col s12">
+													<h6 class="grey-text">Drop Address</h6><h5>{{item.order.delivery.drop_address}} {{item.order.delivery.drop_address_number}}</h5>
+												</span>
+                        <span class="col s12" ng-if="item.order.delivery.additional_address">
+													<h6 class="grey-text">Additional Direction / Info</h6><h5>{{item.order.delivery.additional_address}}</h5>
+												</span>
+                    </div>
+                    <div class="row divider"></div>
+                    <div class="row left-align">
+                        <span class="col s12">
+                        <a class="waves-effect waves-light btn">Open in GMaps</a>
+                      </span>
+                    </div>
+                    <div class="row left-align">
+                        <span class="col s12">
+                        <a class="waves-effect waves-light btn disabled">Assign a courier</a>
+                      </span>
+                    </div>
+                    <div class="row left-align">
+                        <span class="col s12">
+                        <a class="waves-effect waves-light btn valign">Set as completed</a>
+                      </span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -104,14 +130,21 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
-    <script type="text/javascript" src="bower_components/Materialize/dist/js/materialize.min.js"></script>
     <!-- Plugin Library -->
+    <script type="text/javascript" src="bower_components/Materialize/dist/js/materialize.min.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/angular-moment/angular-moment.js"></script>
     <!-- App's scripts -->
     <script src="src/app.js"></script>
     <script src="src/service.js"></script>
     <script src="src/controller.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('.tooltipped').tooltip({
+            delay: 50
+        });
+    });
+    </script>
 </body>
 
 </html>
