@@ -52,7 +52,7 @@
                 <ul class="col s12 collection with-header">
                     <li class="collection-header center-align">
                         <h4>
-                        <a class="activator"><small>ORDER </small> <strong>{{item.order.number}}</strong></a>
+                        	<small>ORDER </small> <strong>{{item.order.number}}</strong>
                         </h4>
                     </li>
                     <li class="collection-item" ng-repeat="pizza in item.order.pizza">
@@ -70,8 +70,14 @@
                             </div>
                         </div>
                     </li>
+                    <li class="collection-item center-align">
+                    		<h6 class="grey-text">Delivery Address </h6> 
+                        <h5>
+                        	{{item.order.delivery.drop_address}} {{item.order.delivery.drop_address_number}}
+                        </h5>
+                    </li>
                     <li class="collection-footer center-align" ng-if="item.order.delivery.status == 'processed'">
-                        <h5><a class="activator">PROCESSED</a></h5>
+                        <h5 class="teal-text">PROCESSED</h5>
                     </li>
                     <li class="collection-footer center-align" ng-if="item.order.delivery.status == 'finished'">
                         <h5 class="grey-text">FINISHED</h5>
@@ -83,14 +89,14 @@
                 </div>
             </div>
             <div class="card-action center-align row">
-                <a class="btn-floating grey left"><i class="material-icons">delete</i></a>
+                <a class="btn-floating red darken-3 left disabled" ng-click="delete(item.phone, item.order.number)"><i class="material-icons">delete</i></a>
                 <a class="activator waves-effect waves-circle waves-light btn-floating btn-large right"><i class="large material-icons">local_shipping</i></a>
             </div>
             <!-- Modal Structure -->
             <div class="card-reveal">
                 <div class="modal-content">
                     <div class="card-title row right-align">
-                        <i class="material-icons col s12">close</i>
+                        <i class="material-icons col s12">keyboard_arrow_down</i>
                     </div>
                     <div class="row">
                         <span class="col s12">
@@ -134,17 +140,11 @@
     <script type="text/javascript" src="bower_components/Materialize/dist/js/materialize.min.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/angular-moment/angular-moment.js"></script>
+    <script src="bower_components/masonry/dist/masonry.pkgd.min.js"></script>
     <!-- App's scripts -->
     <script src="src/app.js"></script>
     <script src="src/service.js"></script>
     <script src="src/controller.js"></script>
-    <script>
-    $(document).ready(function() {
-        $('.tooltipped').tooltip({
-            delay: 50
-        });
-    });
-    </script>
 </body>
 
 </html>

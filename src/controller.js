@@ -48,13 +48,13 @@ app.controller('SliceCtrl', function($scope, $rootScope, OrderService) {
 
                 function DialogController($scope, $mdDialog) {
                     $scope.number = number;
-                    /*$scope.phone = phone.replace(/[^\w\s]/gi, '');
+                    $scope.phone = phone.replace(/[^\w\s]/gi, '');
                     $scope.customer = customer;
 
                     OrderService.getOrderDetails($scope.phone, $scope.number).success(function(response) {
                     	$scope.orders = response.details;
                     	//console.log(response.details.pizza);
-                    });*/
+                    });
 
                     $scope.hide = function() {
                         $mdDialog.hide();
@@ -68,7 +68,15 @@ app.controller('SliceCtrl', function($scope, $rootScope, OrderService) {
                         $mdDialog.hide(answer);
                     };
                 }
+            };
 
+            // Show order details
+            $scope.delete = function(phone, number) {
+                var phoneNumber = phone.replace(/[^\w\s]/gi, '');
+                //console.log(phoneNumber, number);
+                OrderService.deleteOrder(phoneNumber, number).success(function(response) {
+                    console.log(response);
+                })
             };
         })
 });
