@@ -6,7 +6,8 @@
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="bower_components/Materialize/dist/css/materialize.min.css" media="screen,projection" />
-    <link rel="stylesheet" href="src/style/style.css">
+    <link type="text/css" rel="stylesheet" href="src/style/style.css">
+    <link rel="stylesheet" href="bower_components/ngprogress/ngprogress.css">
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
@@ -28,102 +29,99 @@
         </nav>
     </div>
     <!--Contents-->
-    <div class="row">
-        <div class="card hoverable col s12 m6 l3" ng-repeat="item in allOrders | orderBy:'order.date':true">
-            <div class="card-content row">
-                <div class="col s3 center-align">
-                    <i class="medium material-icons" style="color:#c52431;">access_time</i>
-                </div>
-                <div class="col s5 center-align">
-                    <i class="medium material-icons" style="color:#9e9e9e;">person</i>
-                </div>
-                <div class="col s4 center-align">
-                    <i class="medium material-icons" style="color:#9e9e9e;">phone</i>
-                </div>
-                <div class="col s3 center-align" capitalize>
-                    <h6 am-time-ago="item.order.date" style="color:#c52431;"></h6>
-                </div>
-                <div class="col s5 center-align">
-                    <h6>{{item.customer | uppercase}}</h6>
-                </div>
-                <div class="col s4 center-align">
-                    <h6>{{item.phone}}</h6>
-                </div>
-                <ul class="col s12 collection with-header">
-                    <li class="collection-header center-align">
-                        <h4>
+    <div id="order-container" class="row">
+        <div id="order-item" class="col s6 m4 l3" ng-repeat="item in allOrders | orderBy:'order.date':true">
+            <div class="card">
+                <div class="card-content row">
+                    <div class="col s3 center-align">
+                        <i class="medium material-icons" style="color:#c52431;">access_time</i>
+                    </div>
+                    <div class="col s5 center-align">
+                        <i class="medium material-icons" style="color:#9e9e9e;">person</i>
+                    </div>
+                    <div class="col s4 center-align">
+                        <i class="medium material-icons" style="color:#9e9e9e;">phone</i>
+                    </div>
+                    <div class="col s3 center-align" capitalize>
+                        <h6 am-time-ago="item.order.date" style="color:#c52431;"></h6>
+                    </div>
+                    <div class="col s5 center-align">
+                        <h6>{{item.customer | uppercase}}</h6>
+                    </div>
+                    <div class="col s4 center-align">
+                        <h6>{{item.phone}}</h6>
+                    </div>
+                    <ul class="col s12 collection with-header">
+                        <li class="collection-header center-align">
+                            <h4>
                             <small>ORDER </small> <strong>{{item.order.number}}</strong>
                         </h4>
-                    </li>
-                    <li class="collection-item" ng-repeat="pizza in item.order.pizza">
-                        <div class="row valign-wrapper">
-                            <div class="col s2 valign">
-                                <h1>{{pizza.quantity}}</h1>
+                        </li>
+                        <li class="collection-item" ng-repeat="pizza in item.order.pizza">
+                            <div class="row valign-wrapper">
+                                <div class="col s2 valign">
+                                    <h1>{{pizza.quantity}}</h1>
+                                </div>
+                                <div class="col s10 valign">
+                                    <blockquote>
+                                        <h6><strong>{{pizza.name | uppercase}}</strong></h6> Crust: {{pizza.crust | uppercase}}
+                                        <br/> Price: {{pizza.itemPrice | currency:'IDR ':0}}
+                                        <br/>
+                                        <span ng-if="pizza.request">Request:  <strong style="color:#c52431;">{{pizza.request | uppercase}}</strong></span>
+                                    </blockquote>
+                                </div>
                             </div>
-                            <div class="col s10 valign">
-                                <blockquote>
-                                    <h6><strong>{{pizza.name | uppercase}}</strong></h6> Crust: {{pizza.crust | uppercase}}
-                                    <br/> Price: {{pizza.itemPrice | currency:'IDR ':0}}
-                                    <br/>
-                                    <span ng-if="pizza.request">Request:  <strong style="color:#c52431;">{{pizza.request | uppercase}}</strong></span>
-                                </blockquote>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="collection-item center-align">
-                        <h6 class="grey-text">Delivery Address </h6>
-                        <h5>
+                        </li>
+                        <li class="collection-item center-align">
+                            <h6 class="grey-text">Delivery Address </h6>
+                            <h5>
                             {{item.order.delivery.drop_address}} {{item.order.delivery.drop_address_number}}
                         </h5>
-                    </li>
-                    <li class="collection-footer center-align" ng-if="item.order.delivery.status == 'processed'">
-                        <h5 class="teal-text">PROCESSED</h5>
-                    </li>
-                    <li class="collection-footer center-align" ng-if="item.order.delivery.status == 'finished'">
-                        <h5 class="grey-text">FINISHED</h5>
-                    </li>
-                </ul>
-                <div class="col s12 right-align">
-                    <h6>Total Pay</h6>
-                    <h4><small>IDR </small> {{item.order.total | currency:'':0}}</h4>
-                </div>
-            </div>
-            <div class="card-action center-align row">
-                <a class="btn-floating red darken-3 left" ng-click="delete(item.phone, item.order.number)"><i class="material-icons">delete</i></a>
-                <a class="activator waves-effect waves-circle waves-light btn-floating btn-large right"><i class="large material-icons">local_shipping</i></a>
-            </div>
-            <!-- Modal Structure -->
-            <div class="card-reveal">
-                <div class="modal-content">
-                    <div class="card-title row right-align">
-                        <i class="material-icons col s12">keyboard_arrow_down</i>
+                        </li>
+                        <li class="collection-footer center-align" ng-if="item.order.delivery.status == 'processed'">
+                            <h5 class="teal-text">PROCESSED</h5>
+                        </li>
+                        <li class="collection-footer center-align" ng-if="item.order.delivery.status == 'finished'">
+                            <h5 class="grey-text">FINISHED</h5>
+                        </li>
+                    </ul>
+                    <div class="col s12 right-align">
+                        <h6>Total Pay</h6>
+                        <h4><small>IDR </small> {{item.order.total | currency:'':0}}</h4>
                     </div>
-                    <div class="row">
-                        <span class="col s12">
+                </div>
+                <div class="card-action center-align row">
+                    <a class="btn-floating red darken-3 left" ng-click="delete(item.phone, item.order.number)"><i class="material-icons">delete</i></a>
+                    <a class="activator waves-effect waves-circle waves-light btn-floating btn-large right"><i class="large material-icons">local_shipping</i></a>
+                </div>
+                <!-- Modal Structure -->
+                <div class="card-reveal">
+                    <div class="modal-content">
+                        <div class="card-title row right-align">
+                            <i class="material-icons col s12">keyboard_arrow_down</i>
+                        </div>
+                        <div class="row">
+                            <span class="col s12">
                                                     <img ng-src="https://maps.googleapis.com/maps/api/staticmap?center={{item.order.delivery.latitude}},{{item.order.delivery.longitude}}&zoom=15&size=300x200&maptype=roadmap&markers=color:red%7Clabel:D%7C{{item.order.delivery.latitude}},{{item.order.delivery.longitude}}" style="width:100%;"/>
                                                 </span>
-                        <span class="col s12">
+                            <span class="col s12">
                                                     <h6 class="grey-text">Drop Address</h6><h5>{{item.order.delivery.drop_address}} {{item.order.delivery.drop_address_number}}</h5>
                                                 </span>
-                        <span class="col s12" ng-if="item.order.delivery.additional_address">
+                            <span class="col s12" ng-if="item.order.delivery.additional_address">
                                                     <h6 class="grey-text">Additional Direction / Info</h6><h5>{{item.order.delivery.additional_address}}</h5>
                                                 </span>
-                    </div>
-                    <div class="row divider"></div>
-                    <div class="row left-align">
-                        <span class="col s12">
-                        <a class="waves-effect waves-light btn">Open in GMaps</a>
-                      </span>
-                    </div>
-                    <div class="row left-align">
-                        <span class="col s12">
+                        </div>
+                        <div class="row divider"></div>
+                        <div class="row left-align">
+                            <span class="col s12">
                         <a class="waves-effect waves-light btn disabled">Assign a courier</a>
                       </span>
-                    </div>
-                    <div class="row left-align">
-                        <span class="col s12">
-                        <a class="waves-effect waves-light btn valign">Set as completed</a>
+                        </div>
+                        <div class="row left-align">
+                            <span class="col s12">
+                        <a class="waves-effect waves-light btn disabled">Set as completed</a>
                       </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -137,14 +135,22 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
     <!-- Plugin Library -->
-    <script type="text/javascript" src="bower_components/Materialize/dist/js/materialize.min.js"></script>
+    <script src="bower_components/Materialize/dist/js/materialize.min.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/angular-moment/angular-moment.js"></script>
-    <script src="bower_components/masonry/dist/masonry.pkgd.min.js"></script>
+    <script src="bower_components/ngprogress/build/ngprogress.min.js"></script>
     <!-- App's scripts -->
     <script src="src/app.js"></script>
     <script src="src/service.js"></script>
     <script src="src/controller.js"></script>
+    <script src='bower_components/masonry/dist/masonry.pkgd.min.js' />
+    <script>
+    $('#order-container').masonry({
+        // options
+        itemSelector: '#order-item',
+        columnWidth: 200
+    });
+    </script>
 </body>
 
 </html>

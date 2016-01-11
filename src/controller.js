@@ -1,4 +1,9 @@
-app.controller('SliceCtrl', function($scope, $rootScope, OrderService) {
+app.controller('SliceCtrl', function($scope, $rootScope, OrderService, ngProgressFactory) {
+    var progressbar = ngProgressFactory.createInstance();
+
+    // Loader bar
+    progressbar.start();
+
     OrderService
         .getAllOrders()
         .success(function(data) {
@@ -17,6 +22,8 @@ app.controller('SliceCtrl', function($scope, $rootScope, OrderService) {
                     // Pass values to scope
                     $rootScope.allOrders = allOrders;
                     //console.log(allOrders);
+                    progressbar.stop();
+
                 }
             });
 
@@ -77,6 +84,7 @@ app.controller('SliceCtrl', function($scope, $rootScope, OrderService) {
                 OrderService.deleteOrder(phoneNumber, number).success(function(response) {
                     var status = response.success;
                     if (status == true) {
+                        //$rootScope.allOrders = [];
                         OrderService.getAllOrders().success(function(data) {
                             // Collect all orders from all users
                             var allOrders = [];

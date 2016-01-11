@@ -1,4 +1,4 @@
-var app = angular.module('SliceDashApp', ['angularMoment']);
+var app = angular.module('SliceDashApp', ['angularMoment', 'ngProgress']);
 
 app.filter('capitalize', function() {
     return function(input, all) {
