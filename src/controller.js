@@ -15,7 +15,7 @@ app.controller('SliceCtrl', function($scope, $rootScope, OrderService) {
                         });
                     });
                     // Pass values to scope
-                    $scope.allOrders = allOrders;
+                    $rootScope.allOrders = allOrders;
                     //console.log(allOrders);
                 }
             });
@@ -52,8 +52,8 @@ app.controller('SliceCtrl', function($scope, $rootScope, OrderService) {
                     $scope.customer = customer;
 
                     OrderService.getOrderDetails($scope.phone, $scope.number).success(function(response) {
-                    	$scope.orders = response.details;
-                    	//console.log(response.details.pizza);
+                        $scope.orders = response.details;
+                        //console.log(response.details.pizza);
                     });
 
                     $scope.hide = function() {
@@ -75,8 +75,34 @@ app.controller('SliceCtrl', function($scope, $rootScope, OrderService) {
                 var phoneNumber = phone.replace(/[^\w\s]/gi, '');
                 //console.log(phoneNumber, number);
                 OrderService.deleteOrder(phoneNumber, number).success(function(response) {
-                    console.log(response);
+                    var status = response.success;
+                    if (status == true) {
+                        OrderService.getAllOrders().success(function(data) {
+                            // Collect all orders from all users
+                            var allOrders = [];
+                            angular.forEach(data, function(value) {
+                                if (value.orders.length > 0) {
+                                    angular.forEach(value.orders, function(order) {
+                                        allOrders.push({
+                                            'phone': value.phone_no,
+                                            'customer': value.fname + ' ' + value.lname,
+                                            'delivery': value.delivery,
+                                            'order': order
+                                        });
+                                    });
+                                    // Pass values to scope
+                                    $rootScope.allOrders = allOrders;
+                                    //console.log(allOrders);
+                                    console.log('Success!');
+                                }
+                            });
+                        })
+                    } else {
+                        console.log('Failed!');
+                    }
                 })
             };
+
+
         })
 });

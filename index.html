@@ -52,7 +52,7 @@
                 <ul class="col s12 collection with-header">
                     <li class="collection-header center-align">
                         <h4>
-                        	<small>ORDER </small> <strong>{{item.order.number}}</strong>
+                            <small>ORDER </small> <strong>{{item.order.number}}</strong>
                         </h4>
                     </li>
                     <li class="collection-item" ng-repeat="pizza in item.order.pizza">
@@ -71,9 +71,9 @@
                         </div>
                     </li>
                     <li class="collection-item center-align">
-                    		<h6 class="grey-text">Delivery Address </h6> 
+                        <h6 class="grey-text">Delivery Address </h6>
                         <h5>
-                        	{{item.order.delivery.drop_address}} {{item.order.delivery.drop_address_number}}
+                            {{item.order.delivery.drop_address}} {{item.order.delivery.drop_address_number}}
                         </h5>
                     </li>
                     <li class="collection-footer center-align" ng-if="item.order.delivery.status == 'processed'">
@@ -100,14 +100,14 @@
                     </div>
                     <div class="row">
                         <span class="col s12">
-													<img ng-src="https://maps.googleapis.com/maps/api/staticmap?center={{item.order.delivery.latitude}},{{item.order.delivery.longitude}}&zoom=15&size=300x200&maptype=roadmap&markers=color:red%7Clabel:D%7C{{item.order.delivery.latitude}},{{item.order.delivery.longitude}}" style="width:100%;"/>
-												</span>
+                                                    <img ng-src="https://maps.googleapis.com/maps/api/staticmap?center={{item.order.delivery.latitude}},{{item.order.delivery.longitude}}&zoom=15&size=300x200&maptype=roadmap&markers=color:red%7Clabel:D%7C{{item.order.delivery.latitude}},{{item.order.delivery.longitude}}" style="width:100%;"/>
+                                                </span>
                         <span class="col s12">
-													<h6 class="grey-text">Drop Address</h6><h5>{{item.order.delivery.drop_address}} {{item.order.delivery.drop_address_number}}</h5>
-												</span>
+                                                    <h6 class="grey-text">Drop Address</h6><h5>{{item.order.delivery.drop_address}} {{item.order.delivery.drop_address_number}}</h5>
+                                                </span>
                         <span class="col s12" ng-if="item.order.delivery.additional_address">
-													<h6 class="grey-text">Additional Direction / Info</h6><h5>{{item.order.delivery.additional_address}}</h5>
-												</span>
+                                                    <h6 class="grey-text">Additional Direction / Info</h6><h5>{{item.order.delivery.additional_address}}</h5>
+                                                </span>
                     </div>
                     <div class="row divider"></div>
                     <div class="row left-align">
