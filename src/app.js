@@ -1,4 +1,25 @@
-var app = angular.module('SliceDashApp', ['angularMoment', 'ngProgress']);
+var app = angular.module('SliceDashApp', ['ngRoute', 'angularMoment', 'ngProgress']);
+
+app.config(function($routeProvider) {
+    $routeProvider
+    // route for the kitchen section
+    .when('/', {
+        templateUrl: 'pages/kitchen.html',
+        controller: 'KitchenCtrl'
+    })
+
+    // route for the driver section
+    .when('/dispatched', {
+        templateUrl: 'pages/driver.html',
+        controller: 'DriverCtrl'
+    })
+
+    // route for the completed section
+    .when('/completed', {
+        templateUrl: 'pages/completed.html',
+        controller: 'CompletedCtrl'
+    });
+});
 
 app.filter('capitalize', function() {
     return function(input, all) {
