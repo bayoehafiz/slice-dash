@@ -91,8 +91,8 @@
                     </div>
                 </div>
                 <div class="card-action center-align row">
-                    <a class="btn-floating red darken-3 left" ng-click="delete(item.phone, item.order.number)"><i class="material-icons">delete</i></a>
-                    <a class="activator waves-effect waves-circle waves-light btn-floating btn-large right"><i class="large material-icons">local_shipping</i></a>
+                    <a class="btn-floating red darken-3" ng-click="delete(item.phone, item.order.number)"><i class="material-icons">delete</i></a>
+                    <a class="activator btn-floating"><i class="large material-icons">local_shipping</i></a>
                 </div>
                 <!-- Modal Structure -->
                 <div class="card-reveal">
@@ -128,7 +128,7 @@
         </div>
     </div>
     <!--Floating refresh button-->
-    <div class="fixed-action-btn horizontal click-to-toggle" style="bottom: 45px; right: 24px;">
+    <div class="fixed-action-btn horizontal click-to-toggle" style="bottom: 25px; right: 25px;">
         <a class="btn-floating btn-large yellow darken-2" ng-click="refresh()">
             <i class="large material-icons">replay</i>
         </a>
