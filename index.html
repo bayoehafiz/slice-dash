@@ -17,7 +17,7 @@
     <div class="navbar-fixed">
         <nav>
             <div class="nav-wrapper">
-                <span class="brand-logo center"><strong>SLICE</strong> <small>Dashboard</small></span>
+                <span class="brand-logo center" class="vertical-align:center;"><img src="img/logo.png" style="width:120px;padding-top:15px;"/></span>
                 <form>
                     <div class="input-field">
                         <input id="search" type="search" required>
@@ -31,7 +31,7 @@
     <!--Contents-->
     <div id="order-container" class="row">
         <div id="order-item" class="col s12 m6 l3" ng-repeat="item in allOrders | orderBy:'order.date':true">
-            <div class="card">
+            <div id="{{item.order.number}}" class="card">
                 <div class="card-content row">
                     <div class="col s3 center-align">
                         <i class="medium material-icons" style="color:#c52431;">access_time</i>
@@ -54,7 +54,7 @@
                     <ul class="col s12 collection with-header">
                         <li class="collection-header center-align">
                             <h4>
-                            <small>ORDER </small> <strong>{{item.order.number}}</strong>
+                            <small>ORDER </small> #<strong>{{item.order.number}}</strong>
                         </h4>
                         </li>
                         <li class="collection-item" ng-repeat="pizza in item.order.pizza">
@@ -72,12 +72,12 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="collection-item center-align">
+                        <!--<li class="collection-item center-align">
                             <h6 class="grey-text">Delivery Address </h6>
                             <h5>
                             {{item.order.delivery.drop_address}} {{item.order.delivery.drop_address_number}}
                         </h5>
-                        </li>
+                        </li>-->
                         <li class="collection-footer center-align" ng-if="item.order.delivery.status == 'processed'">
                             <h5 class="teal-text">PROCESSED</h5>
                         </li>
@@ -105,7 +105,7 @@
                                                     <img ng-src="https://maps.googleapis.com/maps/api/staticmap?center={{item.order.delivery.latitude}},{{item.order.delivery.longitude}}&zoom=15&size=300x200&maptype=roadmap&markers=color:red%7Clabel:D%7C{{item.order.delivery.latitude}},{{item.order.delivery.longitude}}" style="width:100%;"/>
                                                 </span>
                             <span class="col s12">
-                                                    <h6 class="grey-text">Drop Address</h6><h5>{{item.order.delivery.drop_address}} {{item.order.delivery.drop_address_number}}</h5>
+                                                    <h6 class="grey-text">Delivery Address</h6><h5>{{item.order.delivery.drop_address}} {{item.order.delivery.drop_address_number}}</h5>
                                                 </span>
                             <span class="col s12" ng-if="item.order.delivery.additional_address">
                                                     <h6 class="grey-text">Additional Direction / Info</h6><h5>{{item.order.delivery.additional_address}}</h5>
@@ -127,6 +127,12 @@
             </div>
         </div>
     </div>
+    <!--Floating refresh button-->
+    <div class="fixed-action-btn horizontal click-to-toggle" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large yellow darken-2" ng-click="refresh()">
+            <i class="large material-icons">replay</i>
+        </a>
+    </div>
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <!-- Angular Libraries -->
@@ -143,16 +149,6 @@
     <script src="src/app.js"></script>
     <script src="src/service.js"></script>
     <script src="src/controller.js"></script>
-    <script src='bower_components/masonry/dist/masonry.pkgd.min.js' />
-    <script>
-    $(function() {
-        $('#order-container').masonry({
-            // options
-            itemSelector: '#order-item',
-            columnWidth: 200
-        });
-    });
-    </script>
 </body>
 
 </html>
