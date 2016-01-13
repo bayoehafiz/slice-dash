@@ -1,6 +1,7 @@
 app.controller('KitchenCtrl', function($window, $scope, $rootScope, OrderService, ngProgressFactory) {
-    var progressbar = ngProgressFactory.createInstance();
+    $('#logo-subtitle').text('Kitchen');
 
+    var progressbar = ngProgressFactory.createInstance();
     // Loader bar
     progressbar.start();
     progressbar.setColor('#FFF');
@@ -117,6 +118,8 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, OrderService
 
 
 app.controller('DriverCtrl', function($window, $scope, $rootScope, OrderService, ngProgressFactory) {
+    $('#logo-subtitle').text('Driver');
+
     var progressbar = ngProgressFactory.createInstance();
     // Loader bar
     progressbar.start();
@@ -234,6 +237,8 @@ app.controller('DriverCtrl', function($window, $scope, $rootScope, OrderService,
 
 
 app.controller('CompletedCtrl', function($window, $scope, $rootScope, OrderService, ngProgressFactory) {
+    $('#logo-subtitle').text('Summary');
+
     var progressbar = ngProgressFactory.createInstance();
 
     // Loader bar
