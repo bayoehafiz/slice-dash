@@ -2,11 +2,6 @@ var app = angular.module('SliceDashApp', ['ngRoute', 'angularMoment', 'ngProgres
 
 app.config(function($routeProvider) {
     $routeProvider
-    // route for the kitchen section
-    .when('/', {
-        templateUrl: 'pages/kitchen.html',
-        controller: 'KitchenCtrl'
-    })
 
     // route for the driver section
     .when('/dispatched', {
@@ -18,6 +13,11 @@ app.config(function($routeProvider) {
     .when('/completed', {
         templateUrl: 'pages/completed.html',
         controller: 'CompletedCtrl'
+    })
+
+    .otherwise({
+        templateUrl: 'pages/kitchen.html',
+        controller: 'KitchenCtrl'
     });
 });
 
@@ -28,4 +28,18 @@ app.filter('capitalize', function() {
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
         }) : '';
     }
+});
+
+app.directive('capitalizeFirst', function (uppercaseFilter, $parse) {
+    return {
+        require: 'ngModel',
+        scope: {
+            ngModel: "="
+        },
+        link: function (scope, element, attrs, modelCtrl) {
+            scope.$watch("ngModel", function () {
+                scope.ngModel = scope.ngModel.replace(/^(.)|\s(.)/g, function(v){ return v.toUpperCase( ); });
+            });
+        }
+    };
 });

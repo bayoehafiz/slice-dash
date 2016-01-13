@@ -1,4 +1,4 @@
-<div class="col s12 m6 l3" ng-repeat="item in allOrders | orderBy:'order.date':true">
+<div class="col s12 m6 l3" ng-repeat="item in allOrders | orderBy:'order.date':true" ng-show="allOrders.length > 0">
     <div id="{{item.order.number}}" class="card">
         <div class="card-content row">
             <div class="col s3 center-align">
@@ -10,7 +10,7 @@
             <div class="col s4 center-align">
                 <i class="medium material-icons" style="color:#9e9e9e;">phone</i>
             </div>
-            <div class="col s3 center-align" capitalize>
+            <div class="col s3 center-align">
                 <h6 am-time-ago="item.order.date" style="color:#c52431;"></h6>
             </div>
             <div class="col s5 center-align">
@@ -40,14 +40,8 @@
                         </div>
                     </div>
                 </li>
-                <!--<li class="collection-item center-align">
-                            <h6 class="grey-text">Delivery Address </h6>
-                            <h5>
-                            {{item.order.delivery.drop_address}} {{item.order.delivery.drop_address_number}}
-                        </h5>
-                        </li>-->
                 <li class="collection-footer center-align">
-                    <h5 class="red-text"><i class="material-icons red-text">query_builder</i> BEING COOKED</h5>
+                    <h5 class="red-text">BEING COOKED</h5>
                 </li>
             </ul>
             <div class="col s12 right-align">
@@ -71,14 +65,25 @@
                     <span class="col s12" ng-if="item.order.delivery.additional_address"><h6 class="grey-text">Additional Direction / Info</h6><h5>{{item.order.delivery.additional_address}}</h5></span>
                 </div>
                 <div class="row divider"></div>
-                <div class="row left-align">
-                    <span class="col s12">
-                        <a class="waves-effect waves-light btn center-align teal" ng-click="assign(item.phone, item.order.number)">Assign a courier</a>
-                      </span>
+                <div class="row center-align">
+                    <div class="input-field col s12">
+                        <input id="courier-name" type="text" class="validate" ng-model="courierName" capitalize-first>
+                        <label for="courier-name">Courier Name</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="courier-phone" type="number" class="validate" ng-model="courierPhone">
+                        <label for="courier-phone">Phone Number</label>
+                    </div>
+                    <div class="col s12">
+                        <a class="waves-effect waves-light btn center-align teal" ng-click="assign(item.phone, item.order.number, courierName, courierPhone)">Assign courier</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div class="col s12 m12 l12" ng-show="allOrders.length < 1">
+    <p class="flow-text center-align grey-text">There is no order yet...</p>
 </div>
 <!--Floating button-->
 <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
