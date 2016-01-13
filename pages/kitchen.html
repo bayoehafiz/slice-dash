@@ -1,4 +1,4 @@
-<div class="col s12 m6 l3" ng-repeat="item in allOrders | orderBy:'order.date':true" ng-show="allOrders.length > 0">
+<div class="col s12 m6 l3" ng-repeat="item in allOrders | orderBy:'order.date':true | reverse" ng-show="allOrders.length > 0">
     <div id="{{item.order.number}}" class="card">
         <div class="card-content row">
             <div class="col s3 center-align">

@@ -118,7 +118,7 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, OrderService
 
 
 app.controller('DriverCtrl', function($window, $scope, $rootScope, OrderService, ngProgressFactory) {
-    $('#logo-subtitle').text('Driver');
+    $('#logo-subtitle').text('Dispatch');
 
     var progressbar = ngProgressFactory.createInstance();
     // Loader bar

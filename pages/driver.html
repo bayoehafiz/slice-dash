@@ -84,7 +84,7 @@
                     <span class="col s12"><h6 class="grey-text">Delivery Address</h6><h5 style="margin-top:0px!important;">{{item.order.delivery.drop_address}} {{item.order.delivery.drop_address_number}}</h5></span>
                     <span class="col s12" ng-if="item.order.delivery.additional_address"><h6 class="grey-text">Additional Direction / Info</h6><h5 style="margin-top:0px!important;">{{item.order.delivery.additional_address}}</h5></span>
                     <span class="col s12"><h6 class="grey-text">Order Time</h6><h5 style="margin-top:0px!important;">{{item.order.date | date:"dd MMM yyyy, HH:mm"}}</h5></span>
-                    <span class="col s12"><h6 class="grey-text">Delivery Time</h6><h5 style="margin-top:0px!important;">{{item.order.delivery.courier.time | date:"dd MMM yyyy, HH:mm"}} WIB</h5></span>
+                    <span class="col s12"><h6 class="grey-text">Dispatch Time</h6><h5 style="margin-top:0px!important;">{{item.order.delivery.courier.time | date:"dd MMM yyyy, HH:mm"}} WIB</h5></span>
                     <span class="col s12"><h6 class="grey-text">Courier</h6><h5 style="margin-top:0px!important;">{{item.order.delivery.courier.name}} ({{item.order.delivery.courier.phone}})</h5></span>
                 </div>
             </div>
