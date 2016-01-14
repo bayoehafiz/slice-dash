@@ -29,7 +29,7 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                     }
                 });
             })
-            
+
             // show tooltip
             var $toastContent = $('<span>New Order! #' + push_data.message + '</span>');
             Materialize.toast($toastContent, 5000, 'rounded');
@@ -166,7 +166,7 @@ app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, Orde
     my_channel.bind('my_event',
         function(push_data) {
             // show tooltip
-            var $toastContent = $('<span>New Order: #' + push_data.message + '. Please visit Kitchen Page</span>');
+            var $toastContent = $('<span>New Order: #' + push_data.message + '.<br/>Please visit Kitchen Page</span>');
             Materialize.toast($toastContent, 5000, 'rounded');
         }
     );
@@ -262,7 +262,7 @@ app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, O
     my_channel.bind('my_event',
         function(push_data) {
             // show tooltip
-            var $toastContent = $('<span>New Order: #' + push_data.message + '. Please visit Kitchen Page</span>');
+            var $toastContent = $('<span>New Order: #' + push_data.message + '.<br/>Please visit Kitchen Page</span>');
             Materialize.toast($toastContent, 5000, 'rounded');
         }
     );
