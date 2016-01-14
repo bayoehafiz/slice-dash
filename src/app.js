@@ -30,13 +30,7 @@ app.filter('capitalize', function() {
     }
 });
 
-app.filter('reverse', function() {
-  return function(items) {
-    return items.slice().reverse();
-  };
-});
-
-app.directive('capitalizeFirst', function (uppercaseFilter, $parse) {
+/*app.directive('capitalizeFirst', function (uppercaseFilter, $parse) {
     return {
         require: 'ngModel',
         scope: {
@@ -48,4 +42,4 @@ app.directive('capitalizeFirst', function (uppercaseFilter, $parse) {
             });
         }
     };
-});
+});*/

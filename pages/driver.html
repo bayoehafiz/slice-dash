@@ -1,4 +1,4 @@
-<div class="col s12 m6 l3" ng-repeat="item in allOrders | orderBy:'order.date':true" ng-show="allOrders.length > 0">
+<div class="col s12 m6 l3" ng-repeat="item in allOrders | orderBy:'order.date':reverse" ng-show="allOrders.length > 0">
     <div id="{{item.order.number}}" class="card">
         <div class="card-content row">
             <div class="col s3 center-align">
@@ -70,8 +70,8 @@
             </div>
         </div>
         <div class="card-action center-align row">
-            <a class="activator waves-effect waves-light btn grey"><i class="material-icons">place</i></a>
-            <a class="waves-effect waves-light btn blue darken-2" ng-click="complete(item.phone, item.order.number)"><i class="material-icons right">done</i>set as completed</a>
+            <a class="activator waves-effect waves-light btn yellow darken-2"><i class="material-icons">place</i></a>
+            <a class="waves-effect waves-light btn teal darken-2" ng-click="complete(item.phone, item.order.number)"><i class="material-icons left">done</i>set as completed</a>
         </div>
         <!-- Modal Structure -->
         <div class="card-reveal">
