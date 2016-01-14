@@ -1,17 +1,17 @@
-var app = angular.module('SliceDashApp', ['ngRoute', 'angularMoment', 'ngProgress']);
+var app = angular.module('SliceDashApp', ['ngRoute', 'angularMoment', 'ngProgress', 'pusher-angular']);
 
 app.config(function($routeProvider) {
     $routeProvider
 
     // route for the driver section
     .when('/dispatched', {
-        templateUrl: 'pages/driver.html',
+        templateUrl: 'pages/dispatch.html',
         controller: 'DriverCtrl'
     })
 
     // route for the completed section
     .when('/completed', {
-        templateUrl: 'pages/completed.html',
+        templateUrl: 'pages/complete.html',
         controller: 'CompletedCtrl'
     })
 

@@ -1,5 +1,38 @@
-app.controller('KitchenCtrl', function($window, $scope, $rootScope, OrderService, ngProgressFactory) {
+app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, OrderService, ngProgressFactory) {
+    // Dynamic subtitle
     $('#logo-subtitle').text('Kitchen');
+
+    // Pusher notification /////////////////////
+    var client = new Pusher('b7b402b4f6325e3561ed');
+    var pusher = $pusher(client);
+    var my_channel = pusher.subscribe('test_channel');
+    my_channel.bind('my_event',
+        function(data) {
+            console.log(data);
+            OrderService.getAllOrders().success(function(data) {
+                // Collect all orders from all users
+                var allOrders = [];
+                angular.forEach(data, function(value) {
+                    if (value.orders.length > 0) {
+                        angular.forEach(value.orders, function(order) {
+                            if (order.delivery.status == 'processed') {
+                                allOrders.push({
+                                    'phone': value.phone_no,
+                                    'customer': value.fname + ' ' + value.lname,
+                                    'delivery': value.delivery,
+                                    'order': order
+                                });
+                            }
+                        });
+                        progressbar.complete();
+                        // Pass values to scope
+                        $rootScope.allOrders = allOrders;
+                    }
+                });
+            })
+        }
+    );
+    // eof pusher notification //////////////////
 
     var progressbar = ngProgressFactory.createInstance();
     // Loader bar
@@ -120,10 +153,11 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, OrderService
 
 
 app.controller('DriverCtrl', function($window, $scope, $rootScope, OrderService, ngProgressFactory) {
+    // Dynamic subtitle
     $('#logo-subtitle').text('Dispatch');
 
-    var progressbar = ngProgressFactory.createInstance();
     // Loader bar
+    var progressbar = ngProgressFactory.createInstance();
     progressbar.start();
     progressbar.setColor('#FFF');
     progressbar.setHeight('4px');
@@ -202,11 +236,11 @@ app.controller('DriverCtrl', function($window, $scope, $rootScope, OrderService,
 
 
 app.controller('CompletedCtrl', function($window, $scope, $rootScope, OrderService, ngProgressFactory) {
+    // Dynamic subtitle
     $('#logo-subtitle').text('Summary');
 
-    var progressbar = ngProgressFactory.createInstance();
-
     // Loader bar
+    var progressbar = ngProgressFactory.createInstance();
     progressbar.start();
     progressbar.setColor('#FFF');
     progressbar.setHeight('4px');
