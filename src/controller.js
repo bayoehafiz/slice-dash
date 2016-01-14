@@ -7,8 +7,7 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
     var pusher = $pusher(client);
     var my_channel = pusher.subscribe('test_channel');
     my_channel.bind('my_event',
-        function(data) {
-            console.log(data);
+        function(push_data) {
             OrderService.getAllOrders().success(function(data) {
                 // Collect all orders from all users
                 var allOrders = [];
@@ -27,6 +26,10 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                         progressbar.complete();
                         // Pass values to scope
                         $rootScope.allOrders = allOrders;
+
+                        // show tooltip
+                        var $toastContent = $('<span>New Order! #' + push_data.message + '</span>');
+                        Materialize.toast($toastContent, 5000, 'rounded');
                     }
                 });
             })
@@ -152,9 +155,22 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
 
 
 
-app.controller('DriverCtrl', function($window, $scope, $rootScope, OrderService, ngProgressFactory) {
+app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, OrderService, ngProgressFactory) {
     // Dynamic subtitle
     $('#logo-subtitle').text('Dispatch');
+
+    // Pusher notification /////////////////////
+    var client = new Pusher('b7b402b4f6325e3561ed');
+    var pusher = $pusher(client);
+    var my_channel = pusher.subscribe('test_channel');
+    my_channel.bind('my_event',
+        function(push_data) {
+            // show tooltip
+            var $toastContent = $('<span>New Order: #' + push_data.message + '. Please visit Kitchen Page</span>');
+            Materialize.toast($toastContent, 5000, 'rounded');
+        }
+    );
+    // eof pusher notification //////////////////
 
     // Loader bar
     var progressbar = ngProgressFactory.createInstance();
@@ -235,9 +251,22 @@ app.controller('DriverCtrl', function($window, $scope, $rootScope, OrderService,
 });
 
 
-app.controller('CompletedCtrl', function($window, $scope, $rootScope, OrderService, ngProgressFactory) {
+app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, OrderService, ngProgressFactory) {
     // Dynamic subtitle
     $('#logo-subtitle').text('Summary');
+
+    // Pusher notification /////////////////////
+    var client = new Pusher('b7b402b4f6325e3561ed');
+    var pusher = $pusher(client);
+    var my_channel = pusher.subscribe('test_channel');
+    my_channel.bind('my_event',
+        function(push_data) {
+            // show tooltip
+            var $toastContent = $('<span>New Order: #' + push_data.message + '. Please visit Kitchen Page</span>');
+            Materialize.toast($toastContent, 5000, 'rounded');
+        }
+    );
+    // eof pusher notification //////////////////
 
     // Loader bar
     var progressbar = ngProgressFactory.createInstance();
