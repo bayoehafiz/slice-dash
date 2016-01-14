@@ -26,13 +26,13 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                         progressbar.complete();
                         // Pass values to scope
                         $rootScope.allOrders = allOrders;
-
-                        // show tooltip
-                        var $toastContent = $('<span>New Order! #' + push_data.message + '</span>');
-                        Materialize.toast($toastContent, 5000, 'rounded');
                     }
                 });
             })
+            
+            // show tooltip
+            var $toastContent = $('<span>New Order! #' + push_data.message + '</span>');
+            Materialize.toast($toastContent, 5000, 'rounded');
         }
     );
     // eof pusher notification //////////////////
