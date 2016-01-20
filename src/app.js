@@ -15,6 +15,12 @@ app.config(function($routeProvider) {
         controller: 'CompletedCtrl'
     })
 
+    // route for the completed section
+    .when('/list', {
+        templateUrl: 'pages/waiting_list.html',
+        controller: 'WaitingListCtrl'
+    })
+
     .otherwise({
         templateUrl: 'pages/kitchen.html',
         controller: 'KitchenCtrl'

@@ -28,3 +28,19 @@ app.factory("OrderService", ['$http', function($http) {
 
     return obj;
 }]);
+
+app.factory("WaitingListService", ['$http', function($http) {
+    var obj = {};
+
+    obj.getAllList = function() {
+        return $http.get('http://node.colorblindlabs.com:8080/api/access');
+        //return $http.get('http://localhost:8080/admin/orders');
+    }
+
+    obj.deleteList = function(phone) {
+        return $http.get('http://node.colorblindlabs.com:8080/api/access/delete?phone=' + phone);
+        //return $http.get('http://localhost:8080/admin/order/delete?phone=' + phone + '&u=' + number);
+    }
+
+    return obj;
+}]);

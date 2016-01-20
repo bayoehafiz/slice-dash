@@ -392,3 +392,71 @@ app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, O
             }
         })
 });
+
+
+app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher, WaitingListService, ngProgressFactory) {
+    // Dynamic subtitle
+    $('#logo-subtitle').text('Waiting List');
+
+    // Pusher notification /////////////////////
+    var client = new Pusher('b7b402b4f6325e3561ed');
+    var pusher = $pusher(client);
+    var my_channel = pusher.subscribe('test_channel');
+    my_channel.bind('my_event_3',
+        function(push_data) {
+            // show tooltip
+            var $toastContent = $('<span>New Order: #' + push_data.message + '.<br/>Please visit Dashboard</span>');
+            Materialize.toast($toastContent, 5000, 'rounded');
+        }
+    );
+    // eof pusher notification //////////////////
+
+    // Loader bar
+    var progressbar = ngProgressFactory.createInstance();
+    progressbar.start();
+    progressbar.setColor('#FFF');
+    progressbar.setHeight('4px');
+
+    WaitingListService
+        .getAllList()
+        .success(function(data) {
+
+            console.log(data.message);
+
+            // Collect all orders from all users
+            $rootScope.allList = data.message;
+
+            // Delete order
+            $scope.delete = function(phone) {
+                // Loader bar
+                progressbar.start();
+                progressbar.setColor('#FFF');
+
+                var phoneNumber = phone.replace(/[^\w\s]/gi, '');
+                console.log(phone, phoneNumber);
+
+                WaitingListService.deleteList(phoneNumber).success(function(response) {
+                    var status = response.success;
+                    if (status == true) {
+                        //$rootScope.allOrders = [];
+                        WaitingListService.getAllList().success(function(data) {
+
+                            // Collect all orders from all users
+                            $rootScope.allList = data.message;
+                            
+                            progressbar.complete();
+                        })
+                    } else {
+                        progressbar.complete();
+                        console.log('Failed refreshing waiting list!');
+                    }
+                })
+            };
+
+            // Refresh page
+            $scope.refresh = function($route) {
+                //$state.reload();
+                $window.location.reload();
+            }
+        })
+});
