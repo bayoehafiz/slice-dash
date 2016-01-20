@@ -35,6 +35,14 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
             Materialize.toast($toastContent, 5000, 'rounded');
         }
     );
+
+    my_channel.bind('my_event_2', // when a driver set an order to completed
+        function(push_data) {
+            // show tooltip
+            var $toastContent = $('<span>Order #' + push_data.message + ' has been completed. Please check summary section</span>');
+            Materialize.toast($toastContent, 5000, 'rounded');
+        }
+    );
     // eof pusher notification //////////////////
 
     var progressbar = ngProgressFactory.createInstance();
@@ -170,6 +178,14 @@ app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, Orde
             Materialize.toast($toastContent, 5000, 'rounded');
         }
     );
+
+    my_channel.bind('my_event_2', // when a driver set an order to completed
+        function(push_data) {
+            // show tooltip
+            var $toastContent = $('<span>Order #' + push_data.message + ' has been completed. Please check summary section</span>');
+            Materialize.toast($toastContent, 5000, 'rounded');
+        }
+    );
     // eof pusher notification //////////////////
 
     // Loader bar
@@ -263,6 +279,36 @@ app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, O
         function(push_data) {
             // show tooltip
             var $toastContent = $('<span>New Order: #' + push_data.message + '.<br/>Please visit Kitchen Page</span>');
+            Materialize.toast($toastContent, 5000, 'rounded');
+        }
+    );
+
+    my_channel.bind('my_event_2',
+        function(push_data) {
+            OrderService.getAllOrders().success(function(data) {
+                // Collect all orders from all users
+                var allOrders = [];
+                angular.forEach(data, function(value) {
+                    if (value.orders.length > 0) {
+                        angular.forEach(value.orders, function(order) {
+                            if (order.delivery.status == 'completed') {
+                                allOrders.push({
+                                    'phone': value.phone_no,
+                                    'customer': value.fname + ' ' + value.lname,
+                                    'delivery': value.delivery,
+                                    'order': order
+                                });
+                            }
+                        });
+                        progressbar.complete();
+                        // Pass values to scope
+                        $rootScope.allOrders = allOrders;
+                    }
+                });
+            })
+
+            // show tooltip
+            var $toastContent = $('<span>Order #' + push_data.message + ' has been completed!</span>');
             Materialize.toast($toastContent, 5000, 'rounded');
         }
     );
