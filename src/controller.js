@@ -404,9 +404,10 @@ app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher,
     var my_channel = pusher.subscribe('test_channel');
     my_channel.bind('my_event_3',
         function(push_data) {
-            // show tooltip
-            var $toastContent = $('<span>New Order: #' + push_data.message + '.<br/>Please visit Dashboard</span>');
-            Materialize.toast($toastContent, 5000, 'rounded');
+            WaitingListService.getAllList().success(function(data) {
+                // Collect all orders from all users
+                $rootScope.allList = data.message;
+            })
         }
     );
     // eof pusher notification //////////////////
@@ -421,10 +422,11 @@ app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher,
         .getAllList()
         .success(function(data) {
 
-            console.log(data.message);
-
-            // Collect all orders from all users
-            $rootScope.allList = data.message;
+            if (data.message == 'No record yet.') {
+                $rootScope.allList = [];
+            } else {
+                $rootScope.allList = data;
+            }
 
             // Delete order
             $scope.delete = function(phone) {
@@ -441,9 +443,12 @@ app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher,
                         //$rootScope.allOrders = [];
                         WaitingListService.getAllList().success(function(data) {
 
-                            // Collect all orders from all users
-                            $rootScope.allList = data.message;
-                            
+                            if (data.length < 1) {
+                                $rootScope.allList = [];
+                            } else {
+                                $rootScope.allList = data;
+                            }
+
                             progressbar.complete();
                         })
                     } else {

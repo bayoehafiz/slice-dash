@@ -1,6 +1,6 @@
 <div class="col s12 m12 l12" ng-show="allList.length > 0">
     <ul class="collection">
-        <li class="collection-item avatar center-align" ng-repeat="item in allList| orderBy:'number'">
+        <li class="collection-item avatar center-align" ng-repeat="item in allList | orderBy:'number'">
             <div class="circle grey-text darken-1" style="width:100px;height:100px;"><h2><small>#</small>{{item.number}}</h2></div>
             <span class="title"><h4>{{item.phone}}</h4></span>
             <p><span class="grey-text">Registered at</span><br/>{{item.date | date:"dd MMM yyyy, H:mm"}}</p>
@@ -9,7 +9,7 @@
     </ul>
 </div>
 <div class="col s12 m12 l12" ng-show="allList.length < 1">
-    <p class="flow-text center-align grey-text">There is no customer is waiting list yet...</p>
+    <p class="flow-text center-align grey-text">There is no customer in waiting list yet...</p>
 </div>
 <!--Floating button-->
 <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
