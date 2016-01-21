@@ -425,8 +425,10 @@ app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher,
             if (data.message == 'No record yet.') {
                 $rootScope.allList = [];
             } else {
-                $rootScope.allList = data;
+                $rootScope.allList = data.message;
             }
+
+            console.log($rootScope.allList);
 
             // Delete order
             $scope.delete = function(phone) {
@@ -435,7 +437,6 @@ app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher,
                 progressbar.setColor('#FFF');
 
                 var phoneNumber = phone.replace(/[^\w\s]/gi, '');
-                console.log(phone, phoneNumber);
 
                 WaitingListService.deleteList(phoneNumber).success(function(response) {
                     var status = response.success;
@@ -443,10 +444,10 @@ app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher,
                         //$rootScope.allOrders = [];
                         WaitingListService.getAllList().success(function(data) {
 
-                            if (data.length < 1) {
+                            if (data.message == 'No record yet.') {
                                 $rootScope.allList = [];
                             } else {
-                                $rootScope.allList = data;
+                                $rootScope.allList = data.message;
                             }
 
                             progressbar.complete();
