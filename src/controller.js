@@ -1,49 +1,54 @@
-app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, OrderService, ngProgressFactory) {
+app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, OrderService, ngProgressFactory, $route) {
     // Dynamic subtitle
     $('#logo-subtitle').text('Kitchen');
 
-    // Pusher notification /////////////////////
-    var client = new Pusher('b7b402b4f6325e3561ed');
-    var pusher = $pusher(client);
-    var my_channel = pusher.subscribe('test_channel');
-    my_channel.bind('my_event',
-        function(push_data) {
-            OrderService.getAllOrders().success(function(data) {
-                // Collect all orders from all users
-                var allOrders = [];
-                angular.forEach(data, function(value) {
-                    if (value.orders.length > 0) {
-                        angular.forEach(value.orders, function(order) {
-                            if (order.delivery.status == 'processed') {
-                                allOrders.push({
-                                    'phone': value.phone_no,
-                                    'customer': value.fname + ' ' + value.lname,
-                                    'delivery': value.delivery,
-                                    'order': order
-                                });
-                            }
-                        });
-                        progressbar.complete();
-                        // Pass values to scope
-                        $rootScope.allOrders = allOrders;
-                    }
-                });
-            })
+    // get current state
+    console.log($route.current.loadedTemplateUrl);
+    if ($route.current.loadedTemplateUrl == 'pages/kitchen.html') {
+        // Pusher notification /////////////////////
+        var client = new Pusher('b7b402b4f6325e3561ed');
+        var pusher = $pusher(client);
+        var my_channel = pusher.subscribe('test_channel');
+        my_channel.bind('my_event',
+            function(push_data) {
+                OrderService.getAllOrders().success(function(data) {
+                    // Collect all orders from all users
+                    var allOrders = [];
+                    angular.forEach(data, function(value) {
+                        if (value.orders.length > 0) {
+                            angular.forEach(value.orders, function(order) {
+                                if (order.delivery.status == 'processed') {
+                                    allOrders.push({
+                                        'phone': value.phone_no,
+                                        'customer': value.fname + ' ' + value.lname,
+                                        'delivery': value.delivery,
+                                        'order': order
+                                    });
+                                }
+                            });
+                            progressbar.complete();
+                            // Pass values to scope
+                            $rootScope.allOrders = allOrders;
+                        }
+                    });
+                })
 
-            // show tooltip
-            var $toastContent = $('<span>New Order! #' + push_data.message + '</span>');
-            Materialize.toast($toastContent, 5000, 'rounded');
-        }
-    );
+                // show tooltip
+                var $toastContent = $('<span>New Order! #' + push_data.message + '</span>');
+                Materialize.toast($toastContent, 5000, 'rounded');
+            }
+        );
 
-    my_channel.bind('my_event_2', // when a driver set an order to completed
-        function(push_data) {
-            // show tooltip
-            var $toastContent = $('<span>Order #' + push_data.message + ' has been completed. Please check summary section</span>');
-            Materialize.toast($toastContent, 5000, 'rounded');
-        }
-    );
-    // eof pusher notification //////////////////
+        my_channel.bind('my_event_2', // when a driver set an order to completed
+            function(push_data) {
+                // show tooltip
+                var $toastContent = $('<span>Order #' + push_data.message + ' has been completed. Please check summary section</span>');
+                Materialize.toast($toastContent, 5000, 'rounded');
+            }
+        );
+        // eof pusher notification //////////////////
+    };
+
 
     var progressbar = ngProgressFactory.createInstance();
     // Loader bar
@@ -163,30 +168,33 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
 
 
 
-app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, OrderService, ngProgressFactory) {
+app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, OrderService, ngProgressFactory, $route) {
     // Dynamic subtitle
     $('#logo-subtitle').text('Dispatch');
 
-    // Pusher notification /////////////////////
-    var client = new Pusher('b7b402b4f6325e3561ed');
-    var pusher = $pusher(client);
-    var my_channel = pusher.subscribe('test_channel');
-    my_channel.bind('my_event',
-        function(push_data) {
-            // show tooltip
-            var $toastContent = $('<span>New Order: #' + push_data.message + '.<br/>Please visit Kitchen Page</span>');
-            Materialize.toast($toastContent, 5000, 'rounded');
-        }
-    );
+    console.log($route.current.loadedTemplateUrl);
+    if ($route.current.loadedTemplateUrl == 'pages/dispatch.html') {
+        // Pusher notification /////////////////////
+        var client = new Pusher('b7b402b4f6325e3561ed');
+        var pusher = $pusher(client);
+        var my_channel = pusher.subscribe('test_channel');
+        my_channel.bind('my_event',
+            function(push_data) {
+                // show tooltip
+                var $toastContent = $('<span>New Order: #' + push_data.message + '.<br/>Please visit Kitchen Page</span>');
+                Materialize.toast($toastContent, 5000, 'rounded');
+            }
+        );
 
-    my_channel.bind('my_event_2', // when a driver set an order to completed
-        function(push_data) {
-            // show tooltip
-            var $toastContent = $('<span>Order #' + push_data.message + ' has been completed. Please check summary section</span>');
-            Materialize.toast($toastContent, 5000, 'rounded');
-        }
-    );
-    // eof pusher notification //////////////////
+        my_channel.bind('my_event_2', // when a driver set an order to completed
+            function(push_data) {
+                // show tooltip
+                var $toastContent = $('<span>Order #' + push_data.message + ' has been completed. Please check summary section</span>');
+                Materialize.toast($toastContent, 5000, 'rounded');
+            }
+        );
+        // eof pusher notification //////////////////
+    };
 
     // Loader bar
     var progressbar = ngProgressFactory.createInstance();
@@ -267,52 +275,56 @@ app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, Orde
 });
 
 
-app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, OrderService, ngProgressFactory) {
+app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, OrderService, ngProgressFactory, $route) {
     // Dynamic subtitle
     $('#logo-subtitle').text('Summary');
 
-    // Pusher notification /////////////////////
-    var client = new Pusher('b7b402b4f6325e3561ed');
-    var pusher = $pusher(client);
-    var my_channel = pusher.subscribe('test_channel');
-    my_channel.bind('my_event',
-        function(push_data) {
-            // show tooltip
-            var $toastContent = $('<span>New Order: #' + push_data.message + '.<br/>Please visit Kitchen Page</span>');
-            Materialize.toast($toastContent, 5000, 'rounded');
-        }
-    );
+    console.log($route.current.loadedTemplateUrl);
+    if ($route.current.loadedTemplateUrl == 'pages/complete.html') {
+        // Pusher notification /////////////////////
+        var client = new Pusher('b7b402b4f6325e3561ed');
+        var pusher = $pusher(client);
+        var my_channel = pusher.subscribe('test_channel');
+        my_channel.bind('my_event',
+            function(push_data) {
+                // show tooltip
+                var $toastContent = $('<span>New Order: #' + push_data.message + '.<br/>Please visit Kitchen Page</span>');
+                Materialize.toast($toastContent, 5000, 'rounded');
+            }
+        );
 
-    my_channel.bind('my_event_2',
-        function(push_data) {
-            OrderService.getAllOrders().success(function(data) {
-                // Collect all orders from all users
-                var allOrders = [];
-                angular.forEach(data, function(value) {
-                    if (value.orders.length > 0) {
-                        angular.forEach(value.orders, function(order) {
-                            if (order.delivery.status == 'completed') {
-                                allOrders.push({
-                                    'phone': value.phone_no,
-                                    'customer': value.fname + ' ' + value.lname,
-                                    'delivery': value.delivery,
-                                    'order': order
-                                });
-                            }
-                        });
-                        progressbar.complete();
-                        // Pass values to scope
-                        $rootScope.allOrders = allOrders;
-                    }
-                });
-            })
+        my_channel.bind('my_event_2',
+            function(push_data) {
+                OrderService.getAllOrders().success(function(data) {
+                    // Collect all orders from all users
+                    var allOrders = [];
+                    angular.forEach(data, function(value) {
+                        if (value.orders.length > 0) {
+                            angular.forEach(value.orders, function(order) {
+                                if (order.delivery.status == 'completed') {
+                                    allOrders.push({
+                                        'phone': value.phone_no,
+                                        'customer': value.fname + ' ' + value.lname,
+                                        'delivery': value.delivery,
+                                        'order': order
+                                    });
+                                }
+                            });
+                            progressbar.complete();
+                            // Pass values to scope
+                            $rootScope.allOrders = allOrders;
+                        }
+                    });
+                })
 
-            // show tooltip
-            var $toastContent = $('<span>Order #' + push_data.message + ' has been completed!</span>');
-            Materialize.toast($toastContent, 5000, 'rounded');
-        }
-    );
-    // eof pusher notification //////////////////
+                // show tooltip
+                var $toastContent = $('<span>Order #' + push_data.message + ' has been completed!</span>');
+                Materialize.toast($toastContent, 5000, 'rounded');
+            }
+        );
+        // eof pusher notification //////////////////
+    }
+
 
     // Loader bar
     var progressbar = ngProgressFactory.createInstance();
@@ -394,23 +406,26 @@ app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, O
 });
 
 
-app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher, WaitingListService, ngProgressFactory) {
+app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher, WaitingListService, ngProgressFactory, $route) {
     // Dynamic subtitle
     $('#logo-subtitle').text('Waiting List');
 
-    // Pusher notification /////////////////////
-    var client = new Pusher('b7b402b4f6325e3561ed');
-    var pusher = $pusher(client);
-    var my_channel = pusher.subscribe('test_channel');
-    my_channel.bind('my_event_3',
-        function(push_data) {
-            WaitingListService.getAllList().success(function(data) {
-                // Collect all orders from all users
-                $rootScope.allList = data.message;
-            })
-        }
-    );
-    // eof pusher notification //////////////////
+    console.log($route.current.loadedTemplateUrl);
+    if ($route.current.loadedTemplateUrl == 'pages/waiting_list.html') {
+        // Pusher notification /////////////////////
+        var client = new Pusher('b7b402b4f6325e3561ed');
+        var pusher = $pusher(client);
+        var my_channel = pusher.subscribe('test_channel');
+        my_channel.bind('my_event_3',
+            function(push_data) {
+                WaitingListService.getAllList().success(function(data) {
+                    // Collect all orders from all users
+                    $rootScope.allList = data.message;
+                })
+            }
+        );
+        // eof pusher notification //////////////////
+    }
 
     // Loader bar
     var progressbar = ngProgressFactory.createInstance();
