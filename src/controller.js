@@ -476,10 +476,37 @@ app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher,
         })
 });
 
-
 app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher, mkBlocker, $route, MenuUpdaterService, $http) {
     // Dynamic subtitle
     $('#logo-subtitle').text('Menu Updater');
+
+
+
+    MenuUpdaterService.getMenu().success(function(response) {
+        var ver = 0,
+            rel = '',
+            data = [],
+            num = 0;
+
+        var status = response.status;
+        if (status == true) {
+            ver = response.message.version;
+            rel = response.message.release;
+            data = response.message.data;
+            num = data.length;
+        }
+
+        $scope.version = ver;
+        $scope.release = rel;
+        $scope.data = data;
+        $scope.num = num;
+
+    })
+});
+
+app.controller('AddPizzaCtrl', function($window, $scope, $rootScope, $pusher, mkBlocker, $route, MenuUpdaterService, $http) {
+    // Dynamic subtitle
+    $('#logo-subtitle').text('Add Pizza');
 
     // Size dropdown datas
     $scope.sizes = [{
@@ -578,53 +605,14 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
         name: 'jalapeno'
     }];
 
-    MenuUpdaterService.getMenu().success(function(response) {
-        var ver = 0,
-            rel = '',
-            data = [],
-            num = 0;
-
-        var status = response.status;
-        if (status == true) {
-            ver = response.message.version;
-            rel = response.message.release;
-            data = response.message.data;
-            num = data.length;
+    $scope.$on("cropme:loaded", function(ev, width, height, cropmeEl) {
+        // Get the right image ratio (0.62:1)
+        var ratio = width / height;
+        if (ratio != 0.6153846153846154) {
+            $scope.$broadcast("cropme:cancel");
+            Materialize.toast('FAILED! Image ratio must be 0.62:1 (ex. 800p X 1300p)', 5000);
         }
-
-        $scope.version = ver;
-        $scope.release = rel;
-        $scope.data = data;
-        $scope.num = num;
-
-        $scope.$on("cropme:loaded", function(ev, width, height, cropmeEl) {
-            if (width == 800 && height == 1300) {
-                // Do nothing
-                // Refer to $scope.processForm
-            } else {
-                $scope.$broadcast("cropme:cancel");
-                Materialize.toast('Image size must be 800 X 1300 in dimensions', 5000);
-            }
-        });
-
-        // File upload handler
-        $scope.upload = function(file) {
-            Upload.upload({
-                url: 'upload/url',
-                data: {
-                    file: file
-                }
-            }).then(function(resp) {
-                console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
-            }, function(resp) {
-                console.log('Error status: ' + resp.status);
-            }, function(evt) {
-                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-            });
-        };
-
-    })
+    });
 
     $scope.processForm = function(pizza) {
 
@@ -662,8 +650,6 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
                 });
             };
         });
-
-
     };
 
 });

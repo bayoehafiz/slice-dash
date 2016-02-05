@@ -1,0 +1,77 @@
+<div class="col s12 m12 l12">
+    <div class="col s12 m12 l12 right-align" style="padding-top:10px;">
+        <a class="waves-effect waves-yellow btn red darken-3" href="#updater">
+            BACK <i class="material-icons left">arrow_back</i>
+        </a>
+        <button class="waves-effect waves-yellow btn teal" type="submit" ng-click="processForm(pizza)">
+            SAVE <i class="material-icons right">save</i>
+        </button>
+    </div>
+    <div class="col s12 m12 l12">
+        <div class="row">
+            <div class="card col s12 m12 l12">
+                <div class="card-content">
+                    <form novalidate>
+                        <div class="row">
+                            <!-- Left pane -->
+                            <div class="col s9">
+                                <div class="row">
+                                    <div class="input-field col s8">
+                                        <i class="material-icons prefix">local_pizza</i>
+                                        <input id="name" type="text" ng-model="pizza.name" capitalize-first>
+                                        <label for="name">NAME</label>
+                                    </div>
+                                    <div class="input-field col s4">
+                                        <i class="material-icons prefix">attach_money</i>
+                                        <input id="price" type="text" class="validate" ng-model="pizza.price" ui-money-mask="0">
+                                        <label for="price">PRICE</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <i class="material-icons prefix">description</i>
+                                        <textarea id="description" class="materialize-textarea" length="500" ng-model="pizza.description"></textarea>
+                                        <label for="description">ITEM DESCRIPTION</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12" style="margin-top:0;">
+                                        <div class="grey-text">SIZES</div>
+                                        <multi-check ng-model="pizza.size">
+                                            <multi-check-item ng-repeat="size in sizes" value="{{size.name}}">{{size.label}}</multi-check-item>
+                                        </multi-check>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s6">
+                                        <div class="grey-text" style="padding-bottom:10px">CRUSTS</div>
+                                        <oi-select id="crust" oi-options="item.label for item in crusts track by item.id" ng-model="pizza.crust" multiple placeholder="Click to add crust" oi-select-options="{closeList: false, maxlength: 0}" required></oi-select>
+                                    </div>
+                                    <div class="input-field col s6">
+                                        <div class="grey-text" style="padding-bottom:10px">INGREDIENTS</div>
+                                        <oi-select id="ingredient" oi-options="item.label for item in ingredients track by item.id" ng-model="pizza.ingredient" multiple placeholder="Click to add ingredient" oi-select-options="{closeList: false, maxlength: 0}" required></oi-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Right pane -->
+                            <div class="col s3">
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <div class="grey-text" style="padding-bottom:10px;">PHOTO</div>
+                                        <cropme width="100%" height="240" ratio="0.62:1" type="png" destination-width="800" destination-width="1300" cancel-label="Remove">
+                                        </cropme>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12 center-align">
+                                        <div class="g-recaptcha" data-sitekey="6LeoexcTAAAAAAZKEI__NRgrmE_CqE2vEpUggy-t"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -26,6 +26,11 @@ app.config(function($routeProvider) {
         controller: 'MenuUpdaterCtrl'
     })
 
+    .when('/add', {
+        templateUrl: 'pages/add_pizza.html',
+        controller: 'AddPizzaCtrl'
+    })
+
     .otherwise({
         templateUrl: 'pages/kitchen.html',
         controller: 'KitchenCtrl'
