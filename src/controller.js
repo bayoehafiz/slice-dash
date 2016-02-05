@@ -480,8 +480,6 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
     // Dynamic subtitle
     $('#logo-subtitle').text('Menu Updater');
 
-
-
     MenuUpdaterService.getMenu().success(function(response) {
         var ver = 0,
             rel = '',
@@ -496,6 +494,8 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
             num = data.length;
         }
 
+        console.log("Data length: " + num);
+
         $scope.version = ver;
         $scope.release = rel;
         $scope.data = data;
@@ -506,7 +506,9 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
 
 app.controller('AddPizzaCtrl', function($window, $scope, $rootScope, $pusher, mkBlocker, $route, MenuUpdaterService, $http) {
     // Dynamic subtitle
-    $('#logo-subtitle').text('Add Pizza');
+    $('#logo-subtitle').html('Add Pizza');
+
+    $('.tooltipped').tooltip({delay: 50});
 
     // Size dropdown datas
     $scope.sizes = [{

@@ -18,37 +18,37 @@
                                 <div class="row">
                                     <div class="input-field col s8">
                                         <i class="material-icons prefix">local_pizza</i>
-                                        <input id="name" type="text" ng-model="pizza.name" capitalize-first>
+                                        <input id="name" type="text" ng-model="pizza.name" style="font-size:2rem;" capitalize-first>
                                         <label for="name">NAME</label>
                                     </div>
                                     <div class="input-field col s4">
                                         <i class="material-icons prefix">attach_money</i>
-                                        <input id="price" type="text" class="validate" ng-model="pizza.price" ui-money-mask="0">
+                                        <input id="price" type="text" class="validate" ng-model="pizza.price" style="font-size:2rem;" ui-money-mask="0">
                                         <label for="price">PRICE</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <i class="material-icons prefix">description</i>
-                                        <textarea id="description" class="materialize-textarea" length="500" ng-model="pizza.description"></textarea>
+                                        <textarea id="description" class="materialize-textarea" length="500" ng-model="pizza.description" style="font-size:1.5rem;"></textarea>
                                         <label for="description">ITEM DESCRIPTION</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12" style="margin-top:0;">
                                         <div class="grey-text">SIZES</div>
-                                        <multi-check ng-model="pizza.size">
+                                        <multi-check ng-model="pizza.size" style="font-size:1.2rem;">
                                             <multi-check-item ng-repeat="size in sizes" value="{{size.name}}">{{size.label}}</multi-check-item>
                                         </multi-check>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s6">
-                                        <div class="grey-text" style="padding-bottom:10px">CRUSTS</div>
+                                        <div class="grey-text" style="padding-bottom:10px">CRUSTS <i class="material-icons tooltipped right" data-position="left" data-delay="50" data-tooltip="Multiple crusts are available. Click on crust name to remove.">help</i></div>
                                         <oi-select id="crust" oi-options="item.label for item in crusts track by item.id" ng-model="pizza.crust" multiple placeholder="Click to add crust" oi-select-options="{closeList: false, maxlength: 0}" required></oi-select>
                                     </div>
                                     <div class="input-field col s6">
-                                        <div class="grey-text" style="padding-bottom:10px">INGREDIENTS</div>
+                                        <div class="grey-text" style="padding-bottom:10px">INGREDIENTS <i class="material-icons tooltipped right" data-position="left" data-delay="50" data-tooltip="Multiple ingredients are available. Click on ingredient name to remove.">help</i></div>
                                         <oi-select id="ingredient" oi-options="item.label for item in ingredients track by item.id" ng-model="pizza.ingredient" multiple placeholder="Click to add ingredient" oi-select-options="{closeList: false, maxlength: 0}" required></oi-select>
                                     </div>
                                 </div>
@@ -57,7 +57,7 @@
                             <div class="col s3">
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <div class="grey-text" style="padding-bottom:10px;">PHOTO</div>
+                                        <div class="grey-text" style="padding-bottom:10px;">PHOTO <i class="material-icons tooltipped right" data-position="left" data-delay="50" data-tooltip="Pizza image ratio must be 0.62:1. Recommended size is 800x1300.">help</i></div>
                                         <cropme width="100%" height="240" ratio="0.62:1" type="png" destination-width="800" destination-width="1300" cancel-label="Remove">
                                         </cropme>
                                     </div>
