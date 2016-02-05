@@ -1,0 +1,32 @@
+{
+  "name": "Slice Dashboard",
+  "homepage": "https://github.com/bayuhafiz/slice-dash",
+  "authors": [
+    "bayuhafiz <bayu@colorblindlabs.com>"
+  ],
+  "description": "Dashboard panel for Slice App",
+  "main": "index.html",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-materialize": "~0.1.2",
+    "angular-modal-service": "^0.6.9",
+    "angular-dynforms": "~0.0.4",
+    "angular-moment": "~0.10.3",
+    "angular-cropme": "~0.3.6",
+    "material-design-icons": "~2.1.3",
+    "moment": "~2.11.0",
+    "pusher-angular": "~0.1.8",
+    "angular-multi-check": "*",
+    "oi.select": "^0.2.20",
+    "angular-input-masks": "^2.1.1"
+  }
+}

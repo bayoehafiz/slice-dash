@@ -1,9 +1,9 @@
-app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, OrderService, ngProgressFactory, $route) {
+app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, OrderService, mkBlocker, $route) {
     // Dynamic subtitle
     $('#logo-subtitle').text('Kitchen');
 
     // get current state
-    console.log($route.current.loadedTemplateUrl);
+
     if ($route.current.loadedTemplateUrl == 'pages/kitchen.html') {
         // Pusher notification /////////////////////
         var client = new Pusher('b7b402b4f6325e3561ed');
@@ -26,7 +26,7 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                                     });
                                 }
                             });
-                            progressbar.complete();
+                            //mkBlocker.unblockUI();
                             // Pass values to scope
                             $rootScope.allOrders = allOrders;
                         }
@@ -50,11 +50,7 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
     };
 
 
-    var progressbar = ngProgressFactory.createInstance();
-    // Loader bar
-    progressbar.start();
-    progressbar.setColor('#FFF');
-    progressbar.setHeight('4px');
+    mkBlocker.blockUI();
 
     OrderService
         .getAllOrders()
@@ -77,7 +73,7 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                     // Pass values to scope
                     $rootScope.allOrders = allOrders;
                     //console.log(allOrders);
-                    progressbar.complete();
+                    //mkBlocker.unblockUI();
 
                 }
             });
@@ -85,8 +81,8 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
             // Assign courier
             $scope.assign = function(phone, number, courierName, courierPhone) {
                 // Loader bar
-                progressbar.start();
-                progressbar.setColor('#FFF');
+                mkBlocker.blockUI();
+
 
                 var newPhoneNumber = phone.substring(3);
                 OrderService.assignCourier(newPhoneNumber, number, courierName, courierPhone).success(function(response) {
@@ -107,7 +103,7 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                                             });
                                         }
                                     });
-                                    progressbar.complete();
+                                    //mkBlocker.unblockUI();
                                     // Pass values to scope
                                     $rootScope.allOrders = allOrders;
                                 }
@@ -121,8 +117,8 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
             // Delete order
             $scope.delete = function(phone, number) {
                 // Loader bar
-                progressbar.start();
-                progressbar.setColor('#FFF');
+                mkBlocker.blockUI();
+
 
                 var phoneNumber = phone.replace(/[^\w\s]/gi, '');
                 //console.log(phoneNumber, number);
@@ -143,14 +139,14 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                                             'order': order
                                         });
                                     });
-                                    progressbar.complete();
+                                    //mkBlocker.unblockUI();
                                     // Pass values to scope
                                     $rootScope.allOrders = allOrders;
                                 }
                             });
                         })
                     } else {
-                        progressbar.complete();
+                        //mkBlocker.unblockUI();
                         console.log('Failed refreshing order list!');
                     }
                 })
@@ -168,11 +164,11 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
 
 
 
-app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, OrderService, ngProgressFactory, $route) {
+app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, OrderService, mkBlocker, $route) {
     // Dynamic subtitle
     $('#logo-subtitle').text('Dispatch');
 
-    console.log($route.current.loadedTemplateUrl);
+
     if ($route.current.loadedTemplateUrl == 'pages/dispatch.html') {
         // Pusher notification /////////////////////
         var client = new Pusher('b7b402b4f6325e3561ed');
@@ -197,10 +193,10 @@ app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, Orde
     };
 
     // Loader bar
-    var progressbar = ngProgressFactory.createInstance();
-    progressbar.start();
-    progressbar.setColor('#FFF');
-    progressbar.setHeight('4px');
+
+    mkBlocker.blockUI();
+
+
 
     OrderService
         .getAllOrders()
@@ -222,7 +218,7 @@ app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, Orde
                     // Pass values to scope
                     $rootScope.allOrders = allOrders;
                     //console.log(allOrders);
-                    progressbar.complete();
+                    //mkBlocker.unblockUI();
 
                 }
             });
@@ -232,8 +228,8 @@ app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, Orde
             // Assign courier
             $scope.complete = function(phone, number) {
                 // Loader bar
-                progressbar.start();
-                progressbar.setColor('#FFF');
+                mkBlocker.blockUI();
+
 
                 var newPhoneNumber = phone.substring(3);
                 OrderService.setComplete(newPhoneNumber, number).success(function(response) {
@@ -254,7 +250,7 @@ app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, Orde
                                             });
                                         }
                                     });
-                                    progressbar.complete();
+                                    //mkBlocker.unblockUI();
                                     // Pass values to scope
                                     $rootScope.allOrders = allOrders;
                                 }
@@ -275,11 +271,11 @@ app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, Orde
 });
 
 
-app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, OrderService, ngProgressFactory, $route) {
+app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, OrderService, mkBlocker, $route) {
     // Dynamic subtitle
     $('#logo-subtitle').text('Summary');
 
-    console.log($route.current.loadedTemplateUrl);
+
     if ($route.current.loadedTemplateUrl == 'pages/complete.html') {
         // Pusher notification /////////////////////
         var client = new Pusher('b7b402b4f6325e3561ed');
@@ -310,7 +306,7 @@ app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, O
                                     });
                                 }
                             });
-                            progressbar.complete();
+                            //mkBlocker.unblockUI();
                             // Pass values to scope
                             $rootScope.allOrders = allOrders;
                         }
@@ -327,10 +323,10 @@ app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, O
 
 
     // Loader bar
-    var progressbar = ngProgressFactory.createInstance();
-    progressbar.start();
-    progressbar.setColor('#FFF');
-    progressbar.setHeight('4px');
+
+    mkBlocker.blockUI();
+
+
 
     OrderService
         .getAllOrders()
@@ -352,7 +348,7 @@ app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, O
                     // Pass values to scope
                     $rootScope.allOrders = allOrders;
                     //console.log(allOrders);
-                    progressbar.complete();
+                    //mkBlocker.unblockUI();
 
                 }
             });
@@ -360,8 +356,8 @@ app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, O
             // Delete order
             $scope.delete = function(phone, number) {
                 // Loader bar
-                progressbar.start();
-                progressbar.setColor('#FFF');
+                mkBlocker.blockUI();
+
 
                 var phoneNumber = phone.replace(/[^\w\s]/gi, '');
                 //console.log(phoneNumber, number);
@@ -384,14 +380,14 @@ app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, O
                                             });
                                         }
                                     });
-                                    progressbar.complete();
+                                    //mkBlocker.unblockUI();
                                     // Pass values to scope
                                     $rootScope.allOrders = allOrders;
                                 }
                             });
                         })
                     } else {
-                        progressbar.complete();
+                        //mkBlocker.unblockUI();
                         console.log('Failed refreshing order list!');
                     }
                 })
@@ -406,11 +402,11 @@ app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, O
 });
 
 
-app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher, WaitingListService, ngProgressFactory, $route) {
+app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher, WaitingListService, mkBlocker, $route) {
     // Dynamic subtitle
     $('#logo-subtitle').text('Waiting List');
 
-    console.log($route.current.loadedTemplateUrl);
+
     if ($route.current.loadedTemplateUrl == 'pages/waiting_list.html') {
         // Pusher notification /////////////////////
         var client = new Pusher('b7b402b4f6325e3561ed');
@@ -428,10 +424,10 @@ app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher,
     }
 
     // Loader bar
-    var progressbar = ngProgressFactory.createInstance();
-    progressbar.start();
-    progressbar.setColor('#FFF');
-    progressbar.setHeight('4px');
+
+    mkBlocker.blockUI();
+
+
 
     WaitingListService
         .getAllList()
@@ -443,13 +439,11 @@ app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher,
                 $rootScope.allList = data.message;
             }
 
-            console.log($rootScope.allList);
-
             // Delete order
             $scope.delete = function(phone) {
                 // Loader bar
-                progressbar.start();
-                progressbar.setColor('#FFF');
+                mkBlocker.blockUI();
+
 
                 var phoneNumber = phone.replace(/[^\w\s]/gi, '');
 
@@ -465,10 +459,10 @@ app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher,
                                 $rootScope.allList = data.message;
                             }
 
-                            progressbar.complete();
+                            //mkBlocker.unblockUI();
                         })
                     } else {
-                        progressbar.complete();
+                        //mkBlocker.unblockUI();
                         console.log('Failed refreshing waiting list!');
                     }
                 })
@@ -480,4 +474,196 @@ app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher,
                 $window.location.reload();
             }
         })
+});
+
+
+app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher, mkBlocker, $route, MenuUpdaterService, $http) {
+    // Dynamic subtitle
+    $('#logo-subtitle').text('Menu Updater');
+
+    // Size dropdown datas
+    $scope.sizes = [{
+        id: 1,
+        label: 'SMALL',
+        name: 'small'
+    }, {
+        id: 2,
+        label: 'REGULAR',
+        name: 'regular'
+    }, {
+        id: 3,
+        label: 'LARGE',
+        name: 'large'
+    }];
+
+    // Crust dropdown datas
+    $scope.crusts = [{
+        id: 1,
+        label: 'THIN',
+        name: 'thin'
+    }, {
+        id: 2,
+        label: 'THICK',
+        name: 'thick'
+    }, {
+        id: 3,
+        label: 'MEDIUM',
+        name: 'medium'
+    }, {
+        id: 4,
+        label: 'SOFT',
+        name: 'soft'
+    }, {
+        id: 5,
+        label: 'CRACKER',
+        name: 'cracker'
+    }];
+
+    // Ingredients dropdown datas
+    $scope.ingredients = [{
+        id: 1,
+        label: 'ONIONS',
+        name: 'onions'
+    }, {
+        id: 2,
+        label: 'PARSLEY',
+        name: 'parsley'
+    }, {
+        id: 3,
+        label: 'SALAMI',
+        name: 'salami'
+    }, {
+        id: 4,
+        label: 'TOMATOES',
+        name: 'tomatoes'
+    }, {
+        id: 5,
+        label: 'TUNA',
+        name: 'tuna'
+    }, {
+        id: 6,
+        label: 'BBQ SAUCE',
+        name: 'bbq_sauce'
+    }, {
+        id: 7,
+        label: 'BLACK OLIVE',
+        name: 'black_olive'
+    }, {
+        id: 8,
+        label: 'GARLIC CLOVES',
+        name: 'garlic_cloves'
+    }, {
+        id: 9,
+        label: 'MOZARELLA CHEESE',
+        name: 'mozarella_cheese'
+    }, {
+        id: 10,
+        label: 'OREGANO',
+        name: 'oregano'
+    }, {
+        id: 11,
+        label: 'PINEAPPLE',
+        name: 'pineapple'
+    }, {
+        id: 12,
+        label: 'CORN',
+        name: 'corn'
+    }, {
+        id: 13,
+        label: 'HAM',
+        name: 'ham'
+    }, {
+        id: 14,
+        label: 'JALAPENO',
+        name: 'jalapeno'
+    }];
+
+    MenuUpdaterService.getMenu().success(function(response) {
+        var ver = 0,
+            rel = '',
+            data = [],
+            num = 0;
+
+        var status = response.status;
+        if (status == true) {
+            ver = response.message.version;
+            rel = response.message.release;
+            data = response.message.data;
+            num = data.length;
+        }
+
+        $scope.version = ver;
+        $scope.release = rel;
+        $scope.data = data;
+        $scope.num = num;
+
+        $scope.$on("cropme:loaded", function(ev, width, height, cropmeEl) {
+            if (width == 800 && height == 1300) {
+                // Do nothing
+                // Refer to $scope.processForm
+            } else {
+                $scope.$broadcast("cropme:cancel");
+                Materialize.toast('Image size must be 800 X 1300 in dimensions', 5000);
+            }
+        });
+
+        // File upload handler
+        $scope.upload = function(file) {
+            Upload.upload({
+                url: 'upload/url',
+                data: {
+                    file: file
+                }
+            }).then(function(resp) {
+                console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+            }, function(resp) {
+                console.log('Error status: ' + resp.status);
+            }, function(evt) {
+                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+            });
+        };
+
+    })
+
+    $scope.processForm = function(pizza) {
+
+        // Get uploaded image state
+        var imageData = $("cropme").find('.responsive-img').attr('ng-src');
+        if (imageData == undefined || !imageData) {
+            var image = undefined;
+        } else {
+            var image = $("cropme").find('.responsive-img').attr('src');
+        }
+
+        // Handle image submission
+        $scope.$broadcast("cropme:ok");
+        $scope.$on("cropme:done", function(ev, result, cropmeEl) {
+            // get upload link
+            var url = MenuUpdaterService.getUploadLink();
+            // Handle the form submission...
+            master = angular.copy(pizza);
+            if (master == undefined) {
+                Materialize.toast('Empty field!', 5000);
+            } else {
+                datas = {
+                    name: master.name,
+                    sizes: master.size,
+                    crusts: master.crust,
+                    ingredients: master.ingredient,
+                    description: master.description,
+                    price: master.price,
+                    image: image
+                };
+                console.log(datas);
+                // send to server
+                $http.post(url, datas).then(function(res) {
+                    console.log(res);
+                });
+            };
+        });
+
+
+    };
+
 });

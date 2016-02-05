@@ -1,0 +1,40 @@
+{
+  "name": "evtrs-loader-directive",
+  "version": "0.0.3",
+  "main": [
+    "dist/angular-loader.js"
+  ],
+  "description": "CSS animated loader directive",
+  "keywords": [
+    "Angular",
+    "CSS Animation",
+    "loader"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "index.html",
+    "demo",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": ">1.2.0"
+  },
+  "devDependencies": {
+    "angular-mocks": ">1.2.0"
+  },
+  "homepage": "https://github.com/eventures-io/angular-loader-directive",
+  "_release": "0.0.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.3",
+    "commit": "371a1a089df8faddfc048fc8016ac0c76d6d199a"
+  },
+  "_source": "git://github.com/eventures-io/angular-loader-directive.git",
+  "_target": "^0.0.3",
+  "_originalSource": "angular-loader-directive",
+  "_direct": true
+}

@@ -6,21 +6,26 @@
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="bower_components/Materialize/dist/css/materialize.min.css" media="screen,projection" />
+    <link rel="stylesheet" href="bower_components/oi.select/dist/select.min.css">
+    <link rel="stylesheet" href="bower_components/cropme/cropme.css">
+    <link href="bower_components/angular-loader-directive/dist/styles/loader.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="src/style/style.css">
-    <link rel="stylesheet" href="bower_components/ngprogress/ngprogress.css">
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
 <body ng-app="SliceDashApp" ng-cloak>
+    <!-- Page loader -->
+    <div loader="animation_name"></div>
     <!--Navigation Bar-->
     <div class="navbar-fixed">
         <nav>
             <div class="nav-wrapper">
                 <span class="brand-logo center" class="vertical-align:center;"><img src="img/logo.png" style="width:120px;padding-top:15px;"/> <span id="logo-subtitle"></span></span>
-                <ul class="right hide-on-med-and-down">
+                <ul class="right">
                     <li><a href="#"><i class="material-icons">home</i></a></li>
                     <li><a href="#list"><i class="material-icons">view_list</i></a></li>
+                    <li><a href="#updater"><i class="material-icons">build</i></a></li>
                 </ul>
                 <!-- Search form -->
                 <!--<form>
@@ -40,19 +45,30 @@
     </div>
     <!-- Angular Libraries -->
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="src/angular-locale_id.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-route.min.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-superswipe/superswipe.js"></script>
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <!-- Plugin Library -->
     <script src="bower_components/Materialize/dist/js/materialize.min.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/angular-moment/angular-moment.js"></script>
-    <script src="bower_components/ngprogress/build/ngprogress.min.js"></script>
+    <script src="bower_components/mk-bloker/js/mk-blocker.js"></script>
+    <script src="bower_components/angular-dynforms/dynamic-forms.js"></script>
+    <script src="bower_components/oi.select/dist/select-tpls.min.js"></script>
+    <script src="bower_components/angular-multi-check/dist/multi-check.js"></script>
+    <script src="bower_components/cropme/cropme.js"></script>
+    <script src="bower_components/angular-loader-directive/dist/angular-loader.min.js"></script>
+    <script src="bower_components/angular-input-masks/angular-input-masks-standalone.min.js"></script>
+    <!-- Google Recaptcha -->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     <!-- Pusher integration -->
-    <!-- pusher-js -->
     <script src="//js.pusher.com/3.0/pusher.min.js"></script>
     <!-- pusher-angular -->
     <script src="//cdn.jsdelivr.net/angular.pusher/latest/pusher-angular.min.js"></script>

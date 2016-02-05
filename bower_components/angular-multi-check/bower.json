@@ -1,0 +1,24 @@
+{
+  "name": "angular-multi-check",
+  "version": "0.6.0",
+  "homepage": "https://github.com/ndxbxrme/angular-multi-check",
+  "authors": [
+    "ndxbxrme <lewis_the_cat@hotmail.com>"
+  ],
+  "description": "An angular multi-checkbox directive",
+  "main": "dist/multi-check.js",
+  "keywords": [
+    "angular",
+    "checkbox",
+    "multi",
+    "directive"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
