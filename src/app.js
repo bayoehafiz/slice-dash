@@ -1,9 +1,9 @@
-var app = angular.module('SliceDashApp', ['ngRoute', 'angularMoment', 'mkBlock', 'pusher-angular', 'oi.select', 'cropme', 'multi-check', 'ui.utils.masks']);
+var app = angular.module('SliceDashApp', ['ngRoute', 'angularMoment', 'mkBlock', 'pusher-angular', 'oi.select', 'cropme', 'multi-check', 'ui.utils.masks', 'ngStorage']);
 
 app.config(function($routeProvider) {
     $routeProvider
     // route for the driver section
-        .when('/dispatched', {
+    .when('/dispatched', {
         templateUrl: 'pages/dispatch.html',
         controller: 'DriverCtrl'
     })
@@ -12,6 +12,12 @@ app.config(function($routeProvider) {
     .when('/completed', {
         templateUrl: 'pages/complete.html',
         controller: 'CompletedCtrl'
+    })
+
+    // route for the user section
+    .when('/user', {
+        templateUrl: 'pages/user.html',
+        controller: 'UserCtrl'
     })
 
     // route for the waiting-list section
@@ -24,11 +30,6 @@ app.config(function($routeProvider) {
     .when('/updater', {
         templateUrl: 'pages/menu_updater.html',
         controller: 'MenuUpdaterCtrl'
-    })
-
-    .when('/add', {
-        templateUrl: 'pages/add_pizza.html',
-        controller: 'AddPizzaCtrl'
     })
 
     .otherwise({

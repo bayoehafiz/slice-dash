@@ -1,33 +1,118 @@
-<div class="col s12 m12 l12">
-    <div class="col s6 m6 l6">
-        <h4><span class="grey-text">Current Version:</span>  {{ version }}</h4>
-        <h5><span class="grey-text">Pizza Items:</span> {{ num }}</h5>
-        <h5><span class="grey-text" ng-if="release != ''">Released:</span> {{ release }}</h5>
+<!--<div class="col s6 m6 l6">
+        <h4><span class="grey-text">Published Ver:</span>  {{ publishedVer }} <small><span class="grey-text"> (Released on {{ releasedDate }})</span></small></h4>
+        <h5><span class="grey-text">Current Ver:</span> {{ currentVer }}</h5>
     </div>
     <div class="col s6 m6 l6 right-align" style="padding-top:10px;">
-        <a class="waves-effect waves-light btn teal darken-1" href="#add"><i class="material-icons left">add_circle</i>Add Pizza Item</a>
-        <a class="waves-effect waves-light btn grey darken-1">Update Menu<i class="material-icons right">cloud_upload</i></a>
-    </div>
-    <div class="col s12 m12 l12">
-        <div class="row">
-            <div class="card col s12 m4 l3" ng-repeat="item in data" ng-show="num > 0">
+        <a class="waves-effect waves-light btn teal darken-1" href="" ng-click="release()">Release this Menu<i class="material-icons right">cloud_upload</i></a>
+    </div>-->
+<div class="col s12 m12 l12">
+    <div class="row">
+        <div class="col s12 m6 l4" ng-repeat="item in menu" ng-if="menu.length > 0">
+            <div class="card hoverable">
                 <div class="card-image waves-effect waves-block waves-light">
-                    <img class="activator" />
+                    <img class="activator responsive" src="{{item.image}}" />
+                    <span class="card-title"><strong>{{item.name}}</strong></span>
                 </div>
                 <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                    <p><a href="#">This is a link</a></p>
+                    <a href=""><i class="material-icons grey-text right">mode_edit</i></a>
+                    <p class="flow-text">
+                        <span class="grey-text"><small>Selling Price</small></span>
+                        <strong>{{item.price | currency:'IDR ':0}}</strong><br/>
+                        <span class="grey-text"><small>Status</small></span>
+                        <span class="teal-text" ng-if="item.published == true">PUBLISHED</span>
+                        <span class="red-text text-darken-2" ng-if="item.published == false">UNPUBLISHED</span>
+                    </p>
                 </div>
                 <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                </div>
-            </div>
-            <div class="col s12 m12 l12" ng-repeat="item in data" ng-show="num == 0">
-                <div class="card-content">
-                    <p class="grey-text text-darken-4">No item found in database</p>
+                    <span class="card-title grey-text text-darken-4">{{item.name}}<i class="material-icons right">close</i></span>
+                    <p>{{item.description}}</p>
+                    <ul class="collection with-header">
+                        <li class="collection-header">
+                            <h5>Ingredients</h5></li>
+                        <li class="collection-item" ng-repeat="ingredient in item.ingredients"><i class="material-icons teal-text left">check</i>{{ingredient.label}}</li>
+                    </ul>
+                    <ul class="collection with-header">
+                        <li class="collection-header">
+                            <h5>Crust Types</h5></li>
+                        <li class="collection-item" ng-repeat="crust in item.crusts"><i class="material-icons teal-text left">check</i>{{crust.label}}</li>
+                    </ul>
+                    <ul class="collection with-header">
+                        <li class="collection-header">
+                            <h5>Available Size</h5></li>
+                        <li class="collection-item" ng-repeat="size in item.sizes"><i class="material-icons teal-text left">check</i>{{size | uppercase}}</li>
+                    </ul>
                 </div>
             </div>
         </div>
+        <div class="col s12 m12 l12" ng-if="menu.length < 1">
+            <div class="card-content valign-wrapper">
+                <p class="grey-text text-darken-4 valign">No item found in database</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Floating button-->
+<div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large yellow darken-2 modal-trigger" href="" ng-click="openModal()"><i class="material-icons">add</i></a>
+</div>
+<!-- Add Pizza Modal -->
+<div id="add-item-modal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4 class="grey-text">Add New Pizza</h4>
+        <form novalidate>
+            <div class="row">
+                <!-- Left pane -->
+                <div class="row">
+                    <div class="input-field col s7">
+                        <input id="name" type="text" ng-model="pizza.name" style="font-size:2rem;" capitalize-first>
+                        <label for="name">NAME</label>
+                    </div>
+                    <div class="input-field col s5">
+                        <input id="price" type="text" class="validate" ng-model="pizza.price" style="font-size:2rem;" ui-money-mask="0">
+                        <label for="price">PRICE</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="description" class="materialize-textarea" length="500" ng-model="pizza.description" style="font-size:1.5rem;"></textarea>
+                        <label for="description">ITEM DESCRIPTION</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6" style="padding-left: 0;">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <div class="grey-text" style="padding-bottom:10px">CRUSTS <i class="material-icons tooltipped right" data-position="top" data-delay="50" data-tooltip="Multiple crusts are available. Click on crust name to remove.">help</i></div>
+                                <oi-select id="crust" oi-options="item.label for item in crusts track by item.id" ng-model="pizza.crust" multiple placeholder="Click to add crust" oi-select-options="{closeList: false, maxlength: 0}" required></oi-select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <div class="grey-text" style="padding-bottom:10px">INGREDIENTS <i class="material-icons tooltipped right" data-position="top" data-delay="50" data-tooltip="Multiple ingredients are available. Click on ingredient name to remove.">help</i></div>
+                                <oi-select id="ingredient" oi-options="item.label for item in ingredients track by item.id" ng-model="pizza.ingredient" multiple placeholder="Click to add ingredient" oi-select-options="{closeList: false, maxlength: 0}" required></oi-select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <div class="grey-text">AVAILABLE SIZES</div>
+                                <multi-check ng-model="pizza.size" style="font-size:1.2rem;">
+                                    <multi-check-item ng-repeat="size in sizes" value="{{size.name}}">{{size.label}}</multi-check-item>
+                                </multi-check>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-field col s6">
+                        <div class="grey-text" style="padding-bottom:10px;">IMAGE<i class="material-icons tooltipped right" data-position="top" data-delay="50" data-tooltip="Pizza image ratio must be 0.62:1. Recommended size is 800x1300. To remove, hit on Remove button">help</i></div>
+                        <cropme width="100%" height="240" ratio="0.62:1" type="png" destination-width="800" destination-width="1300" cancel-label="Remove">
+                        </cropme>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <span class="red-text text-darken-2 left" ng-bind="errorMsg"></span>
+        <a href="" class="waves-effect waves-green btn-flat" ng-click="save(pizza)">Save</a>
+        <a href="" class="modal-action modal-close btn-flat" ng-click="closeModal()">Cancel</a>
     </div>
 </div>

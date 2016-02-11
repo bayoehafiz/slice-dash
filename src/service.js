@@ -29,6 +29,20 @@ app.factory("OrderService", ['$http', function($http) {
     return obj;
 }]);
 
+app.factory("UserService", ['$http', function($http) {
+    var obj = {};
+
+    obj.getAllUsers = function(param) {
+        return $http.get('http://node.colorblindlabs.com:8080/api/users?sort=' + param);
+    }
+
+    obj.deleteUser = function(uid) {
+        return $http.get('http://node.colorblindlabs.com:8080/api/users/delete?uid=' + uid);
+    }
+
+    return obj;
+}]);
+
 app.factory("WaitingListService", ['$http', function($http) {
     var obj = {};
 
@@ -52,7 +66,8 @@ app.factory("MenuUpdaterService", ['$http', function($http) {
     }
 
     obj.getUploadLink = function() {
-        return 'http://node.colorblindlabs.com:8080/admin/menu';
+        return 'http://node.colorblindlabs.com:8080/admin/menu/add';
+        //return 'http://localhost:8080/admin/menu/add';
     }
 
     return obj;

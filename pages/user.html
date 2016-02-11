@@ -1,0 +1,178 @@
+<div class="col s12 m12 l12" ng-show="allUsers.length > 0">
+    <div class="row" style="margin-bottom:0px;margin-top:5px;">
+        <div class="col s12 m12 l12 flow-text center">
+            <span class="teal-text title"><strong>Verified:</strong></span> {{ verNum }} user<span ng-if="verNum > 1">s</span>
+            <span class="grey-text"> / </span>
+            <span class="yellow-text text-darken-2 title"><strong>Unverified:</strong></span> {{ unverNUm }} user<span ng-if="unverNum > 1">s</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m6 l4" ng-repeat="user in allUsers">
+            <a href="" ng-click="openDetails(user._id)" class="modal-trigger">
+                <div id="{{user.phone_no}}" class="card grey darken-1 hoverable">
+                    <div class="card-content white-text">
+                        <span class="card-title"><strong>{{user.fname | uppercase}} {{user.lname | uppercase}}</strong></span>
+                        <span class="badge teal-text text-lighten-3" ng-if="user.status == true">
+                        <i class="material-icons">verified_user</i>
+                    </span>
+                        <span class="badge yellow-text" ng-if="user.status == false">
+                        <i class="material-icons">error</i>
+                    </span>
+                        <p><span class="grey-text">UID</span> {{user._id}}</p>
+                        <p><span class="grey-text">Phone</span> {{user.phone_no}}</p>
+                        <p><span class="grey-text">Registered</span> {{user.date | date:"dd MMM yyyy"}}</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="" ng-click="delete(user._id)" class="grey-text right"><i class="material-icons right">delete</i></a>
+                    </div>
+                    <!-- Details Modal -->
+                    <div id="details_{{user._id}}" class="modal modal-fixed-footer">
+                        <div class="modal-content">
+                            <h4>
+                                {{user.fname | uppercase}} {{user.lname | uppercase}}
+                                <small>
+                                    <span class="teal-text right" ng-if="user.status == true">VERIFIED</span>
+                                    <span class="yellow-text darken-3 right" ng-if="user.status == false">UNVERIFIED</span>
+                                </small>
+                            </h4>
+                            <ul class="collapsible popout" data-collapsible="accordion">
+                                <!-- User's info section -->
+                                <li>
+                                    <div class="collapsible-header active"><i class="material-icons">person_pin</i>USER INFO</div>
+                                    <div class="collapsible-body">
+                                        <p class="flow-text">
+                                            <span class="grey-text"><small>UID</small></span> {{user._id}}
+                                            <br/>
+                                            <span class="grey-text"><small>Phone</small></span> {{user.phone_no}}
+                                            <br/>
+                                            <span class="grey-text"><small>Reg Date</small></span> {{user.date | date:"dd MMM yyyy"}}
+                                            <br/>
+                                            <span class="grey-text"><small>Reg Time</small></span> {{user.date | date:"HH:mm"}}
+                                            <br/>
+                                            <span class="grey-text"><small>Reg Code</small></span> {{user.code}}
+                                            <br/>
+                                        </p>
+                                    </div>
+                                </li>
+                                <!-- User's orders section -->
+                                <li ng-if="user.status == true && user.orders.length > 0">
+                                    <div class="collapsible-header"><i class="material-icons">local_pizza</i>ORDERS
+                                        <span class="right grey-text" ng-if="user.orders.length < 2">{{user.orders.length}} order</span>
+                                        <span class="right grey-text" ng-if="user.orders.length > 1">{{user.orders.length}} orders</span>
+                                    </div>
+                                    <div class="collapsible-body">
+                                        <ul class="collapsible" data-collapsible="accordion" style="border-top:0;border-right:0;border-left:0;margin:0;">
+                                            <li ng-repeat="order in user.orders | orderBy:'-date'">
+                                                <div class="collapsible-header"># <strong>{{order.number}} </strong>
+                                                    <span class="right teal-text" ng-if="order.delivery.status == 'completed'"><span am-time-ago="order.date"></span></span>
+                                                    <span class="right yellow-text text-darken-3" ng-if="order.delivery.status == 'dispatched'"><span am-time-ago="order.date"></span></span>
+                                                    <span class="right red-text text-darken-3" ng-if="order.delivery.status == 'processed'"><span am-time-ago="order.date"></span></span>
+                                                </div>
+                                                <div class="collapsible-body">
+                                                    <blockquote ng-repeat="pizza in order.pizza" style="margin-left: 20px;margin-right: 10px;">
+                                                        <h5>{{pizza.quantity}} x <strong>{{pizza.name | uppercase}}</strong></h5>
+                                                        <span class="grey-text">Size</span> {{pizza.size | uppercase}} <span class="grey-text"> / Crust</span> {{pizza.crust | uppercase}}
+                                                        <br/><span class="grey-text">Price</span> {{pizza.itemPrice | currency:'IDR ':0}}
+                                                        <br/>
+                                                        <span class="grey-text" ng-if="pizza.request"><i class="material-icons tiny">feedback</i></span><span ng-if="pizza.request"> {{pizza.request | uppercase}}</span>
+                                                    </blockquote>
+                                                    <p class="flow-text" style="padding-top: 0;">
+                                                        <span class="grey-text"><small>Total Order</small></span>
+                                                        <br/>{{order.total | currency:'IDR ':0}}
+                                                        <br/>
+                                                        <span class="grey-text"><small>Ordered Date</small></span>
+                                                        <br/>{{order.date | date:"dd MMM yyyy, HH:mm"}}
+                                                        <br/>
+                                                        <span class="grey-text"><small>Delivery Address</small><br/></span>{{order.delivery.drop_address}} {{order.delivery.drop_address_number}}
+                                                        <br/>
+                                                        <span ng-if="order.delivery.additional_address">{{order.delivery.additional_address}}<br/></span>
+                                                        <span class="grey-text"><small>Status</small></span>
+                                                        <br/>
+                                                        <span class="teal-text" ng-if="order.delivery.status == 'completed'">DELIVERED</span>
+                                                        <span class="yellow-text text-darken-3" ng-if="order.delivery.status == 'dispatched'">BEING DELIVERED</span>
+                                                        <span class="red-text text-darken-3" ng-if="order.delivery.status == 'processed'">BEING COOKED</span>
+                                                        <br/>
+                                                        <span class="grey-text" ng-if="order.delivery.status == 'dispatched' || order.delivery.status == 'completed'"><small>Dispatched at</small><br/></span>
+                                                        <span ng-if="order.delivery.status == 'dispatched' || order.delivery.status == 'completed'">{{order.delivery.courier.time | date: "dd MMM yyyy, HH:mm"}}<br/></span>
+                                                        <span class="grey-text" ng-if="order.delivery.status == 'completed'"><small>Delivered at</small><br/></span>
+                                                        <span ng-if="order.delivery.status == 'completed'">{{order.delivery.completed_time | date: "dd MMM yyyy, HH:mm"}}<br/></span>
+                                                        <span class="grey-text" ng-if="order.delivery.status == 'dispatched' || order.delivery.status == 'completed'"><small>Courier</small><br/></span>
+                                                        <span ng-if="order.delivery.status == 'dispatched' || order.delivery.status == 'completed'">{{order.delivery.courier.name}} ({{order.delivery.courier.phone}})</span>
+                                                    </p>
+                                                    <p class="action center">
+                                                        <a class="waves-effect waves-red btn-flat grey-text text-darken-1">Delete this order</a>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <!-- User's address section -->
+                                <li ng-if="user.status == true && user.address.length > 0">
+                                    <div class="collapsible-header"><i class="material-icons">location_on</i>ADDRESSES
+                                        <span class="right grey-text" ng-if="user.address.length < 2">{{user.address.length}} location</span>
+                                        <span class="right grey-text" ng-if="user.address.length > 1">{{user.address.length}} locations</span>
+                                    </div>
+                                    <div class="collapsible-body">
+                                        <ul class="collapsible" data-collapsible="accordion" style="border-top:0;border-right:0;border-left:0;margin:0;">
+                                            <li ng-repeat="address in user.address | orderBy:'uid'">
+                                                <div class="collapsible-header">{{$index + 1}}. <strong>{{address.address}}</strong></div>
+                                                <div class="collapsible-body">
+                                                    <p class="flow-text">
+                                                        <span class="grey-text"><small>ID </small></span>
+                                                        <br/> #{{address.uid}}
+                                                        <br/>
+                                                        <span class="grey-text"><small>Full Address</small></span>
+                                                        <br/> {{address.address}} {{address.number}}
+                                                        <br/>
+                                                        <span ng-if="address.addAddress"><span class="grey-text"><small>Additional Address / Direction</small></span>
+                                                        <br/>{{address.addAddress}}
+                                                        <br/>
+                                                        </span>
+                                                        <span class="grey-text"><small>Geolocation <a href="https://www.google.com/maps/preview/@{{address.latitude}},{{address.longitude}},10z" target="_blank"><i class="material-icons tiny">open_in_new</i></a></small></span>
+                                                        <br/>{{address.latitude}}, {{address.longitude}}
+                                                        <br/>
+                                                        <span class="grey-text"><small>Created</small></span>
+                                                        <br/>{{address.date | date:"dd MMM yyyy, HH:mm"}}
+                                                        <br/>
+                                                    </p>
+                                                    <p class="action center">
+                                                        <a class="waves-effect waves-red btn-flat red-text text-darken-3">Delete this address</a>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li ng-if="user.status == true && user.logs">
+                                    <div class="collapsible-header"><i class="material-icons">assignment</i>LOGS</div>
+                                    <div class="collapsible-body">
+                                        <p>Lorem ipsum dolor sit amet.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="" class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="closeDetails(user._id)">Close</a>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="col s12 m12 l12" ng-show="allUsers.length < 1">
+    <p class="flow-text center-align grey-text">There is no user yet...</p>
+</div>
+<!--Floating button-->
+<div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large yellow darken-2">
+        <i class="large material-icons">sort</i>
+    </a>
+    <ul>
+        <li><a class="btn-floating yellow darken-2" ng-click="refresh()"><i class="material-icons">refresh</i></a></li>
+        <li><a href="" ng-click="sort('name')" class="btn-floating grey darken-2"><i class="material-icons">spellcheck</i></a></li>
+        <li><a href="" ng-click="sort('date')" class="btn-floating grey darken-2"><i class="material-icons">date_range</i></a></li>
+        <li><a href="" ng-click="sort('phone')" class="btn-floating grey darken-2"><i class="material-icons">phone</i></a></li>
+    </ul>
+</div>
