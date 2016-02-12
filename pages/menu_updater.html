@@ -24,8 +24,8 @@
                         <a href="" ng-click="publish(item._id)"><i class="material-icons grey-text">autorenew</i></a>
                     </p>
                 </div>
-                <div class="card-action">
-                    <a href="" ng-click="delete(item._id)"><i class="material-icons grey-text right">delete</i></a>
+                <div class="card-action center">
+                    <a href="" ng-click="delete(item._id)"><i class="material-icons grey-text">delete</i></a>
                 </div>
                 <div class="card-reveal">
                     <span class="card-title grey-text text-darken-4">{{item.name}}<i class="material-icons right">close</i></span>
@@ -114,7 +114,7 @@
     </div>
     <div class="modal-footer">
         <span class="red-text text-darken-2 left" ng-bind="errorMsg"></span>
-        <a href="" class="waves-effect waves-green btn-flat" ng-click="save(pizza)">Save</a>
-        <a href="" class="modal-action modal-close btn-flat" ng-click="closeModal()">Cancel</a>
+        <a href="" class="modal-action modal-close btn-flat" ng-click="save(pizza)">Save</a>
+        <a href="" class="modal-action modal-close btn-flat">Cancel</a>
     </div>
 </div>
