@@ -27,6 +27,7 @@
     "pusher-angular": "~0.1.8",
     "angular-multi-check": "*",
     "oi.select": "^0.2.20",
-    "angular-input-masks": "^2.1.1"
+    "angular-input-masks": "^2.1.1",
+    "angular-block-ui": "^0.2.2"
   }
 }

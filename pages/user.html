@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col s12 m6 l4" ng-repeat="user in allUsers">
             <a href="" ng-click="openDetails(user._id)" class="modal-trigger">
-                <div id="{{user.phone_no}}" class="card grey darken-1 hoverable">
+                <div id="{{user.phone_no}}" class="card grey darken-1 hoverable" block-ui="userBlockUI"> 
                     <div class="card-content white-text">
                         <span class="card-title"><strong>{{user.fname | uppercase}} {{user.lname | uppercase}}</strong></span>
                         <span class="badge teal-text text-lighten-3" ng-if="user.status == true">
@@ -171,8 +171,8 @@
     </a>
     <ul>
         <li><a class="btn-floating yellow darken-2" ng-click="refresh()"><i class="material-icons">refresh</i></a></li>
-        <li><a href="" ng-click="sort('name')" class="btn-floating grey darken-2"><i class="material-icons">spellcheck</i></a></li>
-        <li><a href="" ng-click="sort('date')" class="btn-floating grey darken-2"><i class="material-icons">date_range</i></a></li>
-        <li><a href="" ng-click="sort('phone')" class="btn-floating grey darken-2"><i class="material-icons">phone</i></a></li>
+        <li><a href="" ng-click="sorting('name')" class="btn-floating teal"><i class="material-icons">spellcheck</i></a></li>
+        <li><a href="" ng-click="sorting('date')" class="btn-floating teal"><i class="material-icons">date_range</i></a></li>
+        <li><a href="" ng-click="sorting('phone')" class="btn-floating teal"><i class="material-icons">phone</i></a></li>
     </ul>
 </div>

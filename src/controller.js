@@ -1,56 +1,57 @@
-app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, OrderService, mkBlocker, $route) {
+app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, OrderService, mkBlocker, $route, blockUI) {
+    // preloader
+    blockUI.start();
+
     // Dynamic subtitle
     $('#logo-subtitle').text('KITCHEN');
 
-    // get current state
+    // Pusher notification /////////////////////
+    var client = new Pusher('b7b402b4f6325e3561ed');
+    var pusher = $pusher(client);
+    var my_channel = pusher.subscribe('test_channel');
+    my_channel.bind('my_event',
+        function(push_data) {
+            blockUI.start();
 
-    if ($route.current.loadedTemplateUrl == 'pages/kitchen.html') {
-        // Pusher notification /////////////////////
-        var client = new Pusher('b7b402b4f6325e3561ed');
-        var pusher = $pusher(client);
-        var my_channel = pusher.subscribe('test_channel');
-        my_channel.bind('my_event',
-            function(push_data) {
-                OrderService.getAllOrders().success(function(data) {
-                    // Collect all orders from all users
-                    var allOrders = [];
-                    angular.forEach(data, function(value) {
-                        if (value.orders.length > 0) {
-                            angular.forEach(value.orders, function(order) {
-                                if (order.delivery.status == 'processed') {
-                                    allOrders.push({
-                                        'phone': value.phone_no,
-                                        'customer': value.fname + ' ' + value.lname,
-                                        'delivery': value.delivery,
-                                        'order': order
-                                    });
-                                }
-                            });
-                            //mkBlocker.unblockUI();
-                            // Pass values to scope
-                            $rootScope.allOrders = allOrders;
-                        }
-                    });
-                })
+            OrderService.getAllOrders().success(function(data) {
+                // Collect all orders from all users
+                var allOrders = [];
+                angular.forEach(data, function(value) {
+                    if (value.orders.length > 0) {
+                        angular.forEach(value.orders, function(order) {
+                            if (order.delivery.status == 'processed') {
+                                allOrders.push({
+                                    'phone': value.phone_no,
+                                    'customer': value.fname + ' ' + value.lname,
+                                    'delivery': value.delivery,
+                                    'order': order
+                                });
+                            }
+                        });
+                        // Pass values to scope
+                        $rootScope.allOrders = allOrders;
 
-                // show tooltip
-                var $toastContent = $('<span>New Order! #' + push_data.message + '</span>');
-                Materialize.toast($toastContent, 5000, 'rounded');
-            }
-        );
+                    }
+                });
+            })
 
-        my_channel.bind('my_event_2', // when a driver set an order to completed
-            function(push_data) {
-                // show tooltip
-                var $toastContent = $('<span>Order #' + push_data.message + ' has been completed. Please check summary section</span>');
-                Materialize.toast($toastContent, 5000, 'rounded');
-            }
-        );
-        // eof pusher notification //////////////////
-    };
+            blockUI.stop();
 
+            // show tooltip
+            var $toastContent = $('<span>New Order! #' + push_data.message + '</span>');
+            Materialize.toast($toastContent, 5000, 'rounded');
+        }
+    );
 
-    mkBlocker.blockUI();
+    my_channel.bind('my_event_2', // when a driver set an order to completed
+        function(push_data) {
+            // show tooltip
+            var $toastContent = $('<span>Order #' + push_data.message + ' has been completed. Please check summary section</span>');
+            Materialize.toast($toastContent, 5000, 'rounded');
+        }
+    );
+    // eof pusher notification //////////////////
+
 
     OrderService
         .getAllOrders()
@@ -72,17 +73,16 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                     });
                     // Pass values to scope
                     $rootScope.allOrders = allOrders;
-                    //console.log(allOrders);
-                    //mkBlocker.unblockUI();
 
+                    // stop preloader
+                    blockUI.stop();
                 }
             });
 
             // Assign courier
             $scope.assign = function(phone, number, courierName, courierPhone) {
-                // Loader bar
-                mkBlocker.blockUI();
-
+                // Loader
+                blockUI.start();
 
                 var newPhoneNumber = phone.substring(3);
                 OrderService.assignCourier(newPhoneNumber, number, courierName, courierPhone).success(function(response) {
@@ -103,9 +103,11 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                                             });
                                         }
                                     });
-                                    //mkBlocker.unblockUI();
                                     // Pass values to scope
                                     $rootScope.allOrders = allOrders;
+
+                                    // stop loader
+                                    blockUI.stop();
                                 }
                             });
                         })
@@ -117,8 +119,7 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
             // Delete order
             $scope.delete = function(phone, number) {
                 // Loader bar
-                mkBlocker.blockUI();
-
+                blockUI.start();
 
                 var phoneNumber = phone.replace(/[^\w\s]/gi, '');
                 //console.log(phoneNumber, number);
@@ -139,14 +140,16 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                                             'order': order
                                         });
                                     });
-                                    //mkBlocker.unblockUI();
                                     // Pass values to scope
                                     $rootScope.allOrders = allOrders;
+
+                                    blockUI.stop();
                                 }
                             });
                         })
                     } else {
-                        //mkBlocker.unblockUI();
+                        blockUI.stop();
+
                         console.log('Failed refreshing order list!');
                     }
                 })
@@ -163,7 +166,10 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
 });
 
 
-app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, OrderService, mkBlocker, $route) {
+app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, OrderService, mkBlocker, $route, blockUI) {
+    // Loader bar
+    blockUI.start();
+
     // Dynamic subtitle
     $('#logo-subtitle').text('DISPATCH');
 
@@ -191,12 +197,6 @@ app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, Orde
         // eof pusher notification //////////////////
     };
 
-    // Loader bar
-
-    mkBlocker.blockUI();
-
-
-
     OrderService
         .getAllOrders()
         .success(function(data) {
@@ -217,18 +217,16 @@ app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, Orde
                     // Pass values to scope
                     $rootScope.allOrders = allOrders;
                     //console.log(allOrders);
-                    //mkBlocker.unblockUI();
 
+                    blockUI.stop();
                 }
             });
-
 
 
             // Assign courier
             $scope.complete = function(phone, number) {
                 // Loader bar
-                mkBlocker.blockUI();
-
+                blockUI.start();
 
                 var newPhoneNumber = phone.substring(3);
                 OrderService.setComplete(newPhoneNumber, number).success(function(response) {
@@ -249,9 +247,11 @@ app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, Orde
                                             });
                                         }
                                     });
-                                    //mkBlocker.unblockUI();
+
                                     // Pass values to scope
                                     $rootScope.allOrders = allOrders;
+
+                                    blockUI.stop();
                                 }
                             });
                         })
@@ -270,10 +270,12 @@ app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, Orde
 });
 
 
-app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, OrderService, mkBlocker, $route) {
+app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, OrderService, mkBlocker, $route, blockUI) {
+    // Loader bar
+    blockUI.start();
+
     // Dynamic subtitle
     $('#logo-subtitle').text('SUMMARY');
-
 
     if ($route.current.loadedTemplateUrl == 'pages/complete.html') {
         // Pusher notification /////////////////////
@@ -305,9 +307,10 @@ app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, O
                                     });
                                 }
                             });
-                            //mkBlocker.unblockUI();
                             // Pass values to scope
                             $rootScope.allOrders = allOrders;
+
+                            blockUI.stop();
                         }
                     });
                 })
@@ -319,13 +322,6 @@ app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, O
         );
         // eof pusher notification //////////////////
     }
-
-
-    // Loader bar
-
-    mkBlocker.blockUI();
-
-
 
     OrderService
         .getAllOrders()
@@ -347,15 +343,15 @@ app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, O
                     // Pass values to scope
                     $rootScope.allOrders = allOrders;
                     //console.log(allOrders);
-                    //mkBlocker.unblockUI();
 
+                    blockUI.stop();
                 }
             });
 
             // Delete order
             $scope.delete = function(phone, number) {
                 // Loader bar
-                mkBlocker.blockUI();
+                blockUI.start();
 
 
                 var phoneNumber = phone.replace(/[^\w\s]/gi, '');
@@ -379,14 +375,14 @@ app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, O
                                             });
                                         }
                                     });
-                                    //mkBlocker.unblockUI();
+                                    blockUI.stop();
                                     // Pass values to scope
                                     $rootScope.allOrders = allOrders;
                                 }
                             });
                         })
                     } else {
-                        //mkBlocker.unblockUI();
+                        blockUI.stop();
                         console.log('Failed refreshing order list!');
                     }
                 })
@@ -401,7 +397,9 @@ app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, O
 });
 
 
-app.controller('UserCtrl', function($window, $scope, $rootScope, $pusher, UserService, mkBlocker, $route, $localStorage) {
+app.controller('UserCtrl', function($window, $scope, $rootScope, $pusher, UserService, mkBlocker, $route, $localStorage, blockUI) {
+    blockUI.start();
+
     // Dynamic subtitle
     $('#logo-subtitle').text('USER MANAGER');
 
@@ -433,14 +431,20 @@ app.controller('UserCtrl', function($window, $scope, $rootScope, $pusher, UserSe
             };
 
             // Sort user list
-            $scope.sort = function(param) {
+            $scope.sorting = function(param) {
+                blockUI.start();
+
                 UserService.getAllUsers(param).success(function(result) {
                     $rootScope.allUsers = result;
+
+                    blockUI.stop();
                 })
             };
 
             // Delete user
             $scope.delete = function(uid) {
+                blockUI.start();
+
                 UserService.deleteUser(uid).success(function(response) {
                     var status = response.success;
                     if (status == true) {
@@ -450,8 +454,11 @@ app.controller('UserCtrl', function($window, $scope, $rootScope, $pusher, UserSe
                         })
                     }
 
+                    blockUI.stop();
+
                     Materialize.toast(response.message, 5000);
                 })
+
             };
 
             // Open details modal
@@ -475,10 +482,12 @@ app.controller('UserCtrl', function($window, $scope, $rootScope, $pusher, UserSe
                 $window.location.reload();
             }
         })
+
+    blockUI.stop();
 });
 
 
-app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher, WaitingListService, mkBlocker, $route) {
+app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher, WaitingListService, mkBlocker, $route, blockUI) {
     // Dynamic subtitle
     $('#logo-subtitle').text('WAITING LIST');
 
@@ -501,7 +510,7 @@ app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher,
 
     // Loader bar
 
-    mkBlocker.blockUI();
+    blockUI.start();
 
 
 
@@ -518,7 +527,7 @@ app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher,
             // Delete order
             $scope.delete = function(phone) {
                 // Loader bar
-                mkBlocker.blockUI();
+                blockUI.start();
 
 
                 var phoneNumber = phone.replace(/[^\w\s]/gi, '');
@@ -535,10 +544,10 @@ app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher,
                                 $rootScope.allList = data.message;
                             }
 
-                            //mkBlocker.unblockUI();
+                            blockUI.stop();
                         })
                     } else {
-                        //mkBlocker.unblockUI();
+                        blockUI.stop();
                         console.log('Failed refreshing waiting list!');
                     }
                 })
@@ -553,7 +562,7 @@ app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher,
 });
 
 
-app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher, mkBlocker, $route, MenuUpdaterService, $http) {
+app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher, mkBlocker, $route, MenuUpdaterService, $http, blockUI) {
     // Dynamic subtitle
     $('#logo-subtitle').text('MENU UPDATER');
 
