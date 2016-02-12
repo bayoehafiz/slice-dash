@@ -3,9 +3,9 @@
 
 <head>
     <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
     <link rel="stylesheet" href="bower_components/oi.select/dist/select.min.css">
     <link rel="stylesheet" href="bower_components/cropme/cropme.css">
     <link href="bower_components/angular-loader-directive/dist/styles/loader.css" rel="stylesheet">
@@ -16,13 +16,13 @@
 </head>
 
 <body ng-app="SliceDashApp" ng-cloak>
-    <!-- Page loader -->
-    <div loader="animation_name"></div>
     <!--Navigation Bar-->
     <div class="navbar-fixed">
         <nav>
             <div class="nav-wrapper">
-                <span class="brand-logo left" style="vertical-align:center;margin-left:10px;"><img src="img/logo.png" style="width:120px;padding-top:15px;"/></span>
+                <span class="brand-logo left" style="vertical-align:center;margin-left:10px;">
+                    <img src="img/logo.png" style="width:120px;padding-top:15px;"/>
+                </span>
                 <span id="logo-subtitle" class="brand-logo center hide-on-small-only"></span>
                 <!-- Mobile menu -->
                 <a href="#" data-activates="mobile-menu" class="button-collapse right hide-on-med-and-up" style="margin-right: 10px;"><i class="material-icons">menu</i></a>
@@ -56,19 +56,19 @@
         <div ng-view></div>
     </div>
     <!-- Angular Libraries -->
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="src/angular-locale_id.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-route.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-route.min.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-superswipe/superswipe.js"></script>
     <!--Import jQuery before materialize.js-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
     <!-- Plugin Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/angular-moment/angular-moment.js"></script>
     <script src="bower_components/mk-bloker/js/mk-blocker.js"></script>
@@ -80,16 +80,28 @@
     <script src="bower_components/angular-input-masks/angular-input-masks-standalone.min.js"></script>
     <script src="bower_components/ngstorage/ngStorage.min.js"></script>
     <script src="bower_components/angular-block-ui/dist/angular-block-ui.min.js"></script>
-    <!-- Google Recaptcha -->
-    <script src='https://www.google.com/recaptcha/api.js'></script>
-    <!-- Pusher integration -->
+    <script src='//www.google.com/recaptcha/api.js'></script>
     <script src="//js.pusher.com/3.0/pusher.min.js"></script>
-    <!-- pusher-angular -->
     <script src="//cdn.jsdelivr.net/angular.pusher/latest/pusher-angular.min.js"></script>
-    <!-- App's scripts -->
+    <!-- App's main script -->
     <script src="src/app.js"></script>
-    <script src="src/service.js"></script>
-    <script src="src/controller.js"></script>
+    <!-- App's directives -->
+    <script src="src/app/directives/capitalizeFirst.js"></script>
+    <script src="src/app/directives/mediaPreview.js"></script>
+    <!-- App's services -->
+    <script src="src/app/services/OrderService.js"></script>
+    <script src="src/app/services/UserService.js"></script>
+    <script src="src/app/services/MenuUpdaterService.js"></script>
+    <script src="src/app/services/WaitingListService.js"></script>
+    <script src="src/app/services/PusherService.js"></script>
+    <!-- App's controllers -->
+    <script src="src/app/controllers/KitchenCtrl.js"></script>
+    <script src="src/app/controllers/DriverCtrl.js"></script>
+    <script src="src/app/controllers/CompletedCtrl.js"></script>
+    <script src="src/app/controllers/UserCtrl.js"></script>
+    <script src="src/app/controllers/MenuUpdaterCtrl.js"></script>
+    <script src="src/app/controllers/WaitingListCtrl.js"></script>
+    <!-- DOM -->
     <script>
     $(document).ready(function() {
         $(".button-collapse").sideNav();

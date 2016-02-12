@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col s12 m6 l4" ng-repeat="user in allUsers">
             <a href="" ng-click="openDetails(user._id)" class="modal-trigger">
-                <div id="{{user.phone_no}}" class="card grey darken-1 hoverable" block-ui="userBlockUI"> 
+                <div id="{{user.phone_no}}" class="card grey darken-4 hoverable" block-ui="userBlockUI"> 
                     <div class="card-content white-text">
                         <span class="card-title"><strong>{{user.fname | uppercase}} {{user.lname | uppercase}}</strong></span>
                         <span class="badge teal-text text-lighten-3" ng-if="user.status == true">
@@ -153,7 +153,7 @@
                             </ul>
                         </div>
                         <div class="modal-footer">
-                            <a href="" class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="closeDetails(user._id)">Close</a>
+                            <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat" ng-click="closeDetails(user._id)">Close</a>
                         </div>
                     </div>
                 </div>
