@@ -1,8 +1,17 @@
-/* Basic styles */
+@font-face {
+    font-family: 'avenir_black';
+    src: url('../fonts/avenir/Avenir-Black.otf');
+}
 
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,500,300italic,500italic,700italic,900,300);
+@font-face {
+    font-family: 'avenir_medium';
+    src: url('../fonts/avenir/Avenir-Medium.otf');
+}
 
-/* -- Box model ------------------------------- */
+@font-face {
+    font-family: 'avenir_light';
+    src: url('../fonts/avenir/Avenir-Light.otf');
+}
 
 *,
 *:after,
@@ -25,7 +34,7 @@ html.text-small {
 }
 
 body {
-    font-family: "Roboto", 'Helvetica Neue, Helvetica, Arial';
+    font-family: 'avenir_light'!important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
