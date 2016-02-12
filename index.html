@@ -21,9 +21,18 @@
     <div class="navbar-fixed">
         <nav>
             <div class="nav-wrapper">
-                <span class="brand-logo" style="vertical-align:center;margin-left:10px;"><img src="img/logo.png" style="width:120px;padding-top:15px;"/></span>
-                <span id="logo-subtitle" class="brand-logo center"></span>
-                <ul class="right">
+                <span class="brand-logo left" style="vertical-align:center;margin-left:10px;"><img src="img/logo.png" style="width:120px;padding-top:15px;"/></span>
+                <span id="logo-subtitle" class="brand-logo center hide-on-small-only"></span>
+                <!-- Mobile menu -->
+                <a href="#" data-activates="mobile-menu" class="button-collapse right" style="margin-right: 10px;"><i class="material-icons">menu</i></a>
+                <ul class="side-nav" id="mobile-menu">
+                    <li><a href="#"><i class="material-icons left">local_pizza</i>KITCHEN</a></li>
+                    <li><a href="#user"><i class="material-icons left">people</i>USER MANAGER</a></li>
+                    <li><a href="#updater"><i class="material-icons left">system_update</i>MENU UPDATER</a></li>
+                    <li><a href="#list"><i class="material-icons left">recent_actors</i>WAITING LIST</a></li>
+                </ul>
+                <!-- Non mobile menu -->
+                <ul class="right hide-on-med-and-down">
                     <li><a href="#"><i class="material-icons">local_pizza</i></a></li>
                     <li><a href="#user"><i class="material-icons">people</i></a></li>
                     <li><a href="#updater"><i class="material-icons">system_update</i></a></li>
@@ -79,6 +88,11 @@
     <script src="src/app.js"></script>
     <script src="src/service.js"></script>
     <script src="src/controller.js"></script>
+    <script>
+    $(document).ready(function() {
+        $(".button-collapse").sideNav();
+    })
+    </script>
 </body>
 
 </html>
