@@ -12,18 +12,18 @@
                 <div id="{{user.phone_no}}" class="card grey darken-4 hoverable" block-ui="userBlockUI"> 
                     <div class="card-content white-text">
                         <span class="card-title"><strong>{{user.fname | uppercase}} {{user.lname | uppercase}}</strong></span>
-                        <span class="badge teal-text text-lighten-3" ng-if="user.status == true">
+                        <span class="badge teal-text text-lighten-1" ng-if="user.status == true">
                         <i class="material-icons">verified_user</i>
                     </span>
                         <span class="badge yellow-text" ng-if="user.status == false">
                         <i class="material-icons">error</i>
                     </span>
                         <p><span class="grey-text">UID</span> {{user._id}}</p>
-                        <p><span class="grey-text">Phone</span> {{user.phone_no}}</p>
-                        <p><span class="grey-text">Registered</span> {{user.date | date:"dd MMM yyyy"}}</p>
+                        <p><span class="grey-text">PHONE</span> {{user.phone_no}}</p>
+                        <p><span class="grey-text">REGISTERED</span> {{user.date | date:"dd MMM yyyy"}}</p>
                     </div>
                     <div class="card-action">
-                        <a href="" ng-click="delete(user._id)" class="grey-text right"><i class="material-icons right">delete</i></a>
+                        <a href="" ng-click="delete(user._id)"><i class="material-icons grey-text right">delete</i></a>
                     </div>
                     <!-- Details Modal -->
                     <div id="details_{{user._id}}" class="modal modal-fixed-footer">
@@ -166,13 +166,13 @@
 </div>
 <!--Floating button-->
 <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
-    <a class="btn-floating btn-large yellow darken-2">
+    <a class="btn-floating btn-large grey darken-4">
         <i class="large material-icons">sort</i>
     </a>
     <ul>
         <li><a class="btn-floating yellow darken-2" ng-click="refresh()"><i class="material-icons">refresh</i></a></li>
-        <li><a href="" ng-click="sorting('name')" class="btn-floating teal"><i class="material-icons">spellcheck</i></a></li>
-        <li><a href="" ng-click="sorting('date')" class="btn-floating teal"><i class="material-icons">date_range</i></a></li>
-        <li><a href="" ng-click="sorting('phone')" class="btn-floating teal"><i class="material-icons">phone</i></a></li>
+        <li><a href="" ng-click="sorting('name')" class="btn-floating grey darken-2"><i class="material-icons">spellcheck</i></a></li>
+        <li><a href="" ng-click="sorting('date')" class="btn-floating grey darken-2"><i class="material-icons">date_range</i></a></li>
+        <li><a href="" ng-click="sorting('phone')" class="btn-floating grey darken-2"><i class="material-icons">phone</i></a></li>
     </ul>
 </div>

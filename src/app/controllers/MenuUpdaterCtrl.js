@@ -7,10 +7,12 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
     MenuUpdaterService.getMenu().success(function(data) {
 
         if (data.success == true) {
-            $scope.menu = data.message;
+            $rootScope.menu = data.message;
         } else {
-            $scope.menu = [];
+            $rootScope.menu = [];
         }
+
+        blockUI.stop();
 
         $scope.pizza = {};
 
@@ -140,6 +142,8 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
             });
 
             $scope.save = function(pizza) {
+                blockUI.start();
+
                 // Get uploaded image state
                 var imageData = $("cropme").find('.responsive-img').attr('ng-src');
                 if (imageData == undefined || !imageData) {
@@ -158,18 +162,25 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
 
                 // Form Validation !!!
                 if (master.name == undefined) {
+                    blockUI.stop();
                     Materialize.toast('Please enter NAME!', 5000);
                 } else if (master.price == undefined) {
+                    blockUI.stop();
                     Materialize.toast('Please set PRICE!', 5000);
                 } else if (master.description == undefined) {
+                    blockUI.stop();
                     Materialize.toast('Please fill in DESCRIPTION!', 5000);
                 } else if (master.crust == undefined) {
+                    blockUI.stop();
                     Materialize.toast('You have to provide CRUSTS!', 5000);
                 } else if (master.ingredient == undefined) {
+                    blockUI.stop();
                     Materialize.toast('You have to provide INGREDIENTS!', 5000);
                 } else if (master.size == undefined) {
+                    blockUI.stop();
                     Materialize.toast('Please choose SIZES', 5000);
                 } else if (image == undefined) {
+                    blockUI.stop();
                     Materialize.toast('The pizza need an IMAGE!', 5000);
                 } else {
                     datas = {
@@ -185,33 +196,72 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
                     // send to server
                     $http.post(url, datas).then(function(response) {
                         if (response.success == true) {
-                            $('#add-item-modal').closeModal();
                             // reload items on menu
                             MenuUpdaterService.getMenu().success(function(data) {
-                                if (data.success == true) {
-                                    $scope.menu = data.message;
+                                if (data.message.length > 0) {
+                                    $rootScope.menu = data.message;
                                 } else {
-                                    $scope.menu = [];
+                                    $rootScope.menu = [];
                                 }
+                                $scope.closeModal();
+                                Materialize.toast(response.message, 5000);
+                                blockUI.stop();
                             })
+                        } else {
+                            Materialize.toast(response.message, 5000);
+                            blockUI.stop();
                         }
-                        Materialize.toast(response.message, 5000);
                     });
                 };
 
             };
         }
 
-        // release current menu
-        $scope.release = function() {
-            Materialize.toast("Releasing new menu update...", 5000);
+        // delete pizza item
+        $scope.delete = function(id) {
+            blockUI.start();
+            MenuUpdaterService.deletePizza(id).success(function(data) {
+                if (data.success == false) {
+                    Materialize.toast(data.message, 5000);
+                } else {
+                    // reload items on menu
+                    MenuUpdaterService.getMenu().success(function(data) {
+                        if (data.success == true) {
+                            $rootScope.menu = data.message;
+                        } else {
+                            $rootScope.menu = [];
+                        }
+                        Materialize.toast("Pizza item has successfully deleted.", 5000);
+                        blockUI.stop();
+                    })
+                }
+            })
+        }
+
+        // publish/un-publish pizza item
+        $scope.publish = function(id) {
+            blockUI.start();
+            MenuUpdaterService.publishPizza(id).success(function(response) {
+                if (response.success == false) {
+                    Materialize.toast(response.message, 5000);
+                } else {
+                    // reload items on menu
+                    MenuUpdaterService.getMenu().success(function(data) {
+                        if (data.success == true) {
+                            $rootScope.menu = data.message;
+                        } else {
+                            $rootScope.menu = [];
+                        }
+                        Materialize.toast(response.message, 5000);
+                        blockUI.stop();
+                    })
+                }
+            })
         }
 
         // close modal
-        $rootScope.closeModal = function(uid) {
+        $scope.closeModal = function() {
             $('#add-item-modal').closeModal();
         }
-    })
-
-    blockUI.stop();
+    });
 });

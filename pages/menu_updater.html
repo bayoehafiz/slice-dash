@@ -10,18 +10,22 @@
         <div class="col s12 m6 l3" ng-repeat="item in menu" ng-if="menu.length > 0">
             <div class="card hoverable">
                 <div class="card-image waves-effect waves-block waves-light">
-                    <img class="activator responsive" src="{{item.image}}" />
+                    <img class="responsive activator" src="{{item.image}}" />
                     <span class="card-title"><strong>{{item.name}}</strong></span>
                 </div>
                 <div class="card-content">
-                    <a href=""><i class="material-icons grey-text right">mode_edit</i></a>
                     <p class="flow-text">
-                        <span class="grey-text"><small>Selling Price</small></span>
-                        <strong>{{item.price | currency:'IDR ':0}}</strong><br/>
+                        <span class="grey-text"><small>Price</small></span>
+                        <strong>{{item.price | currency:'IDR ':0}}</strong>
+                        <br/>
                         <span class="grey-text"><small>Status</small></span>
                         <span class="teal-text" ng-if="item.published == true">Published</span>
                         <span class="red-text text-darken-2" ng-if="item.published == false">Unpublished</span>
+                        <a href="" ng-click="publish(item._id)"><i class="material-icons grey-text">autorenew</i></a>
                     </p>
+                </div>
+                <div class="card-action">
+                    <a href="" ng-click="delete(item._id)"><i class="material-icons grey-text right">delete</i></a>
                 </div>
                 <div class="card-reveal">
                     <span class="card-title grey-text text-darken-4">{{item.name}}<i class="material-icons right">close</i></span>
@@ -45,15 +49,13 @@
             </div>
         </div>
         <div class="col s12 m12 l12" ng-if="menu.length < 1">
-            <div class="card-content valign-wrapper">
-                <p class="grey-text text-darken-4 valign">No item found in database</p>
-            </div>
+            <p class="flow-text center-align grey-text">There is no item yet...</p>
         </div>
     </div>
 </div>
 <!--Floating button-->
 <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
-    <a class="btn-floating btn-large yellow darken-2 modal-trigger" href="" ng-click="openModal()"><i class="material-icons">add</i></a>
+    <a class="btn-floating btn-large grey darken-4 modal-trigger" href="" ng-click="openModal()"><i class="material-icons">add</i></a>
 </div>
 <!-- Add Pizza Modal -->
 <div id="add-item-modal" class="modal modal-fixed-footer">
