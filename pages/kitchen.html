@@ -49,9 +49,9 @@
                 <h4><small>IDR </small> {{item.order.total | currency:'':0}}</h4>
             </div>
         </div>
-        <div class="card-action center-align row">
-            <a class="waves-effect waves-light btn grey" ng-click="delete(item.phone, item.order.number)"><i class="material-icons left">delete</i>delete</a>
-            <a class="activator waves-effect waves-light btn"><i class="material-icons right">local_shipping</i>dispatch</a>
+        <div class="card-action row center">
+                <a class="waves-effect waves-light btn-flat grey-text" ng-click="delete(item.phone, item.order.number)">DELETE</a>
+                <a class="activator waves-effect btn-flat waves-light teal-text">GO DISPATCH</a>
         </div>
         <!-- Modal Structure -->
         <div class="card-reveal">
@@ -74,8 +74,10 @@
                         <input id="courier-phone" type="number" class="validate" ng-model="courierPhone">
                         <label for="courier-phone">Phone Number</label>
                     </div>
+                </div>
+                <div class="row center">
                     <div class="col s12">
-                        <a class="waves-effect waves-light btn center-align teal" ng-click="assign(item.phone, item.order.number, courierName, courierPhone)">Assign courier</a>
+                        <a class="waves-effect waves-light btn-flat center-align teal-text" ng-click="assign(item.phone, item.order.number, courierName, courierPhone)">Assign courier</a>
                     </div>
                 </div>
             </div>
