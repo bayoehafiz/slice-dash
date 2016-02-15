@@ -22,9 +22,9 @@
                         <p><span class="grey-text">REGISTERED </span><span class="flow-text grey-text text-darken-2">{{user.date | date:"dd MMM yyyy"}}</span></p>
                     </div>
                     <div class="card-action center">
-                        <a href="" ng-click="delete(user._id)"><i class="material-icons grey-text">delete</i></a>
+                        <a href="" ng-click="confirm(user._id)"><i class="material-icons grey-text">delete</i></a>
                     </div>
-                    <!-- Details Modal -->
+                    <!-- DETAILS MODAL -->
                     <div id="details_{{user._id}}" class="modal modal-fixed-footer">
                         <div class="modal-content">
                             <h4>
@@ -153,7 +153,17 @@
                             </ul>
                         </div>
                         <div class="modal-footer">
-                            <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat" ng-click="closeDetails(user._id)">Close</a>
+                            <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat">Close</a>
+                        </div>
+                    </div>
+                    <!-- CONFIRM MODAL -->
+                    <div id="confirm_{{user._id}}" class="modal">
+                        <div class="modal-content center">
+                            <p class="flow-text">Are you sure want to delete {{user.fname | uppercase}} {{user.lname | uppercase}}'s account?<br/>All related data including order history and locations will be wiped out!</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat">Cancel</a>
+                            <a href="" class="modal-action modal-close waves-effect waves-red btn-flat" ng-click="delete(user._id)"><i class="material-icons yellow-text text-darken-2 left">warning</i>Yes, I'm sure</a>
                         </div>
                     </div>
                 </div>

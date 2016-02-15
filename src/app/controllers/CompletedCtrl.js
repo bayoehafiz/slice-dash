@@ -76,6 +76,11 @@ app.controller('CompletedCtrl', function($window, $scope, $rootScope, $pusher, O
                 }
             });
 
+            // Confirm deleting
+            $scope.confirm = function(number) {
+                $('#confirm_' + number).openModal();
+            }
+
             // Delete order
             $scope.delete = function(phone, number) {
                 // Loader bar

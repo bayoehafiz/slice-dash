@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="bower_components/cropme/cropme.css">
     <link href="bower_components/angular-loader-directive/dist/styles/loader.css" rel="stylesheet">
     <link href="bower_components/angular-block-ui/dist/angular-block-ui.min.css" rel="stylesheet" />
+    <link href="bower_components/angular-popup-service/styles/angular-popup.css">
     <link type="text/css" rel="stylesheet" href="src/style/style.css">
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,8 +24,8 @@
                 <span class="brand-logo left hide-on-small-only" style="vertical-align:center;margin-left:10px;">
                     <img src="img/logo.png" style="margin-top: 10px;width:120px;"/>
                 </span>
-                <span class="brand-logo left hide-on-med-and-up" style="vertical-align:center;margin-left:5px;">
-                    <img src="img/logo.png" style="margin-top: 5px;width:120px;"/>
+                <span class="brand-logo left hide-on-med-and-up" style="vertical-align:center;margin-left:5px;"><!-- on mobile only -->
+                    <img src="img/logo.png" style="margin-top: 12px;width:90px;"/>
                 </span>
                 <span id="logo-subtitle" class="brand-logo center hide-on-small-only"></span>
                 <!-- Mobile menu -->
@@ -83,6 +84,7 @@
     <script src="bower_components/angular-input-masks/angular-input-masks-standalone.min.js"></script>
     <script src="bower_components/ngstorage/ngStorage.min.js"></script>
     <script src="bower_components/angular-block-ui/dist/angular-block-ui.min.js"></script>
+    <script src="bower_components/angular-popup-service/angular-popup-service.js"></script>
     <script src='//www.google.com/recaptcha/api.js'></script>
     <script src="//js.pusher.com/3.0/pusher.min.js"></script>
     <script src="//cdn.jsdelivr.net/angular.pusher/latest/pusher-angular.min.js"></script>
@@ -107,6 +109,7 @@
     <!-- DOM -->
     <script>
     $(document).ready(function() {
+        // side menu 
         $(".button-collapse").sideNav();
     })
     </script>

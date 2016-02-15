@@ -113,6 +113,11 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
             };
 
 
+            // Confirm deleting
+            $scope.confirm = function(number) {
+                $('#confirm_' + number).openModal();
+            }
+
             // Delete order
             $scope.delete = function(phone, number) {
                 // Loader bar

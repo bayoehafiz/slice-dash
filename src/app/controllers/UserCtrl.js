@@ -42,6 +42,11 @@ app.controller('UserCtrl', function($window, $scope, $rootScope, $pusher, UserSe
                 })
             };
 
+            // Confirm deleting
+            $scope.confirm = function(uid) {
+                $('#confirm_' + uid).openModal();
+            }
+
             // Delete user
             $scope.delete = function(uid) {
                 blockUI.start();
@@ -58,8 +63,7 @@ app.controller('UserCtrl', function($window, $scope, $rootScope, $pusher, UserSe
                     blockUI.stop();
 
                     Materialize.toast(response.message, 5000);
-                })
-
+                });
             };
 
             // Open details modal

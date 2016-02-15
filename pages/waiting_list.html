@@ -1,12 +1,24 @@
 <div class="col s12 m12 l12" ng-show="allList.length > 0">
     <ul class="collection">
         <li class="collection-item avatar center-align" ng-repeat="item in allList | orderBy:'number'">
-            <a href="" ng-click="delete(item.phone)"><i class="material-icons grey-text right">delete</i></a>
-            <div class="circle grey-text darken-1" style="width:100px;height:100px;">
-                <h2><small>#</small>{{item.number}}</h2></div>
-            <span class="title"><h4>{{item.phone}}</h4></span>
-            <p><span class="grey-text">Registered at</span>
-                <br/>{{item.date | date:"dd MMM yyyy, H:mm"}}</p>
+            <div>
+                <a href="" ng-click="confirm(item._id)"><i class="material-icons grey-text right">delete</i></a>
+                <div class="circle grey-text darken-1" style="width:100px;height:100px;">
+                    <h2><small>#</small>{{item.number}}</h2></div>
+                <span class="title"><h4>{{item.phone}}</h4></span>
+                <p><span class="grey-text">Registered at</span>
+                    <br/>{{item.date | date:"dd MMM yyyy, H:mm"}}</p>
+            </div>
+            <!-- CONFIRM MODAL -->
+            <div id="confirm_{{item._id}}" class="modal">
+                <div class="modal-content">
+                    <p class="flow-text center">Delete phone number {{item.phone}} from waiting list?</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat">Cancel</a>
+                    <a href="" class="modal-action modal-close waves-effect waves-red btn-flat" ng-click="delete(item.phone)">Yes</a>
+                </div>
+            </div>
         </li>
     </ul>
 </div>

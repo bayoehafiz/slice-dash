@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="card-action center row">
-            <a class="waves-effect waves-light btn-flat grey-text" ng-click="delete(item.phone, item.order.number)">DELETE</a>
+            <a class="waves-effect waves-light btn-flat grey-text" ng-click="confirm(item.order.number)">DELETE</a>
             <a class="activator waves-effect waves-light btn-flat teal-text text-darken-2">DETAILS</a>
         </div>
         <!-- Modal Structure -->
@@ -75,6 +75,16 @@
                     <span class="col s12"><h6 class="grey-text">Courier</h6><h5 style="margin-top:0px!important;">{{item.order.delivery.courier.name}} ({{item.order.delivery.courier.phone}})</h5></span>
                     <span class="col s12"><h6 class="grey-text">Completed</h6><h5 style="margin-top:0px!important;">{{item.order.delivery.completed_time | date:"dd MMM yyyy, HH:mm"}} WIB</h5></span>
                 </div>
+            </div>
+        </div>
+        <!-- CONFIRM MODAL -->
+        <div id="confirm_{{item.order.number}}" class="modal">
+            <div class="modal-content">
+                <p class="flow-text center">Delete order #{{item.order.number}} from database?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat">Cancel</a>
+                <a href="" class="modal-action modal-close waves-effect waves-red btn-flat" ng-click="delete(item.phone, item.order.number)">Yes</a>
             </div>
         </div>
     </div>

@@ -33,6 +33,11 @@ app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher,
                 $rootScope.allList = data.message;
             }
 
+            // Confirm deleting
+            $scope.confirm = function(id) {
+                $('#confirm_' + id).openModal();
+            }
+
             // Delete order
             $scope.delete = function(phone) {
                 // Loader bar

@@ -216,6 +216,11 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
             };
         };
 
+        // Confirm deleting
+        $scope.confirm = function(id) {
+            $('#confirm_' + id).openModal();
+        }
+
         // delete pizza item
         $scope.delete = function(id) {
             blockUI.start();

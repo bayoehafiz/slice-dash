@@ -56,8 +56,8 @@
             </div>
         </div>
         <div class="card-action row center">
-            <a class="waves-effect waves-light btn-flat grey-text" ng-click="delete(item.phone, item.order.number)">DELETE</a>
-            <a class="activator waves-effect btn-flat waves-light yellow-text text-darken-3">GO DISPATCH</a>
+            <a class="waves-effect waves-light btn-flat grey-text" ng-click="confirm(item.order.number)">DELETE</a>
+            <a class="activator waves-effect btn-flat waves-light yellow-text text-darken-3">DISPATCH</a>
         </div>
         <!-- Modal Structure -->
         <div class="card-reveal">
@@ -86,6 +86,16 @@
                         <a class="waves-effect waves-light btn-flat center-align teal-text" ng-click="assign(item.phone, item.order.number, courierName, courierPhone)">Assign courier</a>
                     </div>
                 </div>
+            </div>
+        </div>
+        <!-- CONFIRM MODAL -->
+        <div id="confirm_{{item.order.number}}" class="modal">
+            <div class="modal-content">
+                <p class="flow-text center">Order #{{item.order.number}} is not completed yet.<br/>Delete this order anyway?<br/></p>
+            </div>
+            <div class="modal-footer">
+                <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat">Cancel</a>
+                <a href="" class="modal-action modal-close waves-effect waves-red btn-flat" ng-click="delete(item.phone, item.order.number)">Yes</a>
             </div>
         </div>
     </div>
