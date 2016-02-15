@@ -1,4 +1,4 @@
-app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher, WaitingListService, mkBlocker, $route, blockUI) {
+app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher, WaitingListService, $route, blockUI) {
 
     // Loader bar
     blockUI.start();

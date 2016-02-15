@@ -1,4 +1,4 @@
-app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, OrderService, mkBlocker, $route, blockUI) {
+app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, OrderService, $route, blockUI) {
     // Loader bar
     blockUI.start();
 

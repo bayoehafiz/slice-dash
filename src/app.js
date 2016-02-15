@@ -1,4 +1,4 @@
-var app = angular.module('SliceDashApp', ['ngRoute', 'angularMoment', 'mkBlock', 'pusher-angular', 'oi.select', 'cropme', 'multi-check', 'ui.utils.masks', 'ngStorage', 'blockUI', 'ngPopup']);
+var app = angular.module('SliceDashApp', ['ngRoute', 'angularMoment', 'pusher-angular', 'oi.select', 'cropme', 'ui.utils.masks', 'blockUI']);
 
 app.config(function($routeProvider) {
     $routeProvider

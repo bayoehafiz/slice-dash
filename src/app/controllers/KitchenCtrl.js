@@ -1,4 +1,4 @@
-app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, OrderService, mkBlocker, $route, blockUI) {
+app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, OrderService, $route, blockUI) {
     // preloader
     blockUI.start();
 

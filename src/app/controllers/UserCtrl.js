@@ -1,4 +1,4 @@
-app.controller('UserCtrl', function($window, $scope, $rootScope, $pusher, UserService, mkBlocker, $route, $localStorage, blockUI) {
+app.controller('UserCtrl', function($window, $scope, $rootScope, $pusher, UserService, $route, blockUI) {
     blockUI.start();
 
     // Dynamic subtitle

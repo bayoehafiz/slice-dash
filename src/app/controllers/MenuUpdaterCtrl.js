@@ -1,4 +1,4 @@
-app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher, mkBlocker, $route, MenuUpdaterService, $http, blockUI) {
+app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher, $route, MenuUpdaterService, $http, blockUI) {
     blockUI.start();
 
     // Dynamic subtitle
