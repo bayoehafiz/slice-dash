@@ -137,6 +137,7 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
                 blockUI.stop();
                 Materialize.toast('FAILED! Image ratio must be 0.62:1 (ex. 800p X 1300p)', 5000);
             }
+            blockUI.stop();
         });
 
         // Save new item

@@ -2,7 +2,7 @@
     <div id="{{item.order.number}}" class="card">
         <div class="card-content row">
             <div class="col s3 center-align">
-                <i class="medium material-icons blue-text text-darken-3">done</i>
+                <i class="medium material-icons teal-text">done</i>
             </div>
             <div class="col s5 center-align">
                 <i class="medium material-icons" style="color:#9e9e9e;">person</i>
@@ -11,7 +11,7 @@
                 <i class="medium material-icons" style="color:#9e9e9e;">phone_iphone</i>
             </div>
             <div class="col s3 center-align" capitalize>
-                <h6 am-time-ago="item.order.delivery.completed_time" class="blue-text text-darken-3"></h6>
+                <h6 am-time-ago="item.order.delivery.completed_time" class="teal-text text-darken-2"></h6>
             </div>
             <div class="col s5 center-align">
                 <h6>{{item.customer | uppercase}}</h6>
@@ -19,43 +19,45 @@
             <div class="col s4 center-align">
                 <h6 class="truncate">{{item.phone}}</h6>
             </div>
-            <ul class="col s12 collection with-header">
-                <li class="collection-header center-align">
-                    <h4>
-                        <small>ORDER </small> #<strong>{{item.order.number}}</strong>
-                    </h4>
-                </li>
-                <li class="collection-item" ng-repeat="pizza in item.order.pizza">
-                    <div class="row valign-wrapper" style="margin-bottom: 0;">
-                        <div class="col s2 valign">
-                            <h1>{{pizza.quantity}}</h1>
+            <div class="col s12">
+                <ul class="collection with-header">
+                    <li class="collection-header center-align teal white-text">
+                        <h4>
+                            #<strong>{{item.order.number}}</strong>
+                        </h4>
+                    </li>
+                    <li class="collection-item" ng-repeat="pizza in item.order.pizza">
+                        <div class="row valign-wrapper" style="margin-bottom: 0;">
+                            <div class="col s2 valign">
+                                <h1>{{pizza.quantity}}</h1>
+                            </div>
+                            <div class="col s10 valign">
+                                <blockquote>
+                                    <h6><strong>{{pizza.name | uppercase}}</strong></h6> Crust: {{pizza.crust | uppercase}}
+                                    <br/> Price: {{pizza.itemPrice | currency:'IDR ':0}}
+                                    <br/>
+                                    <span ng-if="pizza.request">Request:  <strong style="color:#c52431;">{{pizza.request | uppercase}}</strong></span>
+                                </blockquote>
+                            </div>
                         </div>
-                        <div class="col s10 valign">
-                            <blockquote>
-                                <h6><strong>{{pizza.name | uppercase}}</strong></h6> Crust: {{pizza.crust | uppercase}}
-                                <br/> Price: {{pizza.itemPrice | currency:'IDR ':0}}
-                                <br/>
-                                <span ng-if="pizza.request">Request:  <strong style="color:#c52431;">{{pizza.request | uppercase}}</strong></span>
-                            </blockquote>
+                    </li>
+                    <li class="collection-footer teal white-text">
+                        <div class="row center-align" style="margin-bottom:0px!important;">
+                            <div class="col s12">
+                                <h5>COMPLETED</h5>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li class="collection-footer">
-                    <div class="row center-align" style="margin-bottom:0px!important;">
-                        <div class="col s12">
-                            <h5 class="blue-text text-darken-3">COMPLETED</h5>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            <div class="col s12 right-align">
+                    </li>
+                </ul>
+            </div>
+            <div class="col s12 right-align" style="padding-bottom: 0">
                 <h6>Total Pay</h6>
                 <h4><small>IDR </small> {{item.order.total | currency:'':0}}</h4>
             </div>
         </div>
         <div class="card-action center row">
             <a class="waves-effect waves-light btn-flat grey-text" ng-click="delete(item.phone, item.order.number)">DELETE</a>
-            <a class="activator waves-effect waves-light btn-flat blue-text text-darken-3">DETAILS</a>
+            <a class="activator waves-effect waves-light btn-flat teal-text text-darken-2">DETAILS</a>
         </div>
         <!-- Modal Structure -->
         <div class="card-reveal">
@@ -81,14 +83,14 @@
     <p class="flow-text center-align grey-text">There is no completed order yet...</p>
 </div>
 <!--Floating button-->
-<div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
+<div class="fixed-action-btn horizontal" style="bottom: 20px; right: 20px;">
     <a class="btn-floating btn-large grey darken-4">
         <i class="large mdi-navigation-menu"></i>
     </a>
     <ul>
-        <li><a class="btn-floating yellow darken-2" ng-click="refresh()"><i class="material-icons">refresh</i></a></li>
+        <li><a class="btn-floating grey" ng-click="refresh()"><i class="material-icons">refresh</i></a></li>
         <li><a href="#" class="btn-floating red darken-2"><i class="material-icons">query_builder</i></a></li>
-        <li><a href="#dispatched" class="btn-floating teal"><i class="material-icons">local_shipping</i></a></li>
-        <li><a href="#completed" class="btn-floating blue darken-2"><i class="material-icons">done</i></a></li>
+        <li><a href="#dispatched" class="btn-floating yellow darken-3"><i class="material-icons">local_shipping</i></a></li>
+        <li><a href="#completed" class="btn-floating teal"><i class="material-icons">done</i></a></li>
     </ul>
 </div>

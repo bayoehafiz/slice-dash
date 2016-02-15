@@ -19,39 +19,45 @@
             <div class="col s4 center-align">
                 <h6 class="truncate">{{item.phone}}</h6>
             </div>
-            <ul class="col s12 collection with-header">
-                <li class="collection-header center-align">
-                    <h4>
-                            <small>ORDER </small> #<strong>{{item.order.number}}</strong>
+            <div class="col s12">
+                <ul class="collection with-header">
+                    <li class="collection-header center-align red darken-3 white-text">
+                        <h4>
+                            #<strong>{{item.order.number}}</strong>
                         </h4>
-                </li>
-                <li class="collection-item" ng-repeat="pizza in item.order.pizza">
-                    <div class="row valign-wrapper" style="margin-bottom: 0;">
-                        <div class="col s2 valign">
-                            <h1>{{pizza.quantity}}</h1>
+                    </li>
+                    <li class="collection-item" ng-repeat="pizza in item.order.pizza">
+                        <div class="row valign-wrapper" style="margin-bottom: 0;">
+                            <div class="col s2 valign">
+                                <h1>{{pizza.quantity}}</h1>
+                            </div>
+                            <div class="col s10 valign">
+                                <blockquote>
+                                    <h6><strong>{{pizza.name | uppercase}}</strong></h6> Crust: {{pizza.crust | uppercase}}
+                                    <br/> Price: {{pizza.itemPrice | currency:'IDR ':0}}
+                                    <br/>
+                                    <span ng-if="pizza.request">Request:  <strong style="color:#c52431;">{{pizza.request | uppercase}}</strong></span>
+                                </blockquote>
+                            </div>
                         </div>
-                        <div class="col s10 valign">
-                            <blockquote>
-                                <h6><strong>{{pizza.name | uppercase}}</strong></h6> Crust: {{pizza.crust | uppercase}}
-                                <br/> Price: {{pizza.itemPrice | currency:'IDR ':0}}
-                                <br/>
-                                <span ng-if="pizza.request">Request:  <strong style="color:#c52431;">{{pizza.request | uppercase}}</strong></span>
-                            </blockquote>
+                    </li>
+                    <li class="collection-footer red darken-3 white-text">
+                        <div class="row center-align" style="margin-bottom:0px!important;">
+                            <div class="col s12">
+                                <h5>BEING COOKED</h5>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li class="collection-footer center-align">
-                    <h5 class="red-text text-darken-3">BEING COOKED</h5>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div>
             <div class="col s12 right-align">
                 <h6>Total Pay</h6>
                 <h4><small>IDR </small> {{item.order.total | currency:'':0}}</h4>
             </div>
         </div>
         <div class="card-action row center">
-                <a class="waves-effect waves-light btn-flat grey-text" ng-click="delete(item.phone, item.order.number)">DELETE</a>
-                <a class="activator waves-effect btn-flat waves-light teal-text">GO DISPATCH</a>
+            <a class="waves-effect waves-light btn-flat grey-text" ng-click="delete(item.phone, item.order.number)">DELETE</a>
+            <a class="activator waves-effect btn-flat waves-light yellow-text text-darken-3">GO DISPATCH</a>
         </div>
         <!-- Modal Structure -->
         <div class="card-reveal">
@@ -88,14 +94,14 @@
     <p class="flow-text center-align grey-text">There is no order yet...</p>
 </div>
 <!--Floating button-->
-<div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
+<div class="fixed-action-btn horizontal" style="bottom: 20px; right: 20px;">
     <a class="btn-floating btn-large grey darken-4">
         <i class="large mdi-navigation-menu"></i>
     </a>
     <ul>
-        <li><a class="btn-floating yellow darken-2" ng-click="refresh()"><i class="material-icons">refresh</i></a></li>
-        <li><a href="#" class="btn-floating red darken-2"><i class="material-icons">query_builder</i></a></li>
-        <li><a href="#dispatched" class="btn-floating teal"><i class="material-icons">local_shipping</i></a></li>
-        <li><a href="#completed" class="btn-floating blue darken-2"><i class="material-icons">done</i></a></li>
+        <li><a class="btn-floating grey" ng-click="refresh()"><i class="material-icons">refresh</i></a></li>
+        <li><a href="#" class="btn-floating red darken-3"><i class="material-icons">query_builder</i></a></li>
+        <li><a href="#dispatched" class="btn-floating yellow darken-2"><i class="material-icons">local_shipping</i></a></li>
+        <li><a href="#completed" class="btn-floating teal"><i class="material-icons">done</i></a></li>
     </ul>
 </div>
