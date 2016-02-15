@@ -1,16 +1,9 @@
-<!--<div class="col s6 m6 l6">
-        <h4><span class="grey-text">Published Ver:</span>  {{ publishedVer }} <small><span class="grey-text"> (Released on {{ releasedDate }})</span></small></h4>
-        <h5><span class="grey-text">Current Ver:</span> {{ currentVer }}</h5>
-    </div>
-    <div class="col s6 m6 l6 right-align" style="padding-top:10px;">
-        <a class="waves-effect waves-light btn teal darken-1" href="" ng-click="release()">Release this Menu<i class="material-icons right">cloud_upload</i></a>
-    </div>-->
 <div class="col s12 m12 l12">
     <div class="row">
         <div class="col s12 m6 l4" ng-repeat="item in menu" ng-if="menu.length > 0">
             <div class="card hoverable">
                 <div class="card-image waves-effect waves-block waves-light">
-                    <img class="responsive activator" src="{{item.image}}" />
+                    <img class="responsive activator" src="{{item.image}}"/>
                     <span class="card-title"><strong>{{item.name}}</strong></span>
                 </div>
                 <div class="card-content">
