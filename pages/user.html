@@ -175,11 +175,13 @@
                     <div class="card-content">
                         <span class="card-title flow-text grey-text text-darken-2"><strong>{{user.fname | uppercase}} {{user.lname | uppercase}}</strong></span>
                         <span class="badge teal-text text-lighten-1" ng-if="user.status == true">
-                            <i class="material-icons medium">verified_user</i>
+                            <i class="material-icons medium hide-on-small-only">verified_user</i>
+                            <i class="material-icons hide-on-med-and-up">verified_user</i>
                         </span>
                         <span class="badge yellow-text text-darken-3" ng-if="user.status == false">
-                        <i class="material-icons medium">error</i>
-                    </span>
+                            <i class="material-icons medium hide-on-small-only">error</i>
+                            <i class="material-icons hide-on-med-and-up">error</i>
+                        </span>
                         <p><span class="grey-text">PHONE </span><span class="flow-text grey-text text-darken-2">{{user.phone_no}}</span></p>
                         <p><span class="grey-text">REGISTERED </span><span class="flow-text grey-text text-darken-2">{{user.date | date:"dd MMM yyyy"}}</span></p>
                     </div>
