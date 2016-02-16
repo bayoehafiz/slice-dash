@@ -54,9 +54,11 @@
                     </p>
                 </div>
                 <div class="modal-footer">
+                    <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat left" ng-click="delete(item._id)"><i class="material-icons grey-text left">delete</i></a>
                     <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat">Close</a>
                     <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat" ng-click="publish(item._id)" ng-if="item.published == false">Publish</a>
                     <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat" ng-click="publish(item._id)" ng-if="item.published == true">Un-publish</a>
+                    <a href="" class="waves-effect waves-grey btn-flat disabled">Edit</a>
                 </div>
             </div>
             <!-- CONFIRM MODAL -->

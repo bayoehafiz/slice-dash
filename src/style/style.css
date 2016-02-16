@@ -34,7 +34,7 @@ html.text-small {
 }
 
 body {
-    font-family: 'avenir_light'!important;
+    font-family: 'avenir_medium'!important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
