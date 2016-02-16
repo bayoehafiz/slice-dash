@@ -38,7 +38,7 @@ oi-select .select-search-list-item {
 }
 oi-select .select-search-list-item_selection {
   cursor: pointer;
-  background: #efefef;
+  background: #9E9E9E;
   border-color: #ebebeb;
 }
 oi-select .select-search-list-item_selection:hover {

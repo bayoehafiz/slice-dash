@@ -21,9 +21,9 @@
             </div>
             <div class="col s12">
                 <ul class="collection with-header">
-                    <li class="collection-header center-align yellow darken-3 white-text">
+                    <li class="collection-header center-align grey darken-4 orange-text text-lighten-1">
                         <h4>
-                            #<strong>{{item.order.number}}</strong>
+                            <small>Order #</small><strong>{{item.order.number}}</strong>
                         </h4>
                     </li>
                     <li class="collection-item" ng-repeat="pizza in item.order.pizza">

@@ -1,43 +1,62 @@
 <div class="col s12 m12 l12">
     <div class="row">
         <div class="col s12 m6 l4" ng-repeat="item in menu" ng-if="menu.length > 0">
-            <div class="card hoverable">
-                <div class="card-image waves-effect waves-block waves-light">
-                    <img class="responsive activator" src="{{item.image}}"/>
-                    <span class="card-title"><strong>{{item.name}}</strong></span>
+            <a href="" ng-click="details(item._id)">
+                <div class="card hoverable">
+                    <div class="card-image">
+                        <img class="responsive" src="{{item.image}}" />
+                        <span class="card-title right">
+                            <span ng-if="item.published == true"><i class="material-icons medium teal-text text-lighten-1">check_circle</i></span>
+                        <span ng-if="item.published == false"><i class="material-icons medium red-text text-lighten-1">pause_circle_filled</i></span>
+                        </span>
+                    </div>
+                    <div class="card-content grey darken-4 center">
+                        <p class="flow-text">
+                            <span class="white-text"><small>{{item.name | uppercase}}</small></span>
+                        </p>
+                    </div>
                 </div>
-                <div class="card-content">
+            </a>
+            <!-- ITEM DETAILS MODAL -->
+            <div id="details_{{item._id}}" class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <span class="badge right" ng-if="item.published == true">
+                            <i class="material-icons medium teal-text text-lighten-1 hide-on-small-only">check_circle</i><br/>
+                            <small class="teal-text text-lighten-1">PUBLISHED</small>
+                        </span>
+                    <span class="badge right" ng-if="item.published == false">
+                            <i class="material-icons medium red-text text-lighten-1 hide-on-small-only">pause_circle_filled</i><br/>
+                            <small class="red-text text-lighten-1">UNPUBLISHED</small>
+                        </span>
                     <p class="flow-text">
-                        <span class="grey-text"><small>Price</small></span>
-                        <strong>{{item.price | currency:'IDR ':0}}</strong>
+                        <span class="card-title grey-text text-darken-4">{{item.name | uppercase}}
                         <br/>
-                        <span class="grey-text"><small>Status</small></span>
-                        <span class="teal-text" ng-if="item.published == true">Published</span>
-                        <span class="red-text text-darken-2" ng-if="item.published == false">Unpublished</span>
-                        <a href="" ng-click="publish(item._id)"><i class="material-icons grey-text">autorenew</i></a>
+                        <small>
+                            <span class="grey-text">Selling Price</span> {{item.price | currency:"IDR ":0}}
+                        </small>
+                        </span>
+                        <p>{{item.description}}</p>
+                        <ul class="collection with-header">
+                            <li class="collection-header">
+                                <h5>Ingredients</h5></li>
+                            <li class="collection-item" ng-repeat="ingredient in item.ingredients"><i class="material-icons teal-text left">check</i>{{ingredient.label}}</li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header">
+                                <h5>Crust Types</h5></li>
+                            <li class="collection-item" ng-repeat="crust in item.crusts"><i class="material-icons teal-text left">check</i>{{crust.label}}</li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header">
+                                <h5>Available Size</h5></li>
+                            <li class="collection-item" ng-repeat="size in item.sizes"><i class="material-icons teal-text left">check</i>{{size | uppercase}}</li>
+                        </ul>
                     </p>
                 </div>
-                <div class="card-action center">
-                    <a href="" ng-click="confirm(item._id)"><i class="material-icons grey-text">delete</i></a>
-                </div>
-                <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">{{item.name}}<i class="material-icons right">close</i></span>
-                    <p>{{item.description}}</p>
-                    <ul class="collection with-header">
-                        <li class="collection-header">
-                            <h5>Ingredients</h5></li>
-                        <li class="collection-item" ng-repeat="ingredient in item.ingredients"><i class="material-icons teal-text left">check</i>{{ingredient.label}}</li>
-                    </ul>
-                    <ul class="collection with-header">
-                        <li class="collection-header">
-                            <h5>Crust Types</h5></li>
-                        <li class="collection-item" ng-repeat="crust in item.crusts"><i class="material-icons teal-text left">check</i>{{crust.label}}</li>
-                    </ul>
-                    <ul class="collection with-header">
-                        <li class="collection-header">
-                            <h5>Available Size</h5></li>
-                        <li class="collection-item" ng-repeat="size in item.sizes"><i class="material-icons teal-text left">check</i>{{size | uppercase}}</li>
-                    </ul>
+                <div class="modal-footer">
+                    <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat">Close</a>
+                    <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat" ng-click="publish(item._id)" ng-if="item.published == false">Publish</a>
+                    <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat" ng-click="publish(item._id)" ng-if="item.published == true">Un-publish</a>
                 </div>
             </div>
             <!-- CONFIRM MODAL -->
@@ -57,9 +76,9 @@
     </div>
 </div>
 <!-- ADD PIZZA MODAL -->
-<div id="add-item-modal" class="modal modal-fixed-footer">
+<div id="add-item-modal" class="modal modal-fixed-footer" style="width:65%!important;">
     <div class="modal-content">
-        <h4 class="grey-text">Add New Pizza</h4>
+        <h4 class="grey-text">Add New Pizza Item</h4>
         <form novalidate>
             <div class="row">
                 <!-- Left pane -->
@@ -75,7 +94,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <textarea id="description" class="materialize-textarea" length="500" ng-model="pizza.description" style="font-size:1.5rem;"></textarea>
+                        <textarea id="description" class="materialize-textarea" length="500" ng-model="pizza.description" style="font-size:1.3rem;"></textarea>
                         <label for="description">ITEM DESCRIPTION</label>
                     </div>
                 </div>
@@ -113,7 +132,7 @@
     </div>
     <div class="modal-footer">
         <span class="red-text text-darken-2 left" ng-bind="errorMsg"></span>
-        <a href="" class="modal-action modal-close btn-flat" ng-click="save(pizza)">Save</a>
+        <a href="" class="btn-flat" ng-click="save(pizza)">Save</a>
         <a href="" class="modal-action modal-close btn-flat">Cancel</a>
     </div>
 </div>

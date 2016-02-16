@@ -21,9 +21,9 @@
             </div>
             <div class="col s12">
                 <ul class="collection with-header">
-                    <li class="collection-header center-align red darken-3 white-text">
+                    <li class="collection-header center-align grey darken-4 orange-text text-lighten-1">
                         <h4>
-                            #<strong>{{item.order.number}}</strong>
+                            <small>Order #</small><strong>{{item.order.number}}</strong>
                         </h4>
                     </li>
                     <li class="collection-item" ng-repeat="pizza in item.order.pizza">
@@ -57,7 +57,7 @@
         </div>
         <div class="card-action row center">
             <a class="waves-effect waves-light btn-flat grey-text" ng-click="confirm(item.order.number)">DELETE</a>
-            <a class="activator waves-effect btn-flat waves-light yellow-text text-darken-3">DISPATCH</a>
+            <a class="activator waves-effect btn-flat waves-light grey-text text-darken-3">DISPATCH</a>
         </div>
         <!-- Modal Structure -->
         <div class="card-reveal">

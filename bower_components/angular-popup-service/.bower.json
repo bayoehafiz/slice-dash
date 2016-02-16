@@ -1,0 +1,38 @@
+{
+  "name": "angular-popup-service",
+  "main": "angular-popup-service.js",
+  "version": "0.1.2",
+  "dependencies": {
+    "angular": ">=1.2.*"
+  },
+  "homepage": "https://github.com/kivra/angular-popup",
+  "authors": [
+    "Victor Pegado <victor.pegado@kivra.com>"
+  ],
+  "description": "Library for handling popup boxes in angular",
+  "keywords": [
+    "angular",
+    "popup",
+    "dialog",
+    "alert",
+    "confirm",
+    "prompt"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "0.1.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.1.2",
+    "commit": "bc6f3c4286c452b3b806fd6390fbe07e9faca845"
+  },
+  "_source": "git://github.com/kivra/angular-popup-service.git",
+  "_target": "^0.1.2",
+  "_originalSource": "angular-popup-service"
+}

@@ -23,7 +23,7 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
         });
 
         // Open modal
-        $scope.openModal = function(uid) {
+        $scope.openModal = function() {
             $('#add-item-modal').openModal();
 
             $('.tooltipped').tooltip({
@@ -126,6 +126,10 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
                 label: 'JALAPENO',
                 name: 'jalapeno'
             }];
+        };
+
+        $scope.closeModal = function() {
+            $('#add-item-modal').closeModal();
         }
 
         $scope.$on("cropme:loaded", function(ev, width, height, cropmeEl) {
@@ -140,10 +144,13 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
             blockUI.stop();
         });
 
+        // Open details modal
+        $scope.details = function(id) {
+            $('#details_' + id).openModal();
+        };
+
         // Save new item
         $scope.save = function(pizza) {
-            blockUI.start();
-
             // Get uploaded image state
             var imageData = $("cropme").find('.responsive-img').attr('ng-src');
             if (imageData == undefined || !imageData) {
@@ -151,9 +158,6 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
             } else {
                 var image = $("cropme").find('.responsive-img').attr('src');
             }
-
-            // Handle image submission
-            $scope.$broadcast("cropme:ok");
 
             // get upload link
             var url = MenuUpdaterService.getUploadLink();
@@ -165,6 +169,7 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
             if (master.name == undefined) {
                 blockUI.stop();
                 Materialize.toast('Please enter NAME!', 5000);
+                $('name').focus();
             } else if (master.price == undefined) {
                 blockUI.stop();
                 Materialize.toast('Please set PRICE!', 5000);
@@ -182,8 +187,13 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
                 Materialize.toast('Please choose SIZES', 5000);
             } else if (image == undefined) {
                 blockUI.stop();
-                Materialize.toast('The pizza need an IMAGE!', 5000);
+                Materialize.toast('The pizza needs an IMAGE!', 5000);
             } else {
+                // close the modal
+                $scope.closeModal();
+
+                blockUI.start();
+
                 datas = {
                     name: master.name,
                     sizes: master.size,
@@ -198,6 +208,7 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
                 $http.post(url, datas).then(function(response) {
                     var string = response.message;
                     if (response.success == true) {
+
                         // reload items on menu
                         MenuUpdaterService.getMenu().success(function(data) {
                             if (data.success == true) {
@@ -219,7 +230,7 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
         // Confirm deleting
         $scope.confirm = function(id) {
             $('#confirm_' + id).openModal();
-        }
+        };
 
         // delete pizza item
         $scope.delete = function(id) {
@@ -262,5 +273,12 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
                 }
             })
         };
+
+        // Refresh page
+        $scope.refresh = function($route) {
+            //$state.reload();
+            $window.location.reload();
+        }
+
     });
 });
