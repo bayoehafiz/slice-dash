@@ -38,6 +38,11 @@ app.controller('WaitingListCtrl', function($window, $scope, $rootScope, $pusher,
                 $('#confirm_' + id).openModal();
             }
 
+            // Confirm mobile deleting
+            $scope.confirmMobile = function(id) {
+                $('#confirm-mobile_' + id).openModal();
+            }
+
             // Delete order
             $scope.delete = function(phone) {
                 // Loader bar

@@ -128,6 +128,112 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
             }];
         };
 
+        // Open mobile modal
+        $scope.openMobileModal = function() {
+            $('#add-item-mobile-modal').openModal();
+
+            $('.tooltipped').tooltip({
+                delay: 50
+            });
+
+            // Size dropdown datas
+            $scope.sizes = [{
+                id: 1,
+                label: 'SMALL',
+                name: 'small'
+            }, {
+                id: 2,
+                label: 'REGULAR',
+                name: 'regular'
+            }, {
+                id: 3,
+                label: 'LARGE',
+                name: 'large'
+            }];
+
+            // Crust dropdown datas
+            $scope.crusts = [{
+                id: 1,
+                label: 'THIN',
+                name: 'thin'
+            }, {
+                id: 2,
+                label: 'THICK',
+                name: 'thick'
+            }, {
+                id: 3,
+                label: 'MEDIUM',
+                name: 'medium'
+            }, {
+                id: 4,
+                label: 'SOFT',
+                name: 'soft'
+            }, {
+                id: 5,
+                label: 'CRACKER',
+                name: 'cracker'
+            }];
+
+            // Ingredients dropdown datas
+            $scope.ingredients = [{
+                id: 1,
+                label: 'ONIONS',
+                name: 'onions'
+            }, {
+                id: 2,
+                label: 'PARSLEY',
+                name: 'parsley'
+            }, {
+                id: 3,
+                label: 'SALAMI',
+                name: 'salami'
+            }, {
+                id: 4,
+                label: 'TOMATOES',
+                name: 'tomatoes'
+            }, {
+                id: 5,
+                label: 'TUNA',
+                name: 'tuna'
+            }, {
+                id: 6,
+                label: 'BBQ SAUCE',
+                name: 'bbq_sauce'
+            }, {
+                id: 7,
+                label: 'BLACK OLIVE',
+                name: 'black_olive'
+            }, {
+                id: 8,
+                label: 'GARLIC CLOVES',
+                name: 'garlic_cloves'
+            }, {
+                id: 9,
+                label: 'MOZARELLA CHEESE',
+                name: 'mozarella_cheese'
+            }, {
+                id: 10,
+                label: 'OREGANO',
+                name: 'oregano'
+            }, {
+                id: 11,
+                label: 'PINEAPPLE',
+                name: 'pineapple'
+            }, {
+                id: 12,
+                label: 'CORN',
+                name: 'corn'
+            }, {
+                id: 13,
+                label: 'HAM',
+                name: 'ham'
+            }, {
+                id: 14,
+                label: 'JALAPENO',
+                name: 'jalapeno'
+            }];
+        };
+
         $scope.closeModal = function() {
             $('#add-item-modal').closeModal();
         }
@@ -273,6 +379,14 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
                 }
             })
         };
+
+        // release new menu
+        $scope.release = function() {
+            Materialize.toast("Not ready yet!", 5000);
+            MenuUpdaterService.releaseMenu().success(function(response) {
+                // response
+            })
+        }
 
         // Refresh page
         $scope.refresh = function($route) {

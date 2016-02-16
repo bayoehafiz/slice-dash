@@ -54,7 +54,7 @@
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat left" ng-click="delete(item._id)"><i class="material-icons grey-text left">delete</i></a>
+                    <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat left" ng-click="confirm(item._id)"><i class="material-icons grey-text left">delete</i></a>
                     <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat">Close</a>
                     <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat" ng-click="publish(item._id)" ng-if="item.published == false">Publish</a>
                     <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat" ng-click="publish(item._id)" ng-if="item.published == true">Un-publish</a>
@@ -78,9 +78,9 @@
     </div>
 </div>
 <!-- ADD PIZZA MODAL -->
-<div id="add-item-modal" class="modal modal-fixed-footer" style="width:65%!important;">
+<div id="add-item-modal" class="modal modal-fixed-footer hide-on-small-only" style="width:65%!important;">
     <div class="modal-content">
-        <h4 class="grey-text">Add New Pizza Item</h4>
+        <h4 class="grey-text">Add New Pizza</h4>
         <form novalidate>
             <div class="row">
                 <!-- Left pane -->
@@ -138,6 +138,65 @@
         <a href="" class="modal-action modal-close btn-flat">Cancel</a>
     </div>
 </div>
+<!-- ADD PIZZA MODAL (MOBILE) -->
+<div id="add-item-mobile-modal" class="modal bottom-sheet hide-on-med-and-up" style="max-height: 100%!important;width: 100%!important;">
+    <div class="modal-content">
+        <h4 class="grey-text">Add New Pizza</h4>
+        <form novalidate>
+            <div class="row">
+                <!-- Left pane -->
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="name" type="text" ng-model="pizza.name" style="font-size:1.5rem;" capitalize-first>
+                        <label for="name">NAME</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <div class="grey-text">AVAILABLE SIZES</div>
+                        <multi-check ng-model="pizza.size" style="font-size:1.2rem;">
+                            <multi-check-item ng-repeat="size in sizes" value="{{size.name}}">{{size.label}}</multi-check-item>
+                        </multi-check>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="price" type="text" class="validate" ng-model="pizza.price" style="font-size:1.5rem;" ui-money-mask="0">
+                        <label for="price">PRICE</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="description" class="materialize-textarea" length="500" ng-model="pizza.description" style="font-size:1.3rem;"></textarea>
+                        <label for="description">ITEM DESCRIPTION</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <div class="grey-text" style="padding-bottom:10px">CRUSTS <i class="material-icons tooltipped right" data-position="top" data-delay="50" data-tooltip="Multiple crusts are available. Click on crust name to remove.">help</i></div>
+                            <oi-select id="crust" oi-options="item.label for item in crusts track by item.id" ng-model="pizza.crust" multiple placeholder="Click to add crust" oi-select-options="{closeList: false, maxlength: 0}" required></oi-select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <div class="grey-text" style="padding-bottom:10px">INGREDIENTS <i class="material-icons tooltipped right" data-position="top" data-delay="50" data-tooltip="Multiple ingredients are available. Click on ingredient name to remove.">help</i></div>
+                            <oi-select id="ingredient" oi-options="item.label for item in ingredients track by item.id" ng-model="pizza.ingredient" multiple placeholder="Click to add ingredient" oi-select-options="{closeList: false, maxlength: 0}" required></oi-select>
+                        </div>
+                    </div>
+                    <div class="input-field col s12">
+                        <div class="grey-text" style="padding-bottom:10px;">IMAGE<i class="material-icons tooltipped right" data-position="top" data-delay="50" data-tooltip="Pizza image ratio must be 0.62:1. Recommended size is 800x1300. To remove, hit on Remove button">help</i></div>
+                        <cropme width="100%" height="240" ratio="0.62:1" type="png" destination-width="800" destination-width="1300" cancel-label="Remove">
+                        </cropme>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <span class="red-text text-darken-2 left" ng-bind="errorMsg"></span>
+        <a href="" class="btn-flat" ng-click="save(pizza)">Save</a>
+        <a href="" class="modal-action modal-close btn-flat">Cancel</a>
+    </div>
+</div>
 <!--Floating button-->
 <div class="fixed-action-btn horizontal" style="bottom: 20px; right: 20px;">
     <a class="btn-floating btn-large grey darken-4">
@@ -145,7 +204,8 @@
     </a>
     <ul>
         <li><a class="btn-floating yellow darken-3" ng-click="refresh()"><i class="material-icons">refresh</i></a></li>
-        <li><a href="" ng-click="openModal()" class="btn-floating grey darken-2"><i class="material-icons">add</i></a></li>
+        <li><a href="" ng-click="openModal()" class="btn-floating grey darken-2 hide-on-small-only"><i class="material-icons">add</i></a></li>
+        <li><a href="" ng-click="openMobileModal()" class="btn-floating grey darken-2 hide-on-med-and-up"><i class="material-icons">add</i></a></li>
         <li><a href="" ng-click="release()" class="btn-floating grey darken-2"><i class="material-icons">cloud_upload</i></a></li>
     </ul>
 </div>

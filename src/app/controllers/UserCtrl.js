@@ -47,6 +47,11 @@ app.controller('UserCtrl', function($window, $scope, $rootScope, $pusher, UserSe
                 $('#confirm_' + uid).openModal();
             }
 
+            // Confirm mobile deleting
+            $scope.confirmMobile = function(uid) {
+                $('#confirm-mobile_' + uid).openModal();
+            }
+
             // Delete user
             $scope.delete = function(uid) {
                 blockUI.start();
@@ -69,6 +74,16 @@ app.controller('UserCtrl', function($window, $scope, $rootScope, $pusher, UserSe
             // Open details modal
             $scope.openDetails = function(uid) {
                 $('#details_' + uid).openModal();
+
+                // initiate collapsible element
+                $('.collapsible').collapsible({
+                    accordion: true // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+                });
+            }
+
+            // Open details mobile modal
+            $scope.openMobileDetails = function(uid) {
+                $('#details-mobile_' + uid).openModal();
 
                 // initiate collapsible element
                 $('.collapsible').collapsible({
