@@ -23,8 +23,12 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
         });
 
         // Open modal
-        $scope.openModal = function() {
-            $('#add-item-modal').openModal();
+        $scope.openAddModal = function(type) {
+            if (type == 'mobile') {
+                $('#add-item-mobile-modal').openModal();
+            } else {
+                $('#add-item-modal').openModal();
+            }
 
             $('.tooltipped').tooltip({
                 delay: 50
@@ -128,113 +132,7 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
             }];
         };
 
-        // Open mobile modal
-        $scope.openMobileModal = function() {
-            $('#add-item-mobile-modal').openModal();
-
-            $('.tooltipped').tooltip({
-                delay: 50
-            });
-
-            // Size dropdown datas
-            $scope.sizes = [{
-                id: 1,
-                label: 'SMALL',
-                name: 'small'
-            }, {
-                id: 2,
-                label: 'REGULAR',
-                name: 'regular'
-            }, {
-                id: 3,
-                label: 'LARGE',
-                name: 'large'
-            }];
-
-            // Crust dropdown datas
-            $scope.crusts = [{
-                id: 1,
-                label: 'THIN',
-                name: 'thin'
-            }, {
-                id: 2,
-                label: 'THICK',
-                name: 'thick'
-            }, {
-                id: 3,
-                label: 'MEDIUM',
-                name: 'medium'
-            }, {
-                id: 4,
-                label: 'SOFT',
-                name: 'soft'
-            }, {
-                id: 5,
-                label: 'CRACKER',
-                name: 'cracker'
-            }];
-
-            // Ingredients dropdown datas
-            $scope.ingredients = [{
-                id: 1,
-                label: 'ONIONS',
-                name: 'onions'
-            }, {
-                id: 2,
-                label: 'PARSLEY',
-                name: 'parsley'
-            }, {
-                id: 3,
-                label: 'SALAMI',
-                name: 'salami'
-            }, {
-                id: 4,
-                label: 'TOMATOES',
-                name: 'tomatoes'
-            }, {
-                id: 5,
-                label: 'TUNA',
-                name: 'tuna'
-            }, {
-                id: 6,
-                label: 'BBQ SAUCE',
-                name: 'bbq_sauce'
-            }, {
-                id: 7,
-                label: 'BLACK OLIVE',
-                name: 'black_olive'
-            }, {
-                id: 8,
-                label: 'GARLIC CLOVES',
-                name: 'garlic_cloves'
-            }, {
-                id: 9,
-                label: 'MOZARELLA CHEESE',
-                name: 'mozarella_cheese'
-            }, {
-                id: 10,
-                label: 'OREGANO',
-                name: 'oregano'
-            }, {
-                id: 11,
-                label: 'PINEAPPLE',
-                name: 'pineapple'
-            }, {
-                id: 12,
-                label: 'CORN',
-                name: 'corn'
-            }, {
-                id: 13,
-                label: 'HAM',
-                name: 'ham'
-            }, {
-                id: 14,
-                label: 'JALAPENO',
-                name: 'jalapeno'
-            }];
-        };
-
-        $scope.closeModal = function() {
+        $scope.closeAddModal = function() {
             $('#add-item-modal').closeModal();
         }
 
@@ -296,7 +194,7 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
                 Materialize.toast('The pizza needs an IMAGE!', 5000);
             } else {
                 // close the modal
-                $scope.closeModal();
+                $scope.closeAddModal();
 
                 blockUI.start();
 
@@ -386,13 +284,71 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
             MenuUpdaterService.releaseMenu().success(function(response) {
                 // response
             })
-        }
+        };
+
+        // Open ingredients list modals
+        $scope.openIngredientsModal = function() {
+            $('#ingredients-modal').openModal();
+
+            blockUI.start();
+
+            MenuUpdaterService.getIngredients().success(function(data) {
+                if (data.success == true) {
+                    $rootScope.ingredients = data.message;
+                } else {
+                    $rootScope.ingredients = [];
+                }
+
+                blockUI.stop();
+            });
+        };
+
+        // open add ingredient modal
+        $scope.openAddIngredient = function() {
+            $('#ingredients-modal').closeModal();
+            $('#add-ingredients-modal').openModal();
+
+            $scope.$watch('ingredient.name', function() {
+                $scope.label = $scope.ingredient.name.toLowerCase().replace(/\s+/g, '-');
+            });
+
+            // image upload
+            $scope.ingImage = '';
+            $scope.ingCroppedImage = '';
+
+            var handleFileSelect = function(evt) {
+                var file = evt.currentTarget.files[0];
+                var reader = new FileReader();
+                reader.onload = function(evt) {
+                    $scope.$apply(function($scope) {
+                        $scope.ingImage = evt.target.result;
+                    });
+                };
+                reader.readAsDataURL(file);
+            };
+
+            angular.element(document.querySelector('#fileInput')).on('change', handleFileSelect);
+
+            // save ingredient data
+            $scope.saveIngredients = function(ingredient) {
+                console.log('test');
+                // Handle the form submission...
+                master = angular.copy(ingredient);
+                console.log("Going to send:", master);
+            };
+        };
+
+        // close add ingredient modal
+        $scope.closeAddIngredient = function() {
+            $('#add-ingredients-modal').closeModal();
+            $scope.openIngredientsModal();
+        };
 
         // Refresh page
         $scope.refresh = function($route) {
             //$state.reload();
             $window.location.reload();
-        }
+        };
 
     });
 });

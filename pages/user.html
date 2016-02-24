@@ -23,7 +23,7 @@
                         <p><span class="grey-text">REGISTERED </span><span class="flow-text grey-text text-darken-2">{{user.date | date:"dd MMM yyyy"}}</span></p>
                     </div>
                     <div class="card-action center">
-                        <a href="" ng-click="confirm(user._id)"><i class="material-icons grey-text">delete</i></a>
+                        <a href="" ng-click="confirm(user._id)" class="btn-flat grey-text">REMOVE</a>
                     </div>
                     <!-- DETAILS MODAL -->
                     <div id="details_{{user._id}}" class="modal modal-fixed-footer hide-on-small-only">
@@ -160,7 +160,7 @@
                     <!-- CONFIRM MODAL -->
                     <div id="confirm_{{user._id}}" class="modal">
                         <div class="modal-content center">
-                            <p class="flow-text">Are you sure want to delete {{user.fname | uppercase}} {{user.lname | uppercase}}'s account?<br/>All related data including order history and locations will be wiped out!</p>
+                            <p class="flow-text">Are you sure want to remove {{user.fname | uppercase}} {{user.lname | uppercase}}'s account?<br/>All related data including order history and locations will be wiped out!</p>
                         </div>
                         <div class="modal-footer">
                             <a href="" class="modal-action modal-close waves-effect waves-grey btn-flat">Cancel</a>

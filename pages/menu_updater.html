@@ -197,6 +197,74 @@
         <a href="" class="modal-action modal-close btn-flat">Cancel</a>
     </div>
 </div>
+<!-- INGREDIENTS MODAL -->
+<div id="ingredients-modal" class="modal hide-on-small-only" style="width:65%!important;">
+    <div class="modal-content">
+        <h4 class="grey-text">Ingredients Database</h4>
+        <ul class="collection">
+            <li class="collection-item avatar" ng-repeat="item in ingredients" ng-if="ingredients.length > 0">
+                <img src="{{item.image}}" alt="" class="circle">
+                <span class="title">{{item.label}}</span>
+                <p class="flow-text">
+                    <span class="grey-text"><small>Added</small></span>{{item.created | date:"dd MMM yyyy, HH:mm"}}
+                </p>
+                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+            </li>
+            <li class="collection-item" ng-if="ingredients.length < 1">
+                <p class="flow-text center">
+                    <span class="grey-text"><small>No data yet.<br/>Click sign below to add one..</small></span>
+                    <br/>
+                    <br/>
+                    <a href="" ng-click="openAddIngredient()"><i class="material-icons large grey-text">add</i></a>
+                </p>
+            </li>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <a href="" class="modal-action modal-close btn-flat">Close</a>
+    </div>
+</div>
+<!-- ADD INGREDIENTS MODAL -->
+<div id="add-ingredients-modal" class="modal hide-on-small-only">
+    <div class="modal-content">
+        <h4 class="grey-text">Add Ingredient</h4>
+        <form novalidate>
+            <div class="row">
+                <!-- Left pane -->
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="name" type="text" ng-model="ingredient.name" style="font-size:2rem;" capitalize-first>
+                        <label for="name">NAME</label>
+                        <span class="grey-text right"><small>label: </small><strong>{{label}}</strong></span>
+                        <input type="hidden" ng-value="{{label}}" ng-model="ingredient.label">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="file-field input-field col s12">
+                        <div class="btn">
+                            <span>Browse Image File</span>
+                            <input type="file" id="fileInput">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 center cropArea">
+                        <img-crop image="ingImage" result-image="ingCroppedImage" area-type="square"></img-crop>
+                        <div class="grey-text"><small>CAUTION! Only image inside the cropped area that will be uploaded</small></div>
+                        <input type="hidden" ng-value="{{ingCroppedImage}}" ng-model="ingredient.image">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="" class="btn-flat" ng-click="saveIngredient(ingredient)">Save</a>
+        <a href="" class="modal-action modal-close btn-flat" ng-click="closeAddIngredient()">Cancel</a>
+    </div>
+</div>
 <!--Floating button-->
 <div class="fixed-action-btn horizontal" style="bottom: 20px; right: 20px;">
     <a class="btn-floating btn-large grey darken-4">
@@ -204,8 +272,11 @@
     </a>
     <ul>
         <li><a class="btn-floating yellow darken-3" ng-click="refresh()"><i class="material-icons">refresh</i></a></li>
-        <li><a href="" ng-click="openModal()" class="btn-floating grey darken-2 hide-on-small-only"><i class="material-icons">add</i></a></li>
-        <li><a href="" ng-click="openMobileModal()" class="btn-floating grey darken-2 hide-on-med-and-up"><i class="material-icons">add</i></a></li>
+        <li><a href="" ng-click="openIngredientsModal()" class="btn-floating red darken-2"><i class="material-icons">local_pizza</i></a></li>
+        <li>
+            <a href="" ng-click="openAddModal('desktop')" class="btn-floating grey darken-2 hide-on-small-only"><i class="material-icons">add</i></a>
+            <a href="" ng-click="openAddModal('mobile')" class="btn-floating grey darken-2 hide-on-med-and-up"><i class="material-icons">add</i></a>
+        </li>
         <li><a href="" ng-click="release()" class="btn-floating grey darken-2"><i class="material-icons">cloud_upload</i></a></li>
     </ul>
 </div>

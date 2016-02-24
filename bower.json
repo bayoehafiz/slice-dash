@@ -31,6 +31,7 @@
     "angular-block-ui": "^0.2.2",
     "angular-popup-service": "^0.1.2",
     "cropme": "^0.4.1",
-    "angular-multi-chk": "*"
+    "angular-multi-chk": "*",
+    "ng-img-crop": "ngImgCrop#^0.3.2"
   }
 }

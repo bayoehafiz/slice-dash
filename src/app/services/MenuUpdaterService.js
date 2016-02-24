@@ -6,6 +6,11 @@ app.factory("MenuUpdaterService", ['$http', function($http) {
         //return $http.get('http://localhost:8080/admin/menu');
     }
 
+    obj.getIngredients = function() {
+        return $http.get('http://node.colorblindlabs.com:8080/admin/menu/ingredients');
+        //return $http.get('http://localhost:8080/admin/menu/ingredients');
+    }    
+
     obj.deletePizza = function(id) {
         return $http.get('http://node.colorblindlabs.com:8080/admin/menu/delete?id=' + id);
         //return $http.get('http://localhost:8080/admin/menu/delete?id=' + id);
