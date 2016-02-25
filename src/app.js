@@ -3,7 +3,7 @@ var app = angular.module('SliceDashApp', ['ngRoute', 'angularMoment', 'pusher-an
 app.config(function($routeProvider) {
     $routeProvider
     // route for the driver section
-    .when('/dispatched', {
+        .when('/dispatched', {
         templateUrl: 'pages/dispatch.html',
         controller: 'DriverCtrl'
     })
@@ -51,4 +51,18 @@ app.filter('capitalize', function() {
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
         }) : '';
     }
+});
+
+app.filter('orderObjectBy', function() {
+    return function(items, field, reverse) {
+        var filtered = [];
+        angular.forEach(items, function(item) {
+            filtered.push(item);
+        });
+        filtered.sort(function(a, b) {
+            return (a[field] > b[field] ? 1 : -1);
+        });
+        if (reverse) filtered.reverse();
+        return filtered;
+    };
 });

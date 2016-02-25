@@ -1,4 +1,4 @@
-app.controller('PizzaUpdaterCtrl', function($window, $scope, $rootScope, $pusher, $route, MenuUpdaterService, $http, blockUI) {
+app.controller('PizzaUpdaterCtrl', function($window, $scope, $rootScope, $pusher, $route, MenuUpdaterService, $http, blockUI, ModalService) {
     blockUI.start();
 
     // Dynamic subtitle
@@ -29,6 +29,8 @@ app.controller('PizzaUpdaterCtrl', function($window, $scope, $rootScope, $pusher
             } else {
                 $('#add-item-modal').openModal();
             }
+
+            $('select').material_select();
 
             $('.tooltipped').tooltip({
                 delay: 50
@@ -73,63 +75,9 @@ app.controller('PizzaUpdaterCtrl', function($window, $scope, $rootScope, $pusher
             }];
 
             // Ingredients dropdown datas
-            $scope.ingredients = [{
-                id: 1,
-                label: 'ONIONS',
-                name: 'onions'
-            }, {
-                id: 2,
-                label: 'PARSLEY',
-                name: 'parsley'
-            }, {
-                id: 3,
-                label: 'SALAMI',
-                name: 'salami'
-            }, {
-                id: 4,
-                label: 'TOMATOES',
-                name: 'tomatoes'
-            }, {
-                id: 5,
-                label: 'TUNA',
-                name: 'tuna'
-            }, {
-                id: 6,
-                label: 'BBQ SAUCE',
-                name: 'bbq_sauce'
-            }, {
-                id: 7,
-                label: 'BLACK OLIVE',
-                name: 'black_olive'
-            }, {
-                id: 8,
-                label: 'GARLIC CLOVES',
-                name: 'garlic_cloves'
-            }, {
-                id: 9,
-                label: 'MOZARELLA CHEESE',
-                name: 'mozarella_cheese'
-            }, {
-                id: 10,
-                label: 'OREGANO',
-                name: 'oregano'
-            }, {
-                id: 11,
-                label: 'PINEAPPLE',
-                name: 'pineapple'
-            }, {
-                id: 12,
-                label: 'CORN',
-                name: 'corn'
-            }, {
-                id: 13,
-                label: 'HAM',
-                name: 'ham'
-            }, {
-                id: 14,
-                label: 'JALAPENO',
-                name: 'jalapeno'
-            }];
+            MenuUpdaterService.getIngredients().success(function(data) {
+                $scope.ingredients = data;
+            });
         };
 
         $scope.closeAddModal = function() {
@@ -155,6 +103,7 @@ app.controller('PizzaUpdaterCtrl', function($window, $scope, $rootScope, $pusher
 
         // Save new item
         $scope.save = function(pizza) {
+            blockUI.start();
             // Get uploaded image state
             var imageData = $("cropme").find('.responsive-img').attr('ng-src');
             if (imageData == undefined || !imageData) {
@@ -195,8 +144,6 @@ app.controller('PizzaUpdaterCtrl', function($window, $scope, $rootScope, $pusher
             } else {
                 // close the modal
                 $scope.closeAddModal();
-
-                blockUI.start();
 
                 datas = {
                     name: master.name,
@@ -286,17 +233,18 @@ app.controller('PizzaUpdaterCtrl', function($window, $scope, $rootScope, $pusher
             })
         };
 
+
         // Open ingredients list modals
         $scope.openIngredientsModal = function() {
             $('#ingredients-modal').openModal();
 
-            blockUI.start();
+            blockUI.start('Fetching...');
 
             MenuUpdaterService.getIngredients().success(function(data) {
                 if (data.success == true) {
-                    $rootScope.ingredients = data.message;
+                    $scope.ingreds = data.message;
                 } else {
-                    $rootScope.ingredients = [];
+                    $scope.ingreds = [];
                 }
 
                 blockUI.stop();
@@ -308,8 +256,9 @@ app.controller('PizzaUpdaterCtrl', function($window, $scope, $rootScope, $pusher
             $('#ingredients-modal').closeModal();
             $('#add-ingredients-modal').openModal();
 
+            // auto-generate label from name
             $scope.$watch('ingredient.name', function() {
-                $scope.label = $scope.ingredient.name.toLowerCase().replace(/\s+/g, '-');
+                $scope.ingredient.label = $scope.ingredient.name.toLowerCase().replace(/\s+/g, '-');
             });
 
             // image upload
@@ -328,14 +277,67 @@ app.controller('PizzaUpdaterCtrl', function($window, $scope, $rootScope, $pusher
             };
 
             angular.element(document.querySelector('#fileInput')).on('change', handleFileSelect);
+        };
 
-            // save ingredient data
-            $scope.saveIngredients = function(ingredient) {
-                console.log('test');
-                // Handle the form submission...
-                master = angular.copy(ingredient);
-                console.log("Going to send:", master);
-            };
+        // save ingredient data
+        $scope.saveIngredient = function(ingredient) {
+            blockUI.start('Saving...');
+            // Handle the form submission...
+            if (!ingredient) {
+                blockUI.stop();
+                Materialize.toast('Please fill in the form properly!', 5000);
+            } else {
+                var image = angular.element(document.querySelector('#cropped-image')).val();
+                // Form Validation !!!
+                if (ingredient.name == undefined || ingredient.name == '') {
+                    blockUI.stop();
+                    Materialize.toast('Please enter NAME!', 5000);
+                } else if (image == undefined || image == '') {
+                    blockUI.stop();
+                    Materialize.toast('This item needs an IMAGE!', 5000);
+                } else {
+                    master = angular.copy(ingredient);
+                    var datas = {
+                        name: master.name,
+                        label: master.label,
+                        image: image
+                    };
+                    // get upload link
+                    var url = MenuUpdaterService.getAddIngredientLink();
+                    // send to server
+                    $http.post(url, datas).then(function(response) {
+                        var string = response.message;
+                        if (response.success == true) {
+                            $scope.closeAddIngredient();
+                            $scope.openIngredientsModal();
+                        } else {
+                            Materialize.toast(string, 5000);
+                            blockUI.stop();
+                        }
+                    });
+                }
+            }
+        };
+
+        // delete ingredient item
+        $scope.deleteIngredient = function(id) {
+            blockUI.start();
+            MenuUpdaterService.deleteIngredient(id).success(function(data) {
+                if (data.success == false) {
+                    Materialize.toast(data.message, 5000);
+                } else {
+                    // reload items on menu
+                    MenuUpdaterService.getIngredients().success(function(data) {
+                        if (data.success == true) {
+                            $scope.ingreds = data.message;
+                        } else {
+                            $scope.ingreds = [];
+                        }
+
+                        blockUI.stop();
+                    });
+                }
+            })
         };
 
         // close add ingredient modal

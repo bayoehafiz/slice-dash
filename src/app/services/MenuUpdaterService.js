@@ -16,6 +16,11 @@ app.factory("MenuUpdaterService", ['$http', function($http) {
         //return $http.get('http://localhost:8080/admin/pizza/delete?id=' + id);
     }
 
+    obj.deleteIngredient = function(id) {
+        return $http.get('http://node.colorblindlabs.com:8080/admin/pizza/ingredients/delete?id=' + id);
+        //return $http.get('http://localhost:8080/admin/pizza/delete?id=' + id);
+    }
+
     obj.publishPizza = function(id) {
         return $http.get('http://node.colorblindlabs.com:8080/admin/pizza/publish?id=' + id);
         //return $http.get('http://localhost:8080/admin/pizza/delete?id=' + id);
@@ -33,6 +38,11 @@ app.factory("MenuUpdaterService", ['$http', function($http) {
 
     obj.getUploadLink = function() {
         return 'http://node.colorblindlabs.com:8080/admin/pizza/add';
+        //return 'http://localhost:8080/admin/pizza/add';
+    }
+
+    obj.getAddIngredientLink = function() {
+        return 'http://node.colorblindlabs.com:8080/admin/pizza/ingredients/add';
         //return 'http://localhost:8080/admin/pizza/add';
     }
 

@@ -4,7 +4,7 @@
             <a href="" ng-click="details(item._id)">
                 <div class="card hoverable">
                     <div class="card-image">
-                        <img class="responsive" src="{{item.image}}" />
+                        <img class="responsive" ng-src="{{item.image}}" />
                         <span class="card-title right">
                             <span ng-if="item.published == true"><i class="material-icons medium teal-text text-lighten-1">check_circle</i></span>
                         <span ng-if="item.published == false"><i class="material-icons medium red-text text-lighten-1">pause_circle_filled</i></span>
@@ -72,8 +72,11 @@
                 </div>
             </div>
         </div>
-        <div class="col s12 m12 l12" ng-if="menu.length < 1">
-            <p class="flow-text center-align grey-text">There is no item yet...</p>
+        <div class="col s12 m12 l12" ng-if="menu.length < 1" style="margin-top:20%!important;">
+            <p class="flow-text center-align grey-text">
+                <i class="material-icons large">local_bar</i><br/>
+                No data yet :(
+            </p>
         </div>
     </div>
 </div>
@@ -272,11 +275,9 @@
     </a>
     <ul>
         <li><a class="btn-floating yellow darken-3" ng-click="refresh()"><i class="material-icons">refresh</i></a></li>
-        <li><a href="" ng-click="openIngredientsModal()" class="btn-floating red darken-2"><i class="material-icons">local_pizza</i></a></li>
         <li>
             <a href="" ng-click="openAddModal('desktop')" class="btn-floating grey darken-2 hide-on-small-only"><i class="material-icons">add</i></a>
             <a href="" ng-click="openAddModal('mobile')" class="btn-floating grey darken-2 hide-on-med-and-up"><i class="material-icons">add</i></a>
         </li>
-        <li><a href="" ng-click="release()" class="btn-floating grey darken-2"><i class="material-icons">cloud_upload</i></a></li>
     </ul>
 </div>

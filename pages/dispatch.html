@@ -1,5 +1,5 @@
 <div class="col s12 m6 l4" ng-repeat="item in allOrders | orderBy:'order.date':reverse" ng-show="allOrders.length > 0">
-    <div id="{{item.order.number}}" class="card">
+    <div id="{{item.order.number}}" class="card hoverable">
         <div class="card-content row">
             <div class="col s3 center-align">
                 <i class="medium material-icons yellow-text text-darken-3">local_shipping</i>

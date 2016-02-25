@@ -38,7 +38,7 @@
                             <ul class="collapsible popout" data-collapsible="accordion">
                                 <!-- User's info section -->
                                 <li>
-                                    <div class="collapsible-header active"><i class="material-icons">person_pin</i>USER INFO</div>
+                                    <div class="collapsible-header flow-text active"><i class="material-icons">person_pin</i>USER INFO</div>
                                     <div class="collapsible-body">
                                         <p class="flow-text">
                                             <span class="grey-text"><small>UID</small></span> {{user._id}}
@@ -57,7 +57,7 @@
                                 </li>
                                 <!-- User's orders section -->
                                 <li ng-if="user.status == true && user.orders.length > 0">
-                                    <div class="collapsible-header"><i class="material-icons">local_pizza</i>ORDERS
+                                    <div class="collapsible-header flow-text "><i class="material-icons">local_pizza</i>ORDERS
                                         <span class="right grey-text" ng-if="user.orders.length < 2">{{user.orders.length}} order</span>
                                         <span class="right grey-text" ng-if="user.orders.length > 1">{{user.orders.length}} orders</span>
                                     </div>
@@ -114,7 +114,7 @@
                                 </li>
                                 <!-- User's address section -->
                                 <li ng-if="user.status == true && user.address.length > 0">
-                                    <div class="collapsible-header"><i class="material-icons">location_on</i>ADDRESSES
+                                    <div class="collapsible-header flow-text"><i class="material-icons">location_on</i>ADDRESSES
                                         <span class="right grey-text" ng-if="user.address.length < 2">{{user.address.length}} location</span>
                                         <span class="right grey-text" ng-if="user.address.length > 1">{{user.address.length}} locations</span>
                                     </div>
@@ -150,7 +150,7 @@
                                     </div>
                                 </li>
                                 <li ng-if="user.status == true && user.logs">
-                                    <div class="collapsible-header"><i class="material-icons">assignment</i>LOGS</div>
+                                    <div class="collapsible-header flow-text"><i class="material-icons">assignment</i>LOGS</div>
                                     <div class="collapsible-body">
                                         <p>Lorem ipsum dolor sit amet.</p>
                                     </div>
