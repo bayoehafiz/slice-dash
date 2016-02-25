@@ -30,7 +30,6 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                         });
                         // Pass values to scope
                         $rootScope.allOrders = allOrders;
-
                     }
                 });
             })

@@ -43,11 +43,11 @@ app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, Orde
                                 'delivery': value.delivery,
                                 'order': order
                             });
+                            console.log(order);
                         }
                     });
                     // Pass values to scope
                     $rootScope.allOrders = allOrders;
-                    //console.log(allOrders);
                 }
             });
 

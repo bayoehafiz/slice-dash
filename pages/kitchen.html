@@ -23,7 +23,7 @@
                 <ul class="collection with-header">
                     <li class="collection-header center-align grey darken-4 orange-text text-lighten-1">
                         <h4>
-                            <small>Order #</small><strong>{{item.order.number}}</strong>
+                            #<strong>{{item.order.number}}</strong>
                         </h4>
                     </li>
                     <li class="collection-item" ng-repeat="pizza in item.order.pizza">
@@ -45,7 +45,7 @@
                     </li>
                     <li class="collection-item" ng-repeat="drink in item.order.drinks" ng-if="item.order.drinks">
                         <div class="row valign-wrapper" style="margin-bottom: 0;">
-                            <div class="col s2">
+                            <div class="col s2 right-align">
                                 <h3>{{drink.qty}}</h3>
                             </div>
                             <div class="col s10 valign">
