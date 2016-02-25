@@ -41,6 +41,19 @@
                             </div>
                         </div>
                     </li>
+                    <li class="collection-item" ng-repeat="drink in item.order.drinks" ng-if="item.order.drinks">
+                        <div class="row valign-wrapper" style="margin-bottom: 0;">
+                            <div class="col s2 valign">
+                                <h1>{{drink.qty}}</h1>
+                            </div>
+                            <div class="col s10 valign">
+                                <blockquote>
+                                    <h6><strong>{{drink.name | uppercase}}</strong></h6>
+                                    Price: {{drink.price | currency:'IDR ':0}}
+                                </blockquote>
+                            </div>
+                        </div>
+                    </li>
                     <li class="collection-footer red darken-3 white-text">
                         <div class="row center-align" style="margin-bottom:0px!important;">
                             <div class="col s12">

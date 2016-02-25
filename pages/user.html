@@ -77,6 +77,10 @@
                                                         <br/>
                                                         <span class="grey-text" ng-if="pizza.request"><i class="material-icons tiny">feedback</i></span><span ng-if="pizza.request"> {{pizza.request | uppercase}}</span>
                                                     </blockquote>
+                                                    <blockquote ng-repeat="drink in order.drinks" ng-if="order.drinks" style="margin-left: 20px;margin-right: 10px;">
+                                                        <h5>{{drink.qty}} x <strong>{{drink.name | uppercase}}</strong></h5>
+                                                        <span class="grey-text">Price</span> {{drink.price | currency:'IDR ':0}}
+                                                    </blockquote>
                                                     <p class="flow-text" style="padding-top: 0;">
                                                         <span class="grey-text"><small>Total Order</small></span>
                                                         <br/>{{order.total | currency:'IDR ':0}}
