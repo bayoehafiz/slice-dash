@@ -34,7 +34,7 @@
                             <div class="col s10 valign">
                                 <blockquote>
                                     <h5><strong>{{pizza.name | uppercase}}</strong></h5>
-                                    <span class="grey-text">Crust</span> {{pizza.crust | uppercase}}
+                                     <span class="grey-text">Size</span> {{pizza.size | uppercase}} <span class="grey-text"> / Crust</span> {{pizza.crust | uppercase}}
                                     <br/><span class="grey-text">Price</span> {{pizza.itemPrice | currency:'IDR ':0}}
                                     <br/><span class="grey-text">Sub Total</span> {{pizza.itemPrice * pizza.quantity | currency:'IDR ':0}}
                                     <br/>
