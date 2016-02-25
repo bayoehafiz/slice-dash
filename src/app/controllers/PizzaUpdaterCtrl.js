@@ -1,10 +1,10 @@
-app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher, $route, MenuUpdaterService, $http, blockUI) {
+app.controller('PizzaUpdaterCtrl', function($window, $scope, $rootScope, $pusher, $route, MenuUpdaterService, $http, blockUI) {
     blockUI.start();
 
     // Dynamic subtitle
-    $('#logo-subtitle').text('MENU UPDATER');
+    $('#logo-subtitle').text('PIZZAS UPDATER');
 
-    MenuUpdaterService.getMenu().success(function(data) {
+    MenuUpdaterService.getPizzas().success(function(data) {
 
         if (data.success == true) {
             $rootScope.menu = data.message;
@@ -214,7 +214,7 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
                     if (response.success == true) {
 
                         // reload items on menu
-                        MenuUpdaterService.getMenu().success(function(data) {
+                        MenuUpdaterService.getPizzas().success(function(data) {
                             if (data.success == true) {
                                 $rootScope.menu = data.message;
                             } else {
@@ -244,7 +244,7 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
                     Materialize.toast(data.message, 5000);
                 } else {
                     // reload items on menu
-                    MenuUpdaterService.getMenu().success(function(data) {
+                    MenuUpdaterService.getPizzas().success(function(data) {
                         if (data.success == true) {
                             $rootScope.menu = data.message;
                         } else {
@@ -265,7 +265,7 @@ app.controller('MenuUpdaterCtrl', function($window, $scope, $rootScope, $pusher,
                     Materialize.toast(response.message, 5000);
                 } else {
                     // reload items on menu
-                    MenuUpdaterService.getMenu().success(function(data) {
+                    MenuUpdaterService.getPizzas().success(function(data) {
                         if (data.success == true) {
                             $rootScope.menu = data.message;
                         } else {

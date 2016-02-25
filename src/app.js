@@ -26,10 +26,16 @@ app.config(function($routeProvider) {
         controller: 'WaitingListCtrl'
     })
 
-    // route for the menu-updater section
-    .when('/updater', {
-        templateUrl: 'pages/menu_updater.html',
-        controller: 'MenuUpdaterCtrl'
+    // route for the pizza-updater section
+    .when('/pizza', {
+        templateUrl: 'pages/pizza_updater.html',
+        controller: 'PizzaUpdaterCtrl'
+    })
+
+    // route for the extra-updater section
+    .when('/extra', {
+        templateUrl: 'pages/extra_updater.html',
+        controller: 'ExtraUpdaterCtrl'
     })
 
     .otherwise({
