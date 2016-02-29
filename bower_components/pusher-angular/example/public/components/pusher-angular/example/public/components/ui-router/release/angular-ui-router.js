@@ -3023,7 +3023,7 @@ function $ViewScrollProvider() {
    * @methodOf ui.router.state.$uiViewScrollProvider
    *
    * @description
-   * Reverts back to using the core [`$anchorScroll`](http://docs.angularjs.org/api/ng.$anchorScroll) service for
+   * Reverts back to using the core [`$anchorScroll`](http://docs.angularjs.org/ng.$anchorScroll) service for
    * scrolling based on the url anchor.
    */
   this.useAnchorScroll = function () {
@@ -3083,7 +3083,7 @@ angular.module('ui.router.state').provider('$uiViewScroll', $ViewScrollProvider)
  * service, {@link ui.router.state.$uiViewScroll}. This custom service let's you
  * scroll ui-view elements into view when they are populated during a state activation.
  *
- * *Note: To revert back to old [`$anchorScroll`](http://docs.angularjs.org/api/ng.$anchorScroll)
+ * *Note: To revert back to old [`$anchorScroll`](http://docs.angularjs.org/ng.$anchorScroll)
  * functionality, call `$uiViewScrollProvider.useAnchorScroll()`.*
  *
  * @param {string=} onload Expression to evaluate whenever the view updates.

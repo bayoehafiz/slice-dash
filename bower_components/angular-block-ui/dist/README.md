@@ -145,7 +145,7 @@ $timeout(function() {
 Automatic blocking elements can be done by providing the `block-ui` directive a `block-ui-pattern` attribute. This attribute should contain a valid regular expression, which indicates the requests that are associated with the specific element.
 
 ```
-<!-- Initiated the UI block whenever a request to '/api/quote' is performed -->
+<!-- Initiated the UI block whenever a request to '/quote' is performed -->
 <div block-ui block-ui-pattern="/^\/api\/quote($|\/).*/"></div>
   <p> ... I'm blockable ... </p>
 </div>
@@ -216,11 +216,11 @@ By default the BlockUI module will reset the block count and hide the overlay wh
     blockUIConfig.resetOnException = false;
     
 #### requestFilter
-Allows you to specify a filter function to exclude certain ajax requests from blocking the user interface. The function is passed the [Angular request config object](http://docs.angularjs.org/api/ng/service/$http). The blockUI service will ignore requests when the function returns `false`.
+Allows you to specify a filter function to exclude certain ajax requests from blocking the user interface. The function is passed the [Angular request config object](http://docs.angularjs.org/ng/service/$http). The blockUI service will ignore requests when the function returns `false`.
 
 	// Tell the blockUI service to ignore certain requests
     blockUIConfig.requestFilter = function(config) {
-	  // If the request starts with '/api/quote' ...
+	  // If the request starts with '/quote' ...
       if(config.url.match(/^\/api\/quote($|\/).*/)) {
         return false; // ... don't block it.
       }

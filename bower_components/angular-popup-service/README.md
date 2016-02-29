@@ -3,7 +3,7 @@ angular-popup-service
 
 Library for handling popup boxes in angular
 
-ngPopup wraps the native [Popup Boxes](http://www.w3schools.com/js/js_popup.asp) in a promise layer with [$q](https://docs.angularjs.org/api/ng/service/$q).
+ngPopup wraps the native [Popup Boxes](http://www.w3schools.com/js/js_popup.asp) in a promise layer with [$q](https://docs.angularjs.org/ng/service/$q).
 For non [mobile devices](http://stackoverflow.com/questions/3514784/what-is-the-best-way-to-detect-a-handheld-device-in-jquery?answertab=votes#answer-3540295) the dialog boxes are replaced by a html template but still using the same API.
 
 ## Installation

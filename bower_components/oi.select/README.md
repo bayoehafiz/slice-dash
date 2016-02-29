@@ -5,7 +5,7 @@
 ## Features
 
 * multiselect
-* API compatible with [Angular select](http://docs.angularjs.org/api/ng/directive/select)
+* API compatible with [Angular select](http://docs.angularjs.org/ng/directive/select)
 * Angular 1.2+ without jQuery and other dependencies
 * search options by substring (including the search query to the server)
 * use [Bootstrap](http://getbootstrap.com) styles (but you can use own styles)
@@ -80,7 +80,7 @@ Use `oi-select` directive:
 
 ## Attributes
 ### oi-select directive
-* `oi-options` — see: [ngOptions](http://docs.angularjs.org/api/ng/directive/ngOptions)
+* `oi-options` — see: [ngOptions](http://docs.angularjs.org/ng/directive/ngOptions)
   * `oi-options="item for item in shopArrShort | limitTo: 3"` — filter input list
   * `oi-options="item for item in shopArrFn($query, $selectedAs)"` — generate input list (expects array/object or promise)
 * `ng-model` — chosen item/items

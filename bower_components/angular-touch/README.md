@@ -41,7 +41,7 @@ angular.module('myApp', ['ngTouch']);
 ## Documentation
 
 Documentation is available on the
-[AngularJS docs site](http://docs.angularjs.org/api/ngTouch).
+[AngularJS docs site](http://docs.angularjs.org/ngTouch).
 
 ## License
 

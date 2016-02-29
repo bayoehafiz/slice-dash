@@ -41,7 +41,7 @@ angular.module('myApp', ['ngSanitize']);
 ## Documentation
 
 Documentation is available on the
-[AngularJS docs site](http://docs.angularjs.org/api/ngSanitize).
+[AngularJS docs site](http://docs.angularjs.org/ngSanitize).
 
 ## License
 

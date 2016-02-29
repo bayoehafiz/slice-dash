@@ -25,7 +25,7 @@ And add this to your HTML:
 Usage
 -----
 
-Refer to [https://docs.angularjs.org/api/ngTouch/service/$swipe]https://docs.angularjs.org/api/ngTouch/service/$swipe
+Refer to [https://docs.angularjs.org/ngTouch/service/$swipe]https://docs.angularjs.org/ngTouch/service/$swipe
 Just ignore this section:
 
 > If the vertical distance is greater, this is a scroll, and we let the browser take over. A cancel event is sent.

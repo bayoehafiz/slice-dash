@@ -13,7 +13,7 @@
     <link href="bower_components/ng-img-crop/compile/minified/ng-img-crop.css">
     <link type="text/css" rel="stylesheet" href="src/style/style.css">
     <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
 
 <body ng-app="SliceDashApp" ng-cloak>
@@ -79,8 +79,18 @@
     <script src='//www.google.com/recaptcha/api.js'></script>
     <script src="//js.pusher.com/3.0/pusher.min.js"></script>
     <script src="//cdn.jsdelivr.net/angular.pusher/latest/pusher-angular.min.js"></script>
+    <!-- Auth0 required scripts -->
+    <script src="//code.angularjs.org/1.2.16/angular-cookies.min.js"></script>
+    <!-- Auth0 Lock script and AngularJS module -->
+    <script src="//cdn.auth0.com/js/lock-8.2.min.js"></script>
+    <!-- angular-jwt and angular-storage -->
+    <script type="text/javascript" src="//cdn.rawgit.com/auth0/angular-storage/master/dist/angular-storage.js"></script>
+    <script type="text/javascript" src="//cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js"></script>
+    <script src="//cdn.auth0.com/w2/auth0-angular-4.js"></script>
     <!-- App's main script -->
     <script src="src/app.js"></script>
+    <!-- App's filter script -->
+    <script src="src/app/filters/filters.js"></script>
     <!-- App's directives -->
     <script src="src/app/directives/capitalizeFirst.js"></script>
     <script src="src/app/directives/mediaPreview.js"></script>
@@ -92,6 +102,7 @@
     <script src="src/app/services/PusherService.js"></script>
     <script src="src/app/services/ModalService.js"></script>
     <!-- App's controllers -->
+    <script src="src/app/controllers/LoginCtrl.js"></script>
     <script src="src/app/controllers/KitchenCtrl.js"></script>
     <script src="src/app/controllers/DriverCtrl.js"></script>
     <script src="src/app/controllers/CompletedCtrl.js"></script>

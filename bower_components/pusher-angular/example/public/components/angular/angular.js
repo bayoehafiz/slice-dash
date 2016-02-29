@@ -2372,7 +2372,7 @@ function JQLite(element) {
   }
   if (!(this instanceof JQLite)) {
     if (isString(element) && element.charAt(0) != '<') {
-      throw jqLiteMinErr('nosel', 'Looking up elements via selectors is not supported by jqLite! See: http://docs.angularjs.org/api/angular.element');
+      throw jqLiteMinErr('nosel', 'Looking up elements via selectors is not supported by jqLite! See: http://docs.angularjs.org/angular.element');
     }
     return new JQLite(element);
   }
@@ -8807,7 +8807,7 @@ function $InterpolateProvider() {
           throw $interpolateMinErr('noconcat',
               "Error while interpolating: {0}\nStrict Contextual Escaping disallows " +
               "interpolations that concatenate multiple expressions when a trusted value is " +
-              "required.  See http://docs.angularjs.org/api/ng.$sce", text);
+              "required.  See http://docs.angularjs.org/ng.$sce", text);
       }
 
       if (!mustHaveExpression  || hasInterpolation) {
@@ -13849,7 +13849,7 @@ function $SceProvider() {
       throw $sceMinErr('iequirks',
         'Strict Contextual Escaping does not support Internet Explorer version < 9 in quirks ' +
         'mode.  You can fix this by adding the text <!doctype html> to the top of your HTML ' +
-        'document.  See http://docs.angularjs.org/api/ng.$sce for more information.');
+        'document.  See http://docs.angularjs.org/ng.$sce for more information.');
     }
 
     var sce = shallowCopy(SCE_CONTEXTS);
@@ -14367,7 +14367,7 @@ var originUrl = urlResolve(window.location.href, true);
  * Parsing means that the anchor node's host, hostname, protocol, port, pathname and related
  * properties are all populated to reflect the normalized URL.  This approach has wide
  * compatibility - Safari 1+, Mozilla 1+, Opera 7+,e etc.  See
- * http://www.aptana.com/reference/html/api/HTMLAnchorElement.html
+ * http://www.aptana.com/reference/html/HTMLAnchorElement.html
  *
  * Implementation Notes for IE
  * ---------------------------
@@ -14387,7 +14387,7 @@ var originUrl = urlResolve(window.location.href, true);
  *
  * References:
  *   http://developer.mozilla.org/en-US/docs/Web/API/HTMLAnchorElement
- *   http://www.aptana.com/reference/html/api/HTMLAnchorElement.html
+ *   http://www.aptana.com/reference/html/HTMLAnchorElement.html
  *   http://url.spec.whatwg.org/#urlutils
  *   https://github.com/angular/angular.js/pull/2902
  *   http://james.padolsey.com/javascript/parsing-urls-with-the-dom/
