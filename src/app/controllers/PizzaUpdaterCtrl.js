@@ -39,44 +39,44 @@ app.controller('PizzaUpdaterCtrl', function($window, $scope, $rootScope, $pusher
             // Size dropdown datas
             $scope.sizes = [{
                 id: 1,
-                label: 'SMALL',
-                name: 'small'
+                label: 'small',
+                name: 'Small'
             }, {
                 id: 2,
-                label: 'REGULAR',
-                name: 'regular'
+                label: 'regular',
+                name: 'Regular'
             }, {
                 id: 3,
-                label: 'LARGE',
-                name: 'large'
+                label: 'large',
+                name: 'Large'
             }];
 
             // Crust dropdown datas
             $scope.crusts = [{
                 id: 1,
-                label: 'THIN',
-                name: 'thin'
+                label: 'thin',
+                name: 'Thin'
             }, {
                 id: 2,
-                label: 'THICK',
-                name: 'thick'
+                label: 'thick',
+                name: 'Thick'
             }, {
                 id: 3,
-                label: 'MEDIUM',
-                name: 'medium'
+                label: 'medium',
+                name: 'Medium'
             }, {
                 id: 4,
-                label: 'SOFT',
-                name: 'soft'
+                label: 'soft',
+                name: 'Soft'
             }, {
                 id: 5,
-                label: 'CRACKER',
-                name: 'cracker'
+                label: 'cracker',
+                name: 'Cracker'
             }];
 
             // Ingredients dropdown datas
             MenuUpdaterService.getIngredients().success(function(data) {
-                $scope.ingredients = data;
+                $scope.ingredients = data.message;
             });
         };
 
@@ -91,7 +91,7 @@ app.controller('PizzaUpdaterCtrl', function($window, $scope, $rootScope, $pusher
             if (ratio != 0.6153846153846154) {
                 $scope.$broadcast("cropme:cancel");
                 blockUI.stop();
-                Materialize.toast('FAILED! Image ratio must be 0.62:1 (ex. 800p X 1300p)', 5000);
+                Materialize.toast('FAILED! Image dimension must be 800px X 1300px', 5000);
             }
             blockUI.stop();
         });
