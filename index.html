@@ -18,16 +18,28 @@
 
 <body ng-app="SliceDashApp" ng-cloak>
     <!--Navigation Bar-->
-    <div class="navbar-fixed">
+    <div class="navbar-fixed" ng-controller="NavCtrl">
+        <ul id="dropdown-orders" class="dropdown-content">
+            <li><a href="#">KITCHEN</a></li>
+            <li><a href="#dispatched">DISPATCH</a></li>
+            <li><a href="#completed">COMPLETED</a></li>
+        </ul>
+        <ul id="dropdown-updater" class="dropdown-content">
+            <li><a href="#pizza">PIZZAS</a></li>
+            <li><a href="#extra">EXTRAS</a></li>
+        </ul>
+        <ul id="dropdown-manager" class="dropdown-content">
+            <li><a href="#user">USERS</a></li>
+            <li><a href="#list">WAITING LIST</a></li>
+        </ul>
         <nav>
             <div class="nav-wrapper">
-                <span class="brand-logo left hide-on-small-only" style="vertical-align:center;margin-left:10px;">
+                <span class="brand-logo left hide-on-small-only" style="vertical-align:center;margin-left:20px;">
                     <img src="img/logo.png" style="margin-top: 10px;width:120px;"/>
                 </span>
                 <span class="brand-logo left hide-on-med-and-up" style="vertical-align:center;margin-left:10px;"><!-- on mobile only -->
                     <img src="img/logo.png" style="margin-top: 12px;width:90px;"/>
                 </span>
-                <span id="logo-subtitle" class="brand-logo center hide-on-small-only"></span>
                 <!-- Mobile menu -->
                 <a href="#" data-activates="mobile-menu" class="button-collapse right hide-on-med-and-up" style="margin-right: 5px;"><i class="material-icons">more_vert</i></a>
                 <ul class="side-nav" id="mobile-menu">
@@ -36,14 +48,14 @@
                     <li><a href="#pizza"><i class="material-icons left">local_pizza</i>PIZZAS UPDATER</a></li>
                     <li><a href="#extra"><i class="material-icons left">local_bar</i>EXTRAS UPDATER</a></li>
                     <li><a href="#list"><i class="material-icons left">recent_actors</i>WAITING LIST</a></li>
+                    <li ng-if="signed == true"><a href="#list"><i class="material-icons left">power_settings_new</i>WAITING LIST</a></li>
                 </ul>
                 <!-- Non mobile menu -->
                 <ul class="right hide-on-small-only">
-                    <li><a href="#"><i class="material-icons">assignment</i></a></li>
-                    <li><a href="#user"><i class="material-icons">people</i></a></li>
-                    <li><a href="#pizza"><i class="material-icons">local_pizza</i></a></li>
-                    <li><a href="#extra"><i class="material-icons">local_bar</i></a></li>
-                    <li><a href="#list"><i class="material-icons">recent_actors</i></a></li>
+                    <li><a class="dropdown-button" href="#!" data-activates="dropdown-orders">KITCHEN<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li><a class="dropdown-button" href="#!" data-activates="dropdown-updater">DB UPDATER<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li><a class="dropdown-button" href="#!" data-activates="dropdown-manager">DATA MANAGER<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li ng-if="signed"><a href="" ng-click="signout()"><i class="material-icons right">power_settings_new</i></a></li>
                 </ul>
             </div>
         </nav>
@@ -105,6 +117,7 @@
     <script src="src/app/services/PusherService.js"></script>
     <script src="src/app/services/ModalService.js"></script>
     <!-- App's controllers -->
+    <script src="src/app/controllers/NavCtrl.js"></script>
     <script src="src/app/controllers/LoginCtrl.js"></script>
     <script src="src/app/controllers/KitchenCtrl.js"></script>
     <script src="src/app/controllers/DriverCtrl.js"></script>

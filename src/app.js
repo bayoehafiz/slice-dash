@@ -72,32 +72,38 @@ app.config(function(authProvider, $routeProvider, $locationProvider, $httpProvid
         loginUrl: '/auth'
     });
 
-    // We're annotating this function so that the `store` is injected correctly when this file is minified
-    jwtInterceptorProvider.tokenGetter = ['store', function(store) {
-        // Return the saved token
+    jwtInterceptorProvider.tokenGetter = function(store) {
         return store.get('token');
-    }];
+    }
 
+    // Add a simple interceptor that will fetch all requests and add the jwt token to its authorization header.
+    // NOTE: in case you are calling APIs which expect a token signed with a different secret, you might
+    // want to check the delegation-token example
     $httpProvider.interceptors.push('jwtInterceptor');
-});
+})
 
 app.run(function($rootScope, auth, store, jwtHelper, $location) {
     // This hooks al auth events to check everything as soon as the app starts
     auth.hookEvents();
 
-    // This events gets triggered on refresh or URL change
-    $rootScope.$on('$locationChangeStart', function() {
-        var token = store.get('token');
-        if (token) {
-            console.log('Got the token!');
-            if (!jwtHelper.isTokenExpired(token)) {
-                if (!auth.isAuthenticated) {
+    var checkAuth = function() {
+        if (!auth.isAuthenticated) {
+            $rootScope.signed = false;
+            var token = store.get('token');
+            if (token) {
+                if (!jwtHelper.isTokenExpired(token)) {
                     auth.authenticate(store.get('profile'), token);
+                } else {
+                    $location.path('/auth');
                 }
-            } else {
-                // Either show the login page or use the refresh token to get a new idToken
-                $location.path('/');
             }
+        } else {
+            $rootScope.signed = true;
         }
+    }
+
+
+    $rootScope.$on('$locationChangeStart', function() {
+        checkAuth();
     });
 });
