@@ -102,7 +102,6 @@ app.run(function($rootScope, auth, store, jwtHelper, $location) {
         }
     }
 
-
     $rootScope.$on('$locationChangeStart', function() {
         checkAuth();
     });
