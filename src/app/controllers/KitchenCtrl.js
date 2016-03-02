@@ -5,6 +5,13 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
     // Dynamic subtitle
     $('#logo-subtitle').html('ORDERS <small>kitchen</small>');
 
+    // Get static maps function
+    function getStaticMap(lat, long) {
+        var url = 'https://maps.googleapis.com/maps/staticmap?center=' + lat + ',' + long + '&zoom=14&size=300x200&maptype=roadmap&markers=color:red%7Clabel:D%7C' + lat + ',' + long + '&key=x9zt0CqTiC-fOE8bvd4KJ746pr4=';
+        //var url = "https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284"
+        return url;
+    }
+
     // Pusher notification /////////////////////
     var client = new Pusher('b7b402b4f6325e3561ed');
     var pusher = $pusher(client);
@@ -20,11 +27,18 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                     if (value.orders.length > 0) {
                         angular.forEach(value.orders, function(order) {
                             if (order.delivery.status == 'processed') {
+                                var map = [{
+                                    color: 'blue',
+                                    label: 'X',
+                                    coords: order.delivery.latitude + ',' + order.delivery.longitude
+                                }];
+
                                 allOrders.push({
                                     'phone': value.phone_no,
                                     'customer': value.fname + ' ' + value.lname,
                                     'delivery': value.delivery,
-                                    'order': order
+                                    'order': order,
+                                    'markers': map
                                 });
                             }
                         });
@@ -62,11 +76,18 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                     angular.forEach(value.orders, function(order) {
                         //console.log(order);
                         if (order.delivery.status == 'processed') {
+                            var map = [{
+                                color: 'blue',
+                                label: 'X',
+                                coords: [order.delivery.latitude + ',' + order.delivery.longitude]
+                            }];
+
                             allOrders.push({
                                 'phone': value.phone_no,
                                 'customer': value.fname + ' ' + value.lname,
                                 'delivery': value.delivery,
-                                'order': order
+                                'order': order,
+                                'markers': map
                             });
                         }
                     });
@@ -91,11 +112,13 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                                 if (value.orders.length > 0) {
                                     angular.forEach(value.orders, function(order) {
                                         if (order.delivery.status == 'processed') {
+                                            var map = getStaticMap(order.delivery.latitude, order.delivery.longitude);
                                             allOrders.push({
                                                 'phone': value.phone_no,
                                                 'customer': value.fname + ' ' + value.lname,
                                                 'delivery': value.delivery,
-                                                'order': order
+                                                'order': order,
+                                                'map': map
                                             });
                                         }
                                     });
@@ -134,11 +157,13 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                             angular.forEach(data, function(value) {
                                 if (value.orders.length > 0) {
                                     angular.forEach(value.orders, function(order) {
+                                        var map = getStaticMap(order.delivery.latitude, order.delivery.longitude);
                                         allOrders.push({
                                             'phone': value.phone_no,
                                             'customer': value.fname + ' ' + value.lname,
                                             'delivery': value.delivery,
-                                            'order': order
+                                            'order': order,
+                                            'map': map
                                         });
                                     });
                                     // Pass values to scope

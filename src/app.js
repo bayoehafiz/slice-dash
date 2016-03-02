@@ -1,4 +1,4 @@
-var app = angular.module('SliceDashApp', ['ngRoute', 'auth0', 'angular-storage', 'angular-jwt', 'angularMoment', 'pusher-angular', 'oi.select', 'multi-check', 'cropme', 'ui.utils.masks', 'blockUI', 'ngImgCrop']);
+var app = angular.module('SliceDashApp', ['ngRoute', 'auth0', 'angular-storage', 'angular-jwt', 'angularMoment', 'pusher-angular', 'oi.select', 'multi-check', 'cropme', 'ui.utils.masks', 'blockUI', 'ngImgCrop', 'wu.staticGmap']);
 
 app.config(function(authProvider, $routeProvider, $locationProvider, $httpProvider, jwtInterceptorProvider) {
     $routeProvider
@@ -86,23 +86,23 @@ app.run(function($rootScope, auth, store, jwtHelper, $location) {
     // This hooks al auth events to check everything as soon as the app starts
     auth.hookEvents();
 
-    var checkAuth = function() {
-        if (!auth.isAuthenticated) {
-            $rootScope.signed = false;
+    $rootScope.$on('$locationChangeStart', function() {
+        if (!auth.isAuthenticated) { //if not authenticated
             var token = store.get('token');
             if (token) {
-                if (!jwtHelper.isTokenExpired(token)) {
+                if (!jwtHelper.isTokenExpired(token)) { // if token is not expired
                     auth.authenticate(store.get('profile'), token);
-                } else {
+                    $rootScope.signed = false;
+                    console.log('Not signed in!');
+                } else { // if token is expired
+                    $rootScope.signed = false;
+                    console.log('Token expired!');
                     $location.path('/auth');
                 }
             }
-        } else {
+        } else { // if authenticated
             $rootScope.signed = true;
+            console.log('Signed in!');
         }
-    }
-
-    $rootScope.$on('$locationChangeStart', function() {
-        checkAuth();
     });
 });

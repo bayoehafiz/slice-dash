@@ -11,4 +11,8 @@ app.controller('LoginCtrl', function($scope, $rootScope, $http, auth, store, $lo
             console.log(err);
         });
     }
+
+    $scope.send = function(number) {
+        // nothing here
+    }
 });
