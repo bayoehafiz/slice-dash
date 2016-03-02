@@ -96,7 +96,13 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                 }
             });
 
-            // Assign courier
+
+            // Set a courier
+            $scope.setCourier = function(number) {
+                Materialize.toast('Courier for #' + number, 5000);
+            }
+
+            // Assign a courier
             $scope.assign = function(phone, number, courierName, courierPhone) {
                 // Loader
                 blockUI.start();
@@ -112,13 +118,18 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                                 if (value.orders.length > 0) {
                                     angular.forEach(value.orders, function(order) {
                                         if (order.delivery.status == 'processed') {
-                                            var map = getStaticMap(order.delivery.latitude, order.delivery.longitude);
+                                            var map = [{
+                                                color: 'blue',
+                                                label: 'X',
+                                                coords: [order.delivery.latitude + ',' + order.delivery.longitude]
+                                            }];
+
                                             allOrders.push({
                                                 'phone': value.phone_no,
                                                 'customer': value.fname + ' ' + value.lname,
                                                 'delivery': value.delivery,
                                                 'order': order,
-                                                'map': map
+                                                'markers': map
                                             });
                                         }
                                     });
@@ -157,13 +168,18 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                             angular.forEach(data, function(value) {
                                 if (value.orders.length > 0) {
                                     angular.forEach(value.orders, function(order) {
-                                        var map = getStaticMap(order.delivery.latitude, order.delivery.longitude);
+                                        var map = [{
+                                            color: 'blue',
+                                            label: 'X',
+                                            coords: [order.delivery.latitude + ',' + order.delivery.longitude]
+                                        }];
+
                                         allOrders.push({
                                             'phone': value.phone_no,
                                             'customer': value.fname + ' ' + value.lname,
                                             'delivery': value.delivery,
                                             'order': order,
-                                            'map': map
+                                            'markers': map
                                         });
                                     });
                                     // Pass values to scope

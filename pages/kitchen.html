@@ -83,13 +83,13 @@
                 </div>
                 <div class="row">
                     <span class="col s12 center">   
-                        <static-gmap size="300x200" markers="item.markers" sensor="false" zoom="15" class="responsive-img"></static-gmap>
+                        <static-gmap size="600x400" markers="item.markers" sensor="false" zoom="18" class="responsive-img"></static-gmap>
                     </span>
-                    <span class="col s12"><h6 class="grey-text">Delivery Address</h6><h5>{{item.order.delivery.drop_address}} {{item.order.delivery.drop_address_number}}</h5></span>
-                    <span class="col s12" ng-if="item.order.delivery.additional_address"><h6 class="grey-text">Additional Direction / Info</h6><h5>{{item.order.delivery.additional_address}}</h5></span>
+                    <span class="col s12 center"><h6 class="grey-text">Delivery Address</h6><h5>{{item.order.delivery.drop_address}} {{item.order.delivery.drop_address_number}}</h5></span>
+                    <span class="col s12 center" ng-if="item.order.delivery.additional_address"><h6 class="grey-text">Additional Direction / Info</h6><h5>{{item.order.delivery.additional_address}}</h5></span>
                 </div>
                 <div class="row divider"></div>
-                <div class="row center-align">
+                <!--<div class="row center-align">
                     <div class="input-field col s12">
                         <input id="courier-name" type="text" class="validate" ng-model="courierName" capitalize-first>
                         <label for="courier-name">Courier Name</label>
@@ -102,6 +102,11 @@
                 <div class="row center">
                     <div class="col s12">
                         <a class="waves-effect waves-light btn-flat center-align teal-text" ng-click="assign(item.phone, item.order.number, courierName, courierPhone)">Assign courier</a>
+                    </div>
+                </div>-->
+                <div class="row center">
+                    <div class="col s12">
+                        <a class="waves-effect waves-light btn-flat center-align teal-text" ng-click="setCourier(item.order.number)">Assign courier</a>
                     </div>
                 </div>
             </div>
