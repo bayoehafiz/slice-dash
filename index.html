@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
     <link rel="stylesheet" href="bower_components/oi.select/dist/select.css">
     <link rel="stylesheet" href="bower_components/cropme/cropme.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">
     <link href="bower_components/angular-block-ui/dist/angular-block-ui.min.css" rel="stylesheet" />
     <link href="bower_components/angular-popup-service/styles/angular-popup.css">
     <link href="bower_components/ng-img-crop/compile/minified/ng-img-crop.css">
@@ -52,7 +53,7 @@
                 </ul>
                 <!-- Non mobile menu -->
                 <ul class="right hide-on-small-only">
-                    <li><a class="dropdown-button" href="#!" data-activates="dropdown-orders">KITCHEN<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li><a class="dropdown-button" href="#!" data-activates="dropdown-orders">ORDERS<i class="material-icons right">arrow_drop_down</i></a></li>
                     <li><a class="dropdown-button" href="#!" data-activates="dropdown-updater">DB UPDATER<i class="material-icons right">arrow_drop_down</i></a></li>
                     <li><a class="dropdown-button" href="#!" data-activates="dropdown-manager">DATA MANAGER<i class="material-icons right">arrow_drop_down</i></a></li>
                     <li><a href="" ng-click="signout()"><i class="material-icons right">power_settings_new</i></a></li>
@@ -65,6 +66,8 @@
         <!-- this is where content will be injected -->
         <div ng-view></div>
     </div>
+    <!-- Mapbox/Leaflet libraries -->
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
     <!-- Angular Libraries -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="src/angular-locale_id.js"></script>
@@ -89,7 +92,7 @@
     <script src="bower_components/angular-block-ui/dist/angular-block-ui.min.js"></script>
     <script src="bower_components/ng-img-crop/compile/unminified/ng-img-crop.js"></script>
     <script src="bower_components/angular-google-staticmaps/angular-google-staticmaps.js"></script>
-    <script src='//www.google.com/recaptcha/api.js'></script>
+    <script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
     <script src="//js.pusher.com/3.0/pusher.min.js"></script>
     <script src="//cdn.jsdelivr.net/angular.pusher/latest/pusher-angular.min.js"></script>
     <!-- We use client cookies to save the user credentials -->

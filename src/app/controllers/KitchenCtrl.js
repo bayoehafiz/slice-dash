@@ -1,16 +1,7 @@
 app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, OrderService, $route, blockUI) {
-    // preloader
-    blockUI.start();
 
     // Dynamic subtitle
     $('#logo-subtitle').html('ORDERS <small>kitchen</small>');
-
-    // Get static maps function
-    function getStaticMap(lat, long) {
-        var url = 'https://maps.googleapis.com/maps/staticmap?center=' + lat + ',' + long + '&zoom=14&size=300x200&maptype=roadmap&markers=color:red%7Clabel:D%7C' + lat + ',' + long + '&key=x9zt0CqTiC-fOE8bvd4KJ746pr4=';
-        //var url = "https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284"
-        return url;
-    }
 
     // Pusher notification /////////////////////
     var client = new Pusher('b7b402b4f6325e3561ed');
@@ -27,18 +18,11 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                     if (value.orders.length > 0) {
                         angular.forEach(value.orders, function(order) {
                             if (order.delivery.status == 'processed') {
-                                var map = [{
-                                    color: 'blue',
-                                    label: 'X',
-                                    coords: order.delivery.latitude + ',' + order.delivery.longitude
-                                }];
-
                                 allOrders.push({
                                     'phone': value.phone_no,
                                     'customer': value.fname + ' ' + value.lname,
                                     'delivery': value.delivery,
-                                    'order': order,
-                                    'markers': map
+                                    'order': order
                                 });
                             }
                         });
@@ -65,7 +49,10 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
     );
     // eof pusher notification //////////////////
 
+    // preloader
+    blockUI.start();
 
+    // INITIAL LOAD ORDERS 
     OrderService
         .getAllOrders()
         .success(function(data) {
@@ -76,18 +63,11 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
                     angular.forEach(value.orders, function(order) {
                         //console.log(order);
                         if (order.delivery.status == 'processed') {
-                            var map = [{
-                                color: 'blue',
-                                label: 'X',
-                                coords: [order.delivery.latitude + ',' + order.delivery.longitude]
-                            }];
-
                             allOrders.push({
                                 'phone': value.phone_no,
                                 'customer': value.fname + ' ' + value.lname,
                                 'delivery': value.delivery,
-                                'order': order,
-                                'markers': map
+                                'order': order
                             });
                         }
                     });
@@ -98,102 +78,136 @@ app.controller('KitchenCtrl', function($window, $scope, $rootScope, $pusher, Ord
 
 
             // Set a courier
-            $scope.setCourier = function(number) {
-                Materialize.toast('Courier for #' + number, 5000);
-            }
-
-            // Assign a courier
-            $scope.assign = function(phone, number, courierName, courierPhone) {
-                // Loader
+            $scope.openDispatch = function(number, customer, phone, order) {
                 blockUI.start();
 
-                var newPhoneNumber = phone.substring(3);
-                OrderService.assignCourier(newPhoneNumber, number, courierName, courierPhone).success(function(response) {
-                    if (response.success == true) {
-                        //$rootScope.allOrders = [];
-                        OrderService.getAllOrders().success(function(data) {
-                            // Collect all orders from all users
-                            var allOrders = [];
-                            angular.forEach(data, function(value) {
-                                if (value.orders.length > 0) {
-                                    angular.forEach(value.orders, function(order) {
-                                        if (order.delivery.status == 'processed') {
-                                            var map = [{
-                                                color: 'blue',
-                                                label: 'X',
-                                                coords: [order.delivery.latitude + ',' + order.delivery.longitude]
-                                            }];
+                // reset all scopes
+                $scope.orderNo = null,
+                    $scope.customer = null,
+                    $scope.phone = null,
+                    $scope.deliveryAddr = null;
+                $scope.deliveryNo = null;
+                $scope.deliveryAddAddr = null;
+                $scope.geoLoc = null;
+                $scope.courierName = null;
+                $scope.courierPhone = null;
+                $('label').removeClass('active');
 
+                // open modal
+                $('#dispatch').openModal();
+
+                // initiate scopes
+                $scope.orderNo = number,
+                    $scope.customer = customer,
+                    $scope.phone = phone,
+                    $scope.deliveryAddr = order.delivery.drop_address;
+                $scope.deliveryNo = order.delivery.drop_address_number;
+                $scope.deliveryAddAddr = order.delivery.additional_address;
+                $scope.geoLoc = order.delivery.latitude + ',' + order.delivery.longitude;
+
+                // initiate map
+                var geo = $scope.geoLoc;
+                var key = 'AIzaSyBajE1vs6LPId02HRyjpkrwJbaIn1t55Hw';
+                var iconURL = 'https://upload.wikimedia.org/wikipedia/commons/4/47/Map_marker_icon_%E2%80%93_Nicolas_Mollet_%E2%80%93_Pizzeria_%E2%80%93_Restaurants_%26_Hotels_%E2%80%93_Dark.png';
+
+                // Google static map
+                $scope.map = 'https://maps.googleapis.com/maps/api/staticmap?center=' + geo + '&zoom=16&size=500x250&scale=2&markers=icon:' + iconURL + '%257C996600%7C' + geo + '&key=' + key;
+
+                // open in GMaps (new modal)
+                $scope.openMap = function(geoLoc) {
+                    Materialize.toast(geoLoc, 4000);
+                }
+
+                // Assign a courier
+                $scope.assign = function(phone, number, courierName, courierPhone) {
+                    // Loader
+                    blockUI.start();
+
+                    if (!courierName) {
+                        blockUI.stop();
+                        Materialize.toast('Please fill courier name', 5000);
+                    } else if (!courierPhone) {
+                        blockUI.stop();
+                        Materialize.toast('Please provide courier phone number', 5000);
+                    } else {
+                        var newPhoneNumber = phone.substring(3);
+                        OrderService.assignCourier(newPhoneNumber, number, courierName, courierPhone).success(function(response) {
+                            if (response.success == true) {
+                                //$rootScope.allOrders = [];
+                                OrderService.getAllOrders().success(function(data) {
+                                    // Collect all orders from all users
+                                    var allOrders = [];
+                                    angular.forEach(data, function(value) {
+                                        if (value.orders.length > 0) {
+                                            angular.forEach(value.orders, function(order) {
+                                                if (order.delivery.status == 'processed') {
+                                                    allOrders.push({
+                                                        'phone': value.phone_no,
+                                                        'customer': value.fname + ' ' + value.lname,
+                                                        'delivery': value.delivery,
+                                                        'order': order
+                                                    });
+                                                }
+                                            });
+                                            // Pass values to scope
+                                            $rootScope.allOrders = allOrders;
+                                        }
+                                    });
+                                })
+                            }
+                        });
+                        // stop loader
+                        blockUI.stop();
+                        $('#dispatch').closeModal();
+                    }
+                };
+
+                // Confirm deleting
+                $scope.confirm = function(number) {
+                    $('#confirm_' + number).openModal();
+                }
+
+                // Delete order
+                $scope.delete = function(phone, number) {
+                    // Loader bar
+                    blockUI.start();
+
+                    var phoneNumber = phone.replace(/[^\w\s]/gi, '');
+                    //console.log(phoneNumber, number);
+                    OrderService.deleteOrder(phoneNumber, number).success(function(response) {
+                        var status = response.success;
+                        if (status == true) {
+                            //$rootScope.allOrders = [];
+                            OrderService.getAllOrders().success(function(data) {
+                                // Collect all orders from all users
+                                var allOrders = [];
+                                angular.forEach(data, function(value) {
+                                    if (value.orders.length > 0) {
+                                        angular.forEach(value.orders, function(order) {
                                             allOrders.push({
                                                 'phone': value.phone_no,
                                                 'customer': value.fname + ' ' + value.lname,
                                                 'delivery': value.delivery,
-                                                'order': order,
-                                                'markers': map
+                                                'order': order
                                             });
-                                        }
-                                    });
-                                    // Pass values to scope
-                                    $rootScope.allOrders = allOrders;
-                                }
-                            });
-                        })
-                    }
-                })
-
-                // stop loader
-                blockUI.stop();
-            };
-
-
-            // Confirm deleting
-            $scope.confirm = function(number) {
-                $('#confirm_' + number).openModal();
-            }
-
-            // Delete order
-            $scope.delete = function(phone, number) {
-                // Loader bar
-                blockUI.start();
-
-                var phoneNumber = phone.replace(/[^\w\s]/gi, '');
-                //console.log(phoneNumber, number);
-                OrderService.deleteOrder(phoneNumber, number).success(function(response) {
-                    var status = response.success;
-                    if (status == true) {
-                        //$rootScope.allOrders = [];
-                        OrderService.getAllOrders().success(function(data) {
-                            // Collect all orders from all users
-                            var allOrders = [];
-                            angular.forEach(data, function(value) {
-                                if (value.orders.length > 0) {
-                                    angular.forEach(value.orders, function(order) {
-                                        var map = [{
-                                            color: 'blue',
-                                            label: 'X',
-                                            coords: [order.delivery.latitude + ',' + order.delivery.longitude]
-                                        }];
-
-                                        allOrders.push({
-                                            'phone': value.phone_no,
-                                            'customer': value.fname + ' ' + value.lname,
-                                            'delivery': value.delivery,
-                                            'order': order,
-                                            'markers': map
                                         });
-                                    });
-                                    // Pass values to scope
-                                    $rootScope.allOrders = allOrders;
-                                }
-                            });
-                        })
-                    } else {
-                        console.log('Failed refreshing order list!');
-                    }
-                })
+                                        // Pass values to scope
+                                        $rootScope.allOrders = allOrders;
+
+                                    }
+                                });
+                            })
+                        } else {
+                            console.log('Failed refreshing order list!');
+                        }
+                    })
+
+                    blockUI.stop();
+                    $('#dispatch').closeModal();
+                };
 
                 blockUI.stop();
-            };
+            }
 
 
             // Refresh page

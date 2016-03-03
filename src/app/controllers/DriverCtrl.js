@@ -50,6 +50,46 @@ app.controller('DriverCtrl', function($window, $scope, $rootScope, $pusher, Orde
                 }
             });
 
+            // open details modal
+            $scope.openDetails = function(number, customer, phone, order) {
+                // Loader bar
+                blockUI.start();
+
+                // reset all scopes
+                $scope.orderNo = null,
+                $scope.customer = null,
+                $scope.phone = null,
+                $scope.deliveryAddr = null;
+                $scope.deliveryNo = null;
+                $scope.deliveryAddAddr = null;
+                $scope.geoLoc = null;
+                $scope.courierName = null;
+                $scope.courierPhone = null;
+
+                // open modal
+                $('#details').openModal();
+
+                // initiate scopes
+                $scope.orderNo = number,
+                $scope.customer = customer,
+                $scope.phone = phone,
+                $scope.deliveryAddr = order.delivery.drop_address;
+                $scope.deliveryNo = order.delivery.drop_address_number;
+                $scope.deliveryAddAddr = order.delivery.additional_address;
+                $scope.geoLoc = order.delivery.latitude + ',' + order.delivery.longitude;
+                $scope.courierName = order.delivery.courierName;
+                $scope.courierPhone = order.delivery.courierPhone;
+
+                // initiate map
+                var geo = $scope.geoLoc;
+                var key = 'AIzaSyBajE1vs6LPId02HRyjpkrwJbaIn1t55Hw';
+                var iconURL = 'https://upload.wikimedia.org/wikipedia/commons/4/47/Map_marker_icon_%E2%80%93_Nicolas_Mollet_%E2%80%93_Pizzeria_%E2%80%93_Restaurants_%26_Hotels_%E2%80%93_Dark.png';
+
+                // Google static map
+                $scope.map = 'https://maps.googleapis.com/maps/api/staticmap?center=' + geo + '&zoom=16&size=500x250&scale=2&markers=icon:' + iconURL + '%257C996600%7C' + geo + '&key=' + key;
+
+                blockUI.stop();
+            }
 
             // Assign courier
             $scope.complete = function(phone, number) {
